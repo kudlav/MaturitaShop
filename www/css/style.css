@@ -1,0 +1,51 @@
+html {
+  height: 100%;
+  margin: 0;
+}
+body {
+  min-height: 100%;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  font-size: 100%;
+  line-height: 1.6;
+  color: #333;
+  width: 100%;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 11.3em;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 1%;
+  background-color: #E8640C;
+  text-align: center;
+  color: #FFF;
+}
+footer img {
+  margin-bottom: 0.5%;
+}
+footer a {
+  color: #FFF;
+  text-decoration: none;
+}
+footer a:hover {
+  text-decoration: underline;
+}
+.content {
+  background-color: #FFF;
+  padding: 2% 2% 11.3em 2%;
+}
+.orangeHeader {
+  padding: 2%;
+  background-color: #E8640C;
+}
+.flash {
+  border-radius: 3px;
+  margin: 1%;
+  padding: 2%;
+  background-color: #FFC107;
+}

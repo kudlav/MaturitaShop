@@ -1,0 +1,62 @@
+@bgColor: #86898E;
+@bgOrange: #E8640C;
+@bgPage: #FFF;
+@bgFlash: #FFC107;
+@bodyPadding: 2%;
+
+html {
+  height:100%;
+  margin: 0;
+}
+
+body {
+  min-height:100%;
+  position:relative;
+  margin: 0;
+  padding: 0;
+  font-size: 100%;
+  line-height: 1.6;
+  color: #333;
+  width: 100%;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+
+footer {
+  position:absolute;
+  bottom:0;
+  left:0;
+  height: 11.3em;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 1%;
+  background-color: @bgOrange;
+  text-align: center;
+  color: @bgPage;
+  img {
+    margin-bottom: 0.5%;
+  }
+  a {
+    color: @bgPage;
+    text-decoration: none;
+  }
+  a:hover{
+    text-decoration: underline;
+  }
+}
+
+.content{
+  background-color: @bgPage;
+  padding: @bodyPadding @bodyPadding 11.3em @bodyPadding;
+}
+
+.orangeHeader{
+  padding: @bodyPadding;
+  background-color: @bgOrange;
+}
+
+.flash {
+  border-radius: 3px;
+  margin: 1%;
+  padding: @bodyPadding;
+  background-color: @bgFlash;
+}
