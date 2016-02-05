@@ -10,15 +10,15 @@ html {
 }
 
 body {
-  min-height:100%;
-  position:relative;
-  margin: 0;
+  height:100%;
+  position: relative;
+  margin: 0 auto;
   padding: 0;
   font-size: 100%;
   line-height: 1.6;
   color: #333;
-  width: 100%;
   font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  max-width: 1400px;
 }
 
 footer {
@@ -34,6 +34,7 @@ footer {
   color: @bgPage;
   img {
     margin-bottom: 0.5%;
+    height: 3em;
   }
   a {
     color: @bgPage;
@@ -44,14 +45,23 @@ footer {
   }
 }
 
-.content{
+#page {
+  position: relative;
+  min-height: 100%;
   background-color: @bgPage;
-  padding: @bodyPadding @bodyPadding 11.3em @bodyPadding;
+}
+
+.content{
+  padding: @bodyPadding @bodyPadding 12em @bodyPadding;
 }
 
 .orangeHeader{
   padding: @bodyPadding;
   background-color: @bgOrange;
+  img {
+    width: 50%;
+    max-width: 20em;
+  }
 }
 
 .flash {
@@ -59,4 +69,11 @@ footer {
   margin: 1%;
   padding: @bodyPadding;
   background-color: @bgFlash;
+}
+
+@media (min-width: 1024px) {
+  body {
+    background: #797D7C url("../images/bgBeton.jpg") no-repeat fixed;
+    padding: 2%;
+  }
 }

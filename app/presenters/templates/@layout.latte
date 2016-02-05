@@ -39,27 +39,29 @@
 </head>
 
 <body>
-    <div class="orangeHeader">
-        <img src="{$basePath}/images/orangeHeader.png">
+    <div id="page">
+        <div class="orangeHeader">
+            <img src="{$basePath}/images/orangeHeader.png">
+        </div>
+        <div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
+
+        <div class="content">
+            {include content}
+
+            {block scripts}
+            <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+            <script src="//nette.github.io/resources/js/netteForms.min.js"></script>
+            <script src="{$basePath}/js/main.js"></script>
+            {/block}
+        </div>
+
+        <footer>
+            <img src="{$basePath}/images/orangeHeader.png"><br>
+            +420 776 057 409<br>
+            <a n:href="Info:kontakty">Kontakty</a><br>
+            <a n:href="Info:podminky">Obchodní podmínky</a><br>
+            <a n:href="Info:nakup">Doprava a platba</a><br>
+        </footer>
     </div>
-	<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
-
-    <div class="content">
-        {include content}
-
-        {block scripts}
-        <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-        <script src="//nette.github.io/resources/js/netteForms.min.js"></script>
-        <script src="{$basePath}/js/main.js"></script>
-        {/block}
-    </div>
-
-    <footer>
-        <img src="{$basePath}/images/orangeHeader.png"><br>
-        +420 776 057 409<br>
-        <a n:href="Info:kontakty">Kontakty</a><br>
-        <a n:href="Info:podminky">Obchodní podmínky</a><br>
-        <a n:href="Info:nakup">Doprava a platba</a><br>
-    </footer>
 </body>
 </html>
