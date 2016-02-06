@@ -1,3 +1,6 @@
+@charset "UTF-8";
+@import "../fonts/style";
+
 @bgColor: #86898E;
 @bgOrange: #E8640C;
 @bgPage: #FFF;
@@ -43,6 +46,11 @@ footer {
   a:hover{
     text-decoration: underline;
   }
+  ul {
+    margin: 0;
+    padding: 0;
+    line-height: 1.8em;
+  }
 }
 
 #page {
@@ -71,9 +79,26 @@ footer {
   background-color: @bgFlash;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1000px) {
   body {
     background: #797D7C url("../images/bgBeton.jpg") no-repeat fixed;
+    background-size: cover;
     padding: 2%;
+  }
+}
+
+@media (min-width: 650px) {
+  footer {
+    ul {
+      line-height: normal;
+    }
+    li {
+      display: inline-block;
+      margin-left: 4%;
+    }
+    .mobileOnly {
+      display: none;
+    }
+    height: 7.1em;
   }
 }

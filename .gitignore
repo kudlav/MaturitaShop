@@ -7,5 +7,3 @@ vendor/*
 app/config/config.local.neon
 .idea
 .DS_Store
-gitkey.pub
-gitkey

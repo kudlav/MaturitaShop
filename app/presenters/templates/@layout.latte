@@ -41,7 +41,10 @@
 <body>
     <div id="page">
         <div class="orangeHeader">
-            <img src="{$basePath}/images/orangeHeader.png">
+            <a href="{$basePath}"><img src="{$basePath}/images/orangeHeader.png"></a>
+        </div>
+        <div class="cart">
+
         </div>
         <div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
 
@@ -57,10 +60,12 @@
 
         <footer>
             <img src="{$basePath}/images/orangeHeader.png"><br>
-            +420 776 057 409<br>
-            <a n:href="Info:kontakty">Kontakty</a><br>
-            <a n:href="Info:podminky">Obchodní podmínky</a><br>
-            <a n:href="Info:nakup">Doprava a platba</a><br>
+            <ul type="none">
+                <li class="mobileOnly">+420 776 057 409</li>
+                <li><a n:href="Info:kontakty">Kontakty</a></li>
+                <li><a n:href="Info:podminky">Obchodní podmínky</a></li>
+                <li><a n:href="Info:nakup">Doprava a platba</a></li>
+            </ul>
         </footer>
     </div>
 </body>
