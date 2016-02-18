@@ -35,7 +35,12 @@
 
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 
-	{block head}{/block}
+{*    {block scripts}
+        <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script src="//nette.github.io/resources/js/netteForms.min.js"></script>
+        <script src="{$basePath}/js/main.js"></script>
+    {/block}
+*}
 </head>
 
 <body>
@@ -43,22 +48,16 @@
         <div class="orangeHeader">
             <a href="{$basePath}"><img src="{$basePath}/images/orangeHeader.png"></a>
         </div>
-        <div class="cart">
+        <div n:if="$page!='Admin'" class="cart">
             <span data-icon="s" class="icon"></span> <ul type="none"><li>Vladan Kudláč</li><li>1 ks</li><li>3 600 Kč</li></ul>
         </div>
         <div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
 
         <div class="content">
             {include content}
-
-            {block scripts}
-            <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-            <script src="//nette.github.io/resources/js/netteForms.min.js"></script>
-            <script src="{$basePath}/js/main.js"></script>
-            {/block}
         </div>
 
-        <footer>
+        <footer n:if="$page!='Admin'">
             <img src="{$basePath}/images/orangeHeader.png"><br>
             <ul type="none">
                 <li class="mobileOnly">+420 776 057 409</li>

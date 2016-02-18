@@ -11,5 +11,11 @@ use App\Model;
  */
 abstract class BasePresenter extends Nette\Application\UI\Presenter
 {
+    protected function startup()
+    {
+        parent::startup();
+        $this->template->page = $this->getName();
+    }
+
 
 }
