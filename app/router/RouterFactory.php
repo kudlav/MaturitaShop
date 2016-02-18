@@ -16,6 +16,9 @@ class RouterFactory
 	public static function createRouter()
 	{
 		$router = new RouteList;
+		$router[] = new Route('kontakty', 'Info:kontakty');
+		$router[] = new Route('obchodni-podminky', 'Info:podminky');
+		$router[] = new Route('doprava-platba', 'Info:nakup');
 		$router[] = new Route('<presenter>/<action>[/<id>]', 'Homepage:default');
 		return $router;
 	}

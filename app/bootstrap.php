@@ -20,12 +20,4 @@ $configurator->addConfig(__DIR__ . '/config/config.local.neon');
 
 $container = $configurator->createContainer();
 
-$router = new RouteList;
-$router[] = new Route('kontakty', 'Info:kontakty');
-$router[] = new Route('obchodni-podminky', 'Info:podminky');
-$router[] = new Route('doprava-platba', 'Info:nakup');
-$router[] = new Route('<presenter>/<action>[/<id>]', 'Homepage:default');
-
-$container->addService('router', $router);
-
 return $container;
