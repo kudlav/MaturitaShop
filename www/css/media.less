@@ -1,0 +1,43 @@
+@charset "UTF-8";
+
+@media (min-width: 650px) {
+  footer {
+    height: 7.1em;
+    ul {
+      line-height: normal;
+    }
+    li {
+      display: inline-block;
+      margin-left: 4%;
+    }
+    .mobileOnly {
+      display: none;
+    }
+  }
+  .orangeHeader {
+    min-height: 6em;
+  }
+  .cart {
+    text-align: right;
+    position: absolute;
+    top: 2em;
+    right: @bodyPadding;
+    min-width: 40%;
+    ul {
+      text-align: left;
+    }
+  }
+  .search {
+    #frm-search-searchTerm {
+      width: 30em;
+    }
+  }
+}
+
+@media (min-width: 1000px) {
+  body {
+    background: @bgColor url("../images/bgBeton.jpg") no-repeat fixed;
+    background-size: cover;
+    padding: 2%;
+  }
+}

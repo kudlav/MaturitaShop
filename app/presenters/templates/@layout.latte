@@ -11,36 +11,20 @@
 	<title>{ifset title}{include title|striptags} | {/ifset}Auto CVK</title>
 
 	<link rel="stylesheet" href="{$basePath}/css/style.css">
-	<link rel="shortcut icon" href="{$basePath}/favicon.ico">
-	<link rel="apple-touch-icon-precomposed" sizes="57x57" href="{$basePath}/images/apple-touch-icon-57x57.png">
-	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="{$basePath}/images/apple-touch-icon-114x114.png">
-	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="{$basePath}/images/apple-touch-icon-72x72.png">
-	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="{$basePath}/images/apple-touch-icon-144x144.png">
-	<link rel="apple-touch-icon-precomposed" sizes="60x60" href="{$basePath}/images/apple-touch-icon-60x60.png">
-	<link rel="apple-touch-icon-precomposed" sizes="120x120" href="{$basePath}/images/apple-touch-icon-120x120.png">
-	<link rel="apple-touch-icon-precomposed" sizes="76x76" href="{$basePath}/images/apple-touch-icon-76x76.png">
-	<link rel="apple-touch-icon-precomposed" sizes="152x152" href="{$basePath}/images/apple-touch-icon-152x152.png">
-	<link rel="icon" type="image/png" href="{$basePath}/images/favicon-196x196.png" sizes="196x196">
-	<link rel="icon" type="image/png" href="{$basePath}/images/favicon-96x96.png" sizes="96x96">
-	<link rel="icon" type="image/png" href="{$basePath}/images/favicon-32x32.png" sizes="32x32">
-	<link rel="icon" type="image/png" href="{$basePath}/images/favicon-16x16.png" sizes="16x16">
-	<link rel="icon" type="image/png" href="{$basePath}/images/favicon-128.png" sizes="128x128">
-	<meta name="application-name" content="Auto CVK">
-	<meta name="msapplication-TileColor" content="#E8630B">
-	<meta name="msapplication-TileImage" content="{$basePath}/images/mstile-144x144.png">
-	<meta name="msapplication-square70x70logo" content="{$basePath}/images/mstile-70x70.png">
-	<meta name="msapplication-square150x150logo" content="{$basePath}/images/mstile-150x150.png">
-	<meta name="msapplication-wide310x150logo" content="{$basePath}/images/mstile-310x150.png">
-	<meta name="msapplication-square310x310logo" content="{$basePath}/images/mstile-310x310.png">
-
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 
-{*    {block scripts}
-        <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+	<!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="{$bgOrange}">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="{$bgOrange}">
+
+	{include favicons.latte}
+
+    {block scripts}
+        {*<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>*}
         <script src="//nette.github.io/resources/js/netteForms.min.js"></script>
-        <script src="{$basePath}/js/main.js"></script>
     {/block}
-*}
+
 </head>
 
 <body>
@@ -48,9 +32,21 @@
         <div class="orangeHeader">
             <a href="{$basePath}"><img src="{$basePath}/images/orangeHeader.png"></a>
         </div>
-        <div n:if="$page!='Admin'" class="cart">
-            <span data-icon="s" class="icon"></span> <ul type="none"><li>Vladan Kudláč</li><li>1 ks</li><li>3 600 Kč</li></ul>
-        </div>
+
+        {if $page!='Admin'}
+            <div class="cart">
+                <span data-icon="s" class="icon"></span><ul type="none"><li>Vladan Kudláč</li><li>1 ks</li><li>3 600 Kč</li></ul>
+            </div>
+            <div class="search">
+                {form search}
+                    <div class="search-wrapper">
+                        <input n:name=searchTerm>
+                    </div>
+                    <input n:name=send>
+                {/form}
+            </div>
+        {/if}
+
         <div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
 
         <div class="content">
