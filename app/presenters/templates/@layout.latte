@@ -21,8 +21,8 @@
 	{include favicons.latte}
 
     {block scripts}
-        {*<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>*}
-        <script src="//nette.github.io/resources/js/netteForms.min.js"></script>
+        {*<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script src="//nette.github.io/resources/js/netteForms.min.js"></script>*}
     {/block}
 
 </head>
@@ -30,12 +30,30 @@
 <body>
     <div id="page">
         <div class="orangeHeader">
-            <a href="{$basePath}"><img src="{$basePath}/images/orangeHeader.png"></a>
+            <a n:href="Homepage:default"><img src="{$basePath}/images/orangeHeader.png"></a>
         </div>
 
         {if $page!='Admin'}
             <div class="cart">
-                <span data-icon="s" class="icon"></span><ul type="none"><li>Vladan Kudláč</li><li>1 ks</li><li>3 600 Kč</li></ul>
+                <span data-icon="s" class="icon"></span>
+                <ul type="none">
+                    <li>
+                        {if $user->loggedIn}
+                            {$user->identity->name.' '.$user->identity->surname}
+                        {else}
+                            Nepřihlášen
+                        {/if}
+                    </li>
+                    <li>1 ks</li>
+                    <li>3 600 Kč</li>
+                </ul>
+                <div class="sign-in">
+                    {if $user->loggedIn}
+                        <a n:href="Sign:out">Odhlásit</a>
+                    {else}
+                        <a n:href="Sign:in">Přihlásit</a>
+                    {/if}
+                </div>
             </div>
             <div class="search">
                 {form search}

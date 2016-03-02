@@ -94,6 +94,20 @@ footer {
     margin: 0;
     padding: 0;
   }
+  .sign-in {
+    margin: 0 @bodyPadding;
+    text-align: center;
+    background-color: @bgFlash;
+    float: right;
+    vertical-align: bottom;
+    a {
+      color: #000;
+      text-decoration: none;
+      display: block;
+      font-size: 85%;
+      padding: 0.4em;
+    }
+  }
 }
 
 .search {
@@ -131,6 +145,37 @@ footer {
   margin: 1%;
   padding: @bodyPadding;
   background-color: @bgFlash;
+}
+
+.form-input {
+  height: 2em;
+  width: 100%;
+  padding-left: 1em;
+  margin-left: 1em;
+}
+
+#frm-signInForm-remember{
+  margin-left: 1em;
+}
+
+form {
+  tr {
+    height: 2.2em;
+  }
+}
+
+.submit {
+  font-weight: bold;
+  height: 3em;
+  margin-left: 1em;
+  background-color: @bgFlash;
+  border-style: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.error {
+  color: #C22;
 }
 
 .cleaner {
