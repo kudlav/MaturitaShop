@@ -35,6 +35,7 @@
 
         {if $page!='Admin'}
             <div class="cart">
+                <a n:tag-if="$user->loggedIn" n:href="User:orders">
                 <span data-icon="s" class="icon"></span>
                 <ul type="none">
                     <li>
@@ -47,6 +48,7 @@
                     <li>1 ks</li>
                     <li>3 600 Kč</li>
                 </ul>
+                </a>
                 <div class="sign-in">
                     {if $user->loggedIn}
                         <a n:href="Sign:out">Odhlásit</a>
