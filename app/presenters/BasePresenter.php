@@ -16,6 +16,12 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
     {
         parent::startup();
         $this->template->page = $this->getName();
+
+        $this->template->name = $this->getUser()->getIdentity()->name;
+        $this->template->surname = $this->getUser()->getIdentity()->surname;
+        $this->template->cartCount = 1;
+        $this->template->cartPrice = 3600;
+
     }
 
     protected function createComponentSearch()

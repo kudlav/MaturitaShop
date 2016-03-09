@@ -2,6 +2,7 @@
 @import "../fonts/style";
 @import "homepage/style";
 @import "navbar/style";
+@import "product/style";
 
 @bgColor: #797D7C ;
 @bgOrange: #E8640C;
@@ -9,6 +10,7 @@
 @bgFlash: #FFC107;
 @bgButton: #2196F3;
 @bodyPadding: 2%;
+@bgHover: #D84315;
 
 html {
   height:100%;
@@ -25,6 +27,10 @@ body {
   font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
   max-width: 1400px;
   box-sizing: border-box;
+}
+
+button {
+  cursor: pointer;
 }
 
 footer {
@@ -91,27 +97,39 @@ footer {
   }
   ul {
     display: inline-block;
+    list-style-type: none;
     margin: 0;
     padding: 0;
   }
   a {
-    color: #FFF;
+    -webkit-transition: color 300ms ease;
+    -moz-transition: color 300ms ease;
+    -o-transition: color 300ms ease;
+    transition: color 300ms ease;
+    color: @bgPage;
     text-decoration: none;
     &:hover {
-      text-decoration: underline;
+      color: #FFDBAB;
     }
   }
   .sign-in {
     margin: 0 @bodyPadding;
     text-align: center;
-    background-color: @bgFlash;
     float: right;
     vertical-align: bottom;
     a {
+      -webkit-transition: background-color 300ms ease;
+      -moz-transition: background-color 300ms ease;
+      -o-transition: background-color 300ms ease;
+      transition: background-color 300ms ease;
+      background-color: @bgFlash;
       color: #000;
       display: block;
       font-size: 85%;
       padding: 0.4em;
+      &:hover{
+        background-color: #FF9C07;
+      }
     }
   }
 }
@@ -139,6 +157,7 @@ footer {
     width: 51px;
     height: 3em;
     float: left;
+    cursor: pointer;
     background-color: @bgButton;
     border-style: none;
     -webkit-appearance: none;
