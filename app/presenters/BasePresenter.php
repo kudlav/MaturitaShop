@@ -12,32 +12,32 @@ use Nette\Application\UI\Form;
  */
 abstract class BasePresenter extends Nette\Application\UI\Presenter
 {
-    protected function startup()
-    {
-        parent::startup();
-        $this->template->page = $this->getName();
+	protected function startup()
+	{
+		parent::startup();
+		$this->template->page = $this->getName();
 
-        $this->template->name = $this->getUser()->getIdentity()->name;
-        $this->template->surname = $this->getUser()->getIdentity()->surname;
-        $this->template->cartCount = 1;
-        $this->template->cartPrice = 3600;
+		$this->template->name = $this->getUser()->getIdentity()->name;
+		$this->template->surname = $this->getUser()->getIdentity()->surname;
+		$this->template->cartCount = 1;
+		$this->template->cartPrice = 3600;
 
-    }
+	}
 
-    protected function createComponentSearch()
-    {
-        $form = new Form();
+	protected function createComponentSearch()
+	{
+		$form = new Form();
 
-        $form->addText('searchTerm')
-            ->setType('search')
-            ->setAttribute('placeholder', 'Hledaný produkt...');
+		$form->addText('searchTerm')
+			->setType('search')
+			->setAttribute('placeholder', 'Hledaný produkt...');
 
-        $form->addSubmit('send','Hledat')
-            ->setAttribute('class', 'button');
+		$form->addSubmit('send','Hledat')
+			->setAttribute('class', 'button');
 
-        $form->onSuccess[] = array($this, 'postFormSucceeded');
+		$form->onSuccess[] = array($this, 'postFormSucceeded');
 
-        return $form;
-    }
+		return $form;
+	}
 
 }

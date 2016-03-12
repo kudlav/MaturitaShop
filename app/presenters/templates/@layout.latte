@@ -14,75 +14,75 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 
 	<!-- Chrome, Firefox OS and Opera -->
-    <meta name="theme-color" content="{$bgOrange}">
-    <!-- Windows Phone -->
-    <meta name="msapplication-navbutton-color" content="{$bgOrange}">
+	<meta name="theme-color" content="{$bgOrange}">
+	<!-- Windows Phone -->
+	<meta name="msapplication-navbutton-color" content="{$bgOrange}">
 
 	{include favicons.latte}
 
-    {block scripts}
-        {*<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-        <script src="//nette.github.io/resources/js/netteForms.min.js"></script>*}
-    {/block}
+	{block scripts}
+		{*<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+		<script src="//nette.github.io/resources/js/netteForms.min.js"></script>*}
+	{/block}
 
 </head>
 
 <body>
-    <div id="page">
-        <div class="orangeHeader">
-            <a n:href="Homepage:default"><img src="{$basePath}/images/orangeHeader.png"></a>
-        </div>
+	<div id="page">
+		<div class="orangeHeader">
+			<a n:href="Homepage:default"><img src="{$basePath}/images/orangeHeader.png"></a>
+		</div>
 
-        {if $page!='Admin'}
-            <div class="cart">
-                <a n:href="User:cart">
-                <span data-icon="s" class="icon"></span>
-                <ul>
-                    <li>
-                        {if $user->loggedIn}
-                            {$name.' '.$surname}
-                        {else}
-                            Nepřihlášen
-                        {/if}
-                    </li>
-                    <li>{$cartCount} ks</li>
-                    <li>{$cartPrice|number:0:',':' '} Kč</li>
-                </ul>
-                </a>
-                <div class="sign-in">
-                    {if $user->loggedIn}
-                        <a n:href="Sign:out">Odhlásit</a>
-                    {else}
-                        <a n:href="Sign:in">Přihlásit</a>
-                    {/if}
-                </div>
-            </div>
-            <div class="search">
-                {form search}
-                    <div class="search-wrapper">
-                        <input n:name=searchTerm>
-                    </div>
-                    <input n:name=send>
-                    <div class="cleaner"></div>
-                {/form}
-            </div>
-        {/if}
+		{if $page!='Admin'}
+			<div class="cart">
+				<a n:href="User:cart">
+				<span data-icon="s" class="icon"></span>
+				<ul>
+					<li>
+						{if $user->loggedIn}
+							{$name.' '.$surname}
+						{else}
+							Nepřihlášen
+						{/if}
+					</li>
+					<li>{$cartCount} ks</li>
+					<li>{$cartPrice|number:0:',':' '} Kč</li>
+				</ul>
+				</a>
+				<div class="sign-in">
+					{if $user->loggedIn}
+						<a n:href="Sign:out">Odhlásit</a>
+					{else}
+						<a n:href="Sign:in">Přihlásit</a>
+					{/if}
+				</div>
+			</div>
+			<div class="search">
+				{form search}
+					<div class="search-wrapper">
+						<input n:name=searchTerm>
+					</div>
+					<input n:name=send>
+					<div class="cleaner"></div>
+				{/form}
+			</div>
+		{/if}
 
-        <div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
+		<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
 
-        <div class="content">
-            {include content}
-        </div>
+		<div class="content">
+			{include content}
+		</div>
 
-        <footer n:if="$page!='Admin'">
-            <img src="{$basePath}/images/orangeHeader.png"><br>
-            <ul type="none">
-                <li class="mobileOnly">+420 776 057 409</li>
-                <li><a n:href="Info:kontakty">Kontakty</a></li>
-                <li><a n:href="Info:podminky">Obchodní podmínky</a></li>
-                <li><a n:href="Info:nakup">Doprava a platba</a></li>
-            </ul>
-        </footer>
-    </div>
+		<footer n:if="$page!='Admin'">
+			<img src="{$basePath}/images/orangeHeader.png"><br>
+			<ul type="none">
+				<li class="mobileOnly">+420 776 057 409</li>
+				<li><a n:href="Info:kontakty">Kontakty</a></li>
+				<li><a n:href="Info:podminky">Obchodní podmínky</a></li>
+				<li><a n:href="Info:nakup">Doprava a platba</a></li>
+			</ul>
+		</footer>
+	</div>
 </body>
 </html>

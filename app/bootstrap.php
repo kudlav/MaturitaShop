@@ -1,6 +1,6 @@
 <?php
 use Nette\Application\Routers\RouteList,
-    Nette\Application\Routers\Route;
+	Nette\Application\Routers\Route;
 
 require __DIR__ . '/../vendor/autoload.php';
 
