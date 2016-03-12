@@ -29,19 +29,19 @@ class SignFormFactory extends Nette\Object
 			->setType('email')
 			->setRequired('Zadejte prosím email.')
 			->addRule(Form::EMAIL, 'Zadejte platnou emailovou adresu.')
-			->setAttribute('placeholder="Zadejte přihlašovací email"')
-			->setAttribute('class="form-input"')
+			->setAttribute('placeholder','Zadejte přihlašovací email')
+			->setAttribute('class','form-input')
 			->setAttribute('autofocus');
 
 		$form->addPassword('password', 'Heslo:')
 			->setRequired('Zadejte prosím heslo.')
-			->setAttribute('placeholder="Zadejte heslo"')
-			->setAttribute('class="form-input"');
+			->setAttribute('placeholder','Zadejte heslo')
+			->setAttribute('class','form-input');
 
 		$form->addCheckbox('remember', 'Neodhlašovat');
 
 		$form->addSubmit('send', 'Přihlásit se')
-			->setAttribute('class="submit"');
+			->setAttribute('class','submit');
 
 		$form->onSuccess[] = array($this, 'formSucceeded');
 		return $form;
