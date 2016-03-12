@@ -40,7 +40,7 @@
 				<ul>
 					<li>
 						{if $user->loggedIn}
-							{$name.' '.$surname}
+							{$user->identity->name.' '.$user->identity->surname}
 						{else}
 							Nepřihlášen
 						{/if}
