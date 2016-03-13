@@ -1,4 +1,4 @@
-.show-cart {
+.show-cards {
 	ul {
 		list-style-type: none;
 		padding: 0;
@@ -10,7 +10,9 @@
 			padding: 0.6em;
 			box-sizing: border-box;
 			img {
-				display: none;
+				float: left;
+				height: 3em;
+				padding-right: 1em;
 			}
 			a {
 				color: #000;
@@ -24,21 +26,37 @@
 				color: @colorShadow;
 				border-bottom: 1px solid #EEE;
 				margin-bottom: 0.5em;
+				padding-bottom: 0.5em;
 				font-size: 0.9em;
 			}
 			.left {
 				float: left;
-				width: 45%;
+				width: 49%;
+				border-right: solid 1px #BDBDBD;
+				box-sizing: border-box;
 			}
 			.price{
-				border-left: solid 1px #BDBDBD;
-				box-sizing: border-box;
 				float: right;
-				width: 55%;
+				width: 51%;
 				text-align: right;
 			}
 			input {
 				width: 3em;
+			}
+			.delete {
+				width: 2em;
+				text-align: center;
+				float: right;
+				font-size: 1.5em;
+				-webkit-transition: color 200ms ease;
+				-moz-transition: color 200ms ease;
+				-o-transition: color 200ms ease;
+				transition: color 200ms ease;
+				background-color: @bgShadow;
+
+				&:hover {
+					color: @bgHover;
+				}
 			}
 		}
 	}
@@ -47,24 +65,15 @@
 		font-size: 1.1em;
 	}
 	.order {
-		float: right;
 		text-align: right;
-		button {
-			border: none;
-			background-color: @bgOrange;
-			color: @bgPage;
-			font-size: 1em;
-			margin-top: 1em;
-			padding: 0.7em;
-			-webkit-transition: background-color 300ms ease;
-			-moz-transition: background-color 300ms ease;
-			-o-transition: background-color 300ms ease;
-			transition: background-color 300ms ease;
-			&:hover {
-				background-color: @bgHover;
-			}
-		}
 	}
 }
 
-@import "media";
+.user-data {
+	.form-button {
+		position: relative;
+		top: 0;
+		left: 10em;
+	}
+}
+

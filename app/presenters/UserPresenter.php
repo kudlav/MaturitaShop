@@ -30,4 +30,18 @@ class UserPresenter extends BasePresenter
 		return $control;
 	}
 
+	public function renderOrders()
+	{
+		if (!$this->getUser()->isLoggedIn()) {
+			$this->redirect('Sign:in', ['p' => $this->storeRequest()]);
+		}
+	}
+
+	public function renderAccount()
+	{
+		if (!$this->getUser()->isLoggedIn()) {
+			$this->redirect('Sign:in', ['p' => $this->storeRequest()]);
+		}
+	}
+
 }

@@ -3,7 +3,7 @@
 @import "homepage/style";
 @import "navbar/style";
 @import "product/style";
-@import "user/cart";
+@import "user/style";
 
 @bgColor: #797D7C ;
 @bgOrange: #E8640C;
@@ -13,6 +13,7 @@
 @bodyPadding: 2%;
 @bgHover: #D84315;
 @colorShadow: #999;
+@bgShadow: #FCFCFC;
 
 html {
 	height:100%;
@@ -182,7 +183,23 @@ footer {
 	margin: 0.3em 0 0.3em 1em;
 	font: 0.9em "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 	border: #BDBDBD 1px solid;
-	background-color: #FCFCFC;
+	background-color: @bgShadow;
+}
+
+.form-button {
+	border: none;
+	background-color: @bgOrange;
+	color: @bgPage;
+	font-size: 1em;
+	margin-top: 1em;
+	padding: 0.7em;
+	-webkit-transition: background-color 300ms ease;
+	-moz-transition: background-color 300ms ease;
+	-o-transition: background-color 300ms ease;
+	transition: background-color 300ms ease;
+	&:hover {
+		background-color: @bgHover;
+	}
 }
 
 #frm-signInForm-remember{

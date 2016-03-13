@@ -1,3 +1,44 @@
 {block content}
 
 {control navbar}
+
+<div class="show-cards right-column">
+    <h1 n:block=title><span data-icon="D" class="icon"></span> Objednávky</h1>
+    <ul>
+        <li>
+            <div class="item">
+                <a n:href="Product:order" class="spec">
+                    <div class="title">OBJ00001</div>
+                </a>
+                <div class="id">1.2.2016</div>
+                <div class="left">
+                    <div class="status">Stav: objednávka vyfakturována</div>
+                </div>
+                <div class="price">
+                    Celkem: {1302|number:0:',':' '} Kč
+                </div>
+                <div class="cleaner"></div>
+            </div>
+        </li>
+        <li>
+            <div class="item">
+                <a n:href="Product:order" class="spec">
+                    <div class="title">OBJ00024</div>
+                </a>
+                <div class="id">13.3.2016</div>
+                <div class="left">
+                    <div class="status">Stav: objednávka zrušena</div>
+                </div>
+                <div class="price">
+                    Celkem: {5000|number:0:',':' '} Kč
+                </div>
+                <div class="cleaner"></div>
+            </div>
+        </li>
+    </ul>
+
+    <div class="total">Počet objednávek: <strong>{2|number:0:',':' '} </strong></div>
+
+</div>
+
+<div class="cleaner"></div>
