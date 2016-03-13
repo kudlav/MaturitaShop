@@ -1,8 +1,11 @@
 <nav>
-	<h3>Kategorie:</h3>
+	<h3>{$title}</h3>
 	<ul>
-		<li><a href="">Citroen</a></li>
-		<li><a href="">Peugeot</a></li>
-		<li><a href="">Fiat</a></li>
+		<li n:foreach="$items as $title => $link">
+			<a href="
+				{ifset $link[1]}{plink $link[0] p => $link[1]}
+				{else}{plink $link[0]}{/ifset}
+			" {if $link[0] == $page}class="selected"{/if}>{$title}</a>
+		</li>
 	</ul>
 </nav>

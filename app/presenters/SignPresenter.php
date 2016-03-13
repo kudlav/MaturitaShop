@@ -11,6 +11,9 @@ class SignPresenter extends BasePresenter
 	/** @var SignFormFactory @inject */
 	public $factory;
 
+	/** @persistent */
+	public $p = '';
+
 
 	/**
 	 * Sign-in form factory.
@@ -20,7 +23,8 @@ class SignPresenter extends BasePresenter
 	{
 		$form = $this->factory->create();
 		$form->onSuccess[] = function ($form) {
-			$form->getPresenter()->redirect('Homepage:');
+			$this->restoreRequest($this->p);
+			$this->redirect('Homepage:');
 		};
 		return $form;
 	}

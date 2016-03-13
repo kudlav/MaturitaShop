@@ -10,7 +10,12 @@ class HomepagePresenter extends BasePresenter
 {
 	protected function createComponentNavbar()
 	{
-		$control = new Navbar();
+		$items = [
+			'Citroen' => ['Homepage:'],
+			'Peugeot' => ['Homepage:'],
+			'Fiat' => ['Homepage:'],
+		];
+		$control = new Navbar('Kategorie', $items);
 		return $control;
 	}
 }

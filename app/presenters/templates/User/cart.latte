@@ -1,8 +1,10 @@
 {block content}
 
+{control navbar}
+
 <h1 n:block=title><span data-icon="s" class="icon"></span> Nákupní košík</h1>
 
-<div class="show-cart">
+<div class="show-cart right-column">
 	<ul>
 		<li>
 			<div class="item">
@@ -13,7 +15,7 @@
 				<div class="id">A00013</div>
 				<div class="left">
 					<div class="quantity">Skladem: {10|number:0:',':' '} ks</div>
-					<div class="order-quantity">Objednat <input type="number"> ks</div>
+					<div class="order-quantity">Objednat <input type="number" class="form-input"> ks</div>
 				</div>
 				<div class="price">
 					{1302|number:0:',':' '} Kč <br>
@@ -44,4 +46,7 @@
 
 	<div class="total">Celkem k úhradě: <strong>1 828 Kč</strong></div>
 	<div class="order"><button>Pokračovat v objednávce</button></div>
+
 </div>
+
+<div class="cleaner"></div>

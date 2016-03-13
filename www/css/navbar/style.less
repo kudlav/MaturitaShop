@@ -13,19 +13,20 @@ nav {
 				border-bottom: #BDBDBD 1px solid;
 				padding: 0.5em;
 				display: block;
+				-webkit-transition: background-color 300ms ease;
+				-moz-transition: background-color 300ms ease;
+				-o-transition: background-color 300ms ease;
+				transition: background-color 300ms ease;
+				&:hover {
+					background-color: @bgShadow;
+					text-decoration: underline;
+				}
+			}
+			.selected {
+				background-color: @bgShadow;
 			}
 		}
 	}
 }
 
-@media (min-width: 700px) {
-	nav {
-		float: left;
-		width: 20%;
-		position: relative;
-		h3 {
-			margin-top: 2em;
-		}
-	}
-	.item-list {float: right; width: 79%}
-}
+@import "media";
