@@ -21,5 +21,11 @@ session:
 
 services:
 	- App\Model\UserManager
+	- App\Model\EmailValidator
+	- App\Model\Registrator
+
+	- App\Forms\IUserDataFactory
 	- App\Forms\SignFormFactory
+	- App\Forms\UserDataFormFactory
+
 	router: App\RouterFactory::createRouter

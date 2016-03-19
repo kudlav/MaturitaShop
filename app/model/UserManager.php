@@ -56,26 +56,6 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator
 		unset($arr[self::COLUMN_PASSWORD_HASH]);
 		return new Nette\Security\Identity($row[self::COLUMN_ID], $row[self::COLUMN_ROLE], $arr);
 	}
-
-
-	/**
-	 * Adds new user.
-	 * @param  string
-	 * @param  string
-	 * @return void
-	 */
-	public function add($username, $password)
-	{
-		try {
-			$this->database->table(self::TABLE_NAME)->insert(array(
-				self::COLUMN_NAME => $username,
-				self::COLUMN_PASSWORD_HASH => Passwords::hash($password),
-			));
-		} catch (Nette\Database\UniqueConstraintViolationException $e) {
-			throw new DuplicateNameException;
-		}
-	}
-
 }
 
 

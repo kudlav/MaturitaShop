@@ -10,7 +10,7 @@ class Navbar extends Control
 	private $items;
 	private $title;
 
-    public function  __construct($title, $items)
+	public function  __construct($title, $items)
 	{
 		$this->items = $items;
 		$this->title = $title;
