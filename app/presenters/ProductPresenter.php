@@ -4,22 +4,23 @@ namespace App\Presenters;
 
 use Nette;
 use App\Model;
+use App\Model\ProductManager;
 
 
 class ProductPresenter extends BasePresenter
 {
+	private $productManager;
 
-	public function renderShow()
+	public function injectProductManager(ProductManager $productManager) {
+		$this->productManager = $productManager;
+	}
+
+	public function renderDefault($id, $produkt)
 	{
-		$this->template->product = [
-			'name' => 'Použité levé světlo',
-			'description' => 'Prodám Učebnici českého jazyka pro střední školy - komunikace a sloh. Učebnice je nepoužitá, nepopsaná, bez známek poškození. Učebnici jsem ochotný předat kdekoliv po Brně, po dohodě ji zaslat poštou. V případě zájmu jsem schopný sehnat další kusy. (Český jazyk pro SŠ – Komunikace a sloh, nakladatelství: Fraus, 2009 (1. vydání), počet stran: 152).',
-			'condition' => 'Použité',
-			'price' => 12300,
-			'quantity' => 14,
-			'category' => 'Ostatní',
-			'id' => 'A00013',
-		];
+		$this->template->product = $this->productManager->getItem($id);
+		if ($this->template->product === NULL) {
+			$this->error('Požadovaný produkt neexistuje');
+		}
 	}
 
 

@@ -23,6 +23,7 @@ services:
 	- App\Model\UserManager
 	- App\Model\EmailValidator
 	- App\Model\Registrator
+	- App\Model\ProductManager
 
 	- App\Forms\IUserDataFactory
 	- App\Forms\SignFormFactory

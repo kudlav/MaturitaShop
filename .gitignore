@@ -1,6 +1,7 @@
 log/*
 temp/*
 vendor/*
+www/images/products/*
 !.gitignore
 !.htaccess
 !web.config
