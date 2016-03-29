@@ -10,9 +10,13 @@ use App\Model\ProductManager;
 
 class ProductPresenter extends BasePresenter
 {
-	private $buyFormFactory, $productManager;
+	/** @var BuyFormFactory */
+	private $buyFormFactory;
 
-	public function injectDeliverPayFormFactory(BuyFormFactory $buyFormFactory) {
+	/** @var ProductManager */
+	private $productManager;
+
+	public function injectBuyFormFactory(BuyFormFactory $buyFormFactory) {
 		$this->buyFormFactory = $buyFormFactory;
 	}
 

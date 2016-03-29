@@ -1,8 +1,3 @@
-{**
- * @param string   $basePath web base path
- * @param array    $flashes  flash messages
- *}
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,29 +29,7 @@
 		</div>
 
 		{if $page!='Admin'}
-			<div class="cart">
-				<a n:href="User:cart">
-				<span data-icon="s" class="icon"></span>
-				<ul>
-					<li>
-						{if $user->loggedIn}
-							{$user->identity->name.' '.$user->identity->surname}
-						{else}
-							Nepřihlášen
-						{/if}
-					</li>
-					<li>{$cartCount} ks</li>
-					<li>{$cartPrice|number:0:',':' '} Kč</li>
-				</ul>
-				</a>
-				<div class="sign-in">
-					{if $user->loggedIn}
-						<a n:href="Sign:out">Odhlásit</a>
-					{else}
-						<a n:href="Sign:in">Přihlásit</a>
-					{/if}
-				</div>
-			</div>
+			{control cart}
 			<div class="search">
 				{form search}
 					<div class="search-wrapper">

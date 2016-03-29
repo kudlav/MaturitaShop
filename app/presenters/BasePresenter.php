@@ -5,6 +5,7 @@ namespace App\Presenters;
 use Nette;
 use App\Model;
 use Nette\Application\UI\Form;
+use App\Model\CartManager;
 
 
 /**
@@ -12,6 +13,15 @@ use Nette\Application\UI\Form;
  */
 abstract class BasePresenter extends Nette\Application\UI\Presenter
 {
+
+	/** @var CartManager */
+	private $cartManager;
+
+	public function injectCartManager(CartManager $cartManager)
+	{
+		$this->cartManager = $cartManager;
+	}
+
 	protected function startup()
 	{
 		parent::startup();
@@ -36,6 +46,13 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 		$form->onSuccess[] = array($this, 'postFormSucceeded');
 
 		return $form;
+	}
+
+	protected function createComponentCart()
+	{
+		$user = $this->getUser();
+		$control = new Cart($user, $this->cartManager);
+		return $control;
 	}
 
 }

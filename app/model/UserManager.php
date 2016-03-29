@@ -57,8 +57,3 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator
 		return new Nette\Security\Identity($row[self::COLUMN_ID], $row[self::COLUMN_ROLE], $arr);
 	}
 }
-
-
-
-class DuplicateNameException extends \Exception
-{}

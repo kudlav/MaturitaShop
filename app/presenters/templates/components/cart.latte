@@ -1,0 +1,23 @@
+<div class="cart">
+    <a href="{plink "User:cart"}">
+        <span data-icon="s" class="icon"></span>
+        <ul>
+            <li>
+                {if $user->loggedIn}
+                    {$user->identity->name.' '.$user->identity->surname}
+                {else}
+                    Nepřihlášen
+                {/if}
+            </li>
+            <li>{$cart['count']|number:0:',':' '} ks</li>
+            <li>{$cart['price']|number:0:',':' '} Kč</li>
+        </ul>
+    </a>
+    <div class="sign-in">
+        {if $user->loggedIn}
+            <a href="{plink "Sign:out"}">Odhlásit</a>
+        {else}
+            <a href="{plink "Sign:in"}">Přihlásit</a>
+        {/if}
+    </div>
+</div>

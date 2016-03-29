@@ -24,6 +24,7 @@ services:
 	- App\Model\EmailValidator
 	- App\Model\Registrator
 	- App\Model\ProductManager
+	- App\Model\CartManager
 
 	- App\Forms\IUserDataFactory
 	- App\Forms\SignFormFactory
