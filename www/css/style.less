@@ -14,6 +14,7 @@
 @bgHover: #D84315;
 @colorShadow: #999;
 @bgShadow: #FCFCFC;
+@borderShadow: #BDBDBD;
 
 html {
 	height:100%;
@@ -181,7 +182,7 @@ footer {
 	padding-left: 1em;
 	margin: 0.3em 0 0.3em 1em;
 	font: 0.9em "Lucida Sans Unicode", "Lucida Grande", sans-serif;
-	border: #BDBDBD 1px solid;
+	border: @borderShadow 1px solid;
 	background-color: @bgShadow;
 }
 
@@ -201,8 +202,20 @@ footer {
 	}
 }
 
+.form-radio {
+	width: 2em;
+	height: 1.6em;
+	margin-bottom: 1em;
+}
+
 #frm-signInForm-remember{
 	margin-left: 1em;
+}
+
+fieldset {
+	border: @borderShadow 1px solid;
+	margin: 2em 0 2em 0;
+	max-width: 40em;
 }
 
 form {
@@ -225,6 +238,16 @@ form {
 	color: #C22;
 	padding-left: 1em;
 	white-space: nowrap;
+}
+
+.count {
+	padding: 9px 16px 8px;
+	border: 1px solid #d6d6d6;
+	color: #727272;
+	background-color: #FCFCFC;
+	font-size: 1.4em;
+	line-height: 1.9em;
+	margin-right: 0.4em;
 }
 
 .cleaner {

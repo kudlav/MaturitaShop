@@ -3,14 +3,14 @@ nav {
 		list-style-type: none;
 
 		padding: 0;
-		border-bottom: #BDBDBD 3px solid;
+		border-bottom: @borderShadow 3px solid;
 		li {
 			a {
 				line-height: 2em;
 				text-decoration: none;
 				color: #000;
 				background-color: #EEE;
-				border-bottom: #BDBDBD 1px solid;
+				border-bottom: @borderShadow 1px solid;
 				padding: 0.5em;
 				display: block;
 				-webkit-transition: background-color 300ms ease;
@@ -24,6 +24,13 @@ nav {
 			}
 			.selected {
 				background-color: @bgShadow;
+			}
+			.disabled {
+				color: @borderShadow;
+				&:hover {
+					background-color: #EEE;
+					text-decoration: none;
+				}
 			}
 		}
 	}

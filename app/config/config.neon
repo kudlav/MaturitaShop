@@ -28,5 +28,6 @@ services:
 	- App\Forms\IUserDataFactory
 	- App\Forms\SignFormFactory
 	- App\Forms\UserDataFormFactory
+	- App\Forms\BuyFormFactory
 
 	router: App\RouterFactory::createRouter
