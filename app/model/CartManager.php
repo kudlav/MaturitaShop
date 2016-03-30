@@ -24,6 +24,11 @@ class CartManager extends Nette\Object
 		$this->database = $database;
 	}
 
+	/**
+	 * Return number of items in cart of user.
+	 * @param int $id
+	 * @return int
+	 */
 	public function getCount($id)
 	{
 		$query = $this->database->table(self::TABLE_NAME)->where(self::COLUMN_ID, $id);
@@ -35,6 +40,11 @@ class CartManager extends Nette\Object
 		return $ret;
 	}
 
+	/**
+	 * Return total price of cart of user.
+	 * @param int $id
+	 * @return int
+	 */
 	public function getPrice($id)
 	{
 		$query = $this->database->table(self::TABLE_NAME)->where(self::COLUMN_ID, $id);
@@ -42,6 +52,28 @@ class CartManager extends Nette\Object
 		$ret = 0;
 		foreach ($query as $row) {
 			$ret+= $row->quantity * $row->products->price;
+		}
+		return $ret;
+	}
+
+	/**
+	 * Return array of items in cart of user.
+	 * @param int $id
+	 * @return array
+	 */
+	public function getItems($id)
+	{
+		$query = $this->database->table(self::TABLE_NAME)->where(self::COLUMN_ID, $id);
+
+		$ret = array();
+		foreach ($query as $row) {
+			$ret[]= [
+				'id' => $row->products_id,
+				'count' => $row->quantity,
+				'name' => $row->products->name,
+				'quantity' => $row->products->quantity,
+				'price' => $row->products->price,
+			];
 		}
 		return $ret;
 	}

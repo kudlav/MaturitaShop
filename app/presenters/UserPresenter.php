@@ -4,10 +4,19 @@ namespace App\Presenters;
 
 use Nette;
 use App\Model;
+use App\Model\CartManager;
 
 
 class UserPresenter extends BasePresenter
 {
+	/** @var CartManager */
+	private $cartManager;
+
+	public function injectCartManager(CartManager $cartManager)
+	{
+		parent::injectCartManager($this->cartManager = $cartManager);
+	}
+
 
 	protected function createComponentNavbar()
 	{
@@ -35,10 +44,14 @@ class UserPresenter extends BasePresenter
 		}
 	}
 
-	public function renderAccount()
+	public function renderCart()
 	{
-		if (!$this->getUser()->isLoggedIn()) {
-			$this->redirect('Sign:in', ['p' => $this->storeRequest()]);
+		if ($this->getUser()->isLoggedIn()) {
+			$this->template->items = $this->cartManager->getItems($this->getUser()->id);
+			$this->template->total = $this->cartManager->getPrice($this->getUser()->id);
+		} else {
+			$this->template->items = [];
+			$this->template->total = 0;
 		}
 	}
 
