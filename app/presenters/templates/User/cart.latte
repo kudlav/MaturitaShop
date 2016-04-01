@@ -8,9 +8,9 @@
 		<ul>
 			<li n:foreach="$items as $item">
 				<div class="item">
-					<a href="" class="delete"><span data-icon="x" class="icon"></span></a>
+					<a n:href="User:removeFromCart $item['id']" class="delete"><span data-icon="x" class="icon"></span></a>
 					<a n:href="Product:default $item['id'], $item['name']" class="spec">
-						<img src="{$basePath}/images/products/original/{$item['id']}.jpg">
+						<img src="{$basePath}/images/products/original/{$item['id']}.jpg" alt="Miniatura produktu">
 						<div class="title">{$item['name']}</div>
 					</a>
 					<div class="id">{$item['id']}</div>

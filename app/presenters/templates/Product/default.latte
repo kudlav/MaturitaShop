@@ -5,7 +5,7 @@
 	<h1 n:block=title>{$product['name']}</h1>
 	<div class="id">Objednací kód: {$product['id']}</div>
 
-	<img src="{$basePath}/images/products/original/{$product['id']}.jpg">
+	<img src="{$basePath}/images/products/original/{$product['id']}.jpg" alt="Obrázek produktu">
 
 	<div class="desc">
 		<div class="left">
@@ -16,7 +16,9 @@
 			{$product['price']|number:0:',':' '} Kč
 		</div>
 		<div class="cleaner"></div>
-		<div class="to-cart"><button><span data-icon="s" class="icon"></span>Do košíku</button></div>
+		<div class="to-cart">
+			<a n:href="User:addToCart $product->id, 'Product:default?id='.$product->id"><button><span data-icon="s" class="icon"></span>Do košíku</button></a>
+		</div>
 		<div class="cleaner"></div>
 
 		<p>{$product['description']|noescape}</p>

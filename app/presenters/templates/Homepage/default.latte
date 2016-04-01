@@ -8,7 +8,7 @@
 			<li n:foreach="$products as $product">
 				<div class="item">
 					<a n:href="Product:default $product->id, $product->name" class="spec">
-						<img src="{$basePath}/images/products/original/{$product->id}.jpg">
+						<img src="{$basePath}/images/products/original/{$product->id}.jpg" alt="Obrázek produktu">
 						<div class="title">
 							{$product->name}
 						</div>
@@ -16,7 +16,7 @@
 					<div class="status">
 						<div class="condition">{$product->condition}</div>
 						<div class="price">{$product->price|number:0:',':' '} Kč</div>
-						<div class="to-cart"><button>Do košíku</button></div>
+						<div class="to-cart"><a n:href="User:addToCart $product->id, 'Homepage:'"><button>Do košíku</button></a></div>
 						<div class="cleaner"></div>
 					</div>
 				</div>
