@@ -21,22 +21,30 @@ class ProductManager extends Nette\Object
 		COLUMN_TIMESTAMP = 'timestamp',
 		COLUMN_CATEGORY  = 'category';
 
+
 	/** @var Nette\Database\Context */
 	private $database;
-
 
 	public function __construct(Nette\Database\Context $database)
 	{
 		$this->database = $database;
 	}
 
+	/**
+	 * Return all product at database.
+	 * @return static
+	 */
 	public function getProducts() {
 		$products = $this->database->table(self::TABLE_NAME)
-			->order(self::COLUMN_TIMESTAMP.' DESC')
-			->limit(8);
+			->order(self::COLUMN_TIMESTAMP.' DESC');
 		return $products;
 	}
 
+	/**
+	 * Return product with equal ID.
+	 * @param $id
+	 * @return Nette\Database\Table\IRow
+	 */
 	public function getItem($id) {
 		$item = $this->database->table(self::TABLE_NAME)->get($id);
 		if (!$item) {

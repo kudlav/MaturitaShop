@@ -1,0 +1,43 @@
+<div class="show-cards left-half">
+	Způsob dopravy a platby:
+	<ul>
+		<li n:foreach="$form as $item => $value">
+			<div class="item">
+				<div class="id normal">{$item}:</div>
+				<div class="cleaner"></div>
+				<div class="note">{$value[0]} {if isset($value[1])}({$value[1]} Kč){/if}</div>
+			</div>
+		</li>
+	</ul>
+</div>
+
+<div class="show-cards right-half">
+	Položky k objenání:
+	<ul>
+		<li n:foreach="$items as $item">
+			<div class="item">
+				<div class="spec">
+					<img src="{$basePath}/images/products/original/{sprintf("%05d", $item['id'])}.jpg" alt="Miniatura produktu">
+					<div class="title">{$item['name']}</div>
+					<div class="price">
+						<div class="order-quantity">{$item['count']} ks</div>
+					</div>
+				</div>
+				<div class="id">{sprintf("%05d", $item['id'])}</div>
+				<div class="cleaner"></div>
+				<div class="left">
+					{$item['price']|number:0:',':' '} Kč/ks <br>
+				</div>
+				<div class="price">
+					<strong> {$item['price']*$item['count']|number:0:',':' '} Kč</strong>
+				</div>
+				<div class="cleaner"></div>
+			</div>
+		</li>
+	</ul>
+</div>
+<div class="cleaner"></div>
+
+<div class="total">Celkem k úhradě: <strong>{$total|number:0:',':' '} Kč</strong></div>
+<div class="back"><a href="{plink Product:buy 'deliverPay'}"><button class="form-button">&larr; Doprava a platba</button></a></div>
+<div class="order"><a href="{plink Product:submitOrder}"><button class="form-button">Potvrdit objednávku</button></a></div>

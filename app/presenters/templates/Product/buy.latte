@@ -1,7 +1,17 @@
 {block content}
 
-<div>
-	<h1 n:block=title><span data-icon="d" class="icon"></span> Závazná objednávka</h1>
+<nav>
+	<h3>{$title}</h3>
+	<ul>
+		<li n:foreach="$items as $count => $title">
+			<a class="{if $phase == $count}selected{elseif $phase <= $count} disabled{/if}"><span class="count">{$count+1}</span>{$title}</a>
+		</li>
+	</ul>
+</nav>
+
+
+<div class="right-column">
+	<h1 n:block=title>{$items[$phase]}</h1>
 	{control buyForm}
 </div>
 

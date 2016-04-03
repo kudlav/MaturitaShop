@@ -3,11 +3,11 @@
 <div class="product">
 	{* <div class="category">{$product['category']}</div> *}
 	<h1 n:block=title>{$product['name']}</h1>
-	<div class="id">Objednací kód: {$product['id']}</div>
+	<div class="id">Objednací kód: {sprintf("%05d", $product['id'])}</div>
 
-	<img src="{$basePath}/images/products/original/{$product['id']}.jpg" alt="Obrázek produktu">
+	<img class="left-half" src="{$basePath}/images/products/original/{sprintf("%05d", $product['id'])}.jpg" alt="Obrázek produktu">
 
-	<div class="desc">
+	<div class="right-half">
 		<div class="left">
 			<div class="condition">{$product['condition']}</div>
 			<div class="quantity">Skladem: {$product['quantity']|number:0:',':' '} ks</div>

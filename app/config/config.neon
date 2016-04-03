@@ -25,6 +25,7 @@ services:
 	- App\Model\Registrator
 	- App\Model\ProductManager
 	- App\Model\CartManager
+	- App\Model\OrderManager
 
 	- App\Forms\IUserDataFactory
 	- App\Forms\SignFormFactory

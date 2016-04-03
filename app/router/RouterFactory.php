@@ -20,6 +20,7 @@ class RouterFactory
 		$router[] = new Route('obchodni-podminky', 'Info:podminky');
 		$router[] = new Route('doprava-platba', 'Info:nakup');
 		$router[] = new Route('product/buy', 'Product:buy');
+		$router[] = new Route('product/submit-order', 'Product:submitOrder');
 		$router[] = new Route('product/<id>', 'Product:default');
 		$router[] = new Route('<presenter>/<action>[/<id>]', 'Homepage:default');
 		return $router;
