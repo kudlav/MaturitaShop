@@ -50,6 +50,29 @@ class OrderManager extends Nette\Object
 	}
 
 	/**
+	 * Return array of user's orders.
+	 * @param $userId
+	 * @return array
+	 */
+	public function getOrders($userId)
+	{
+		$query = $this->database->table(self::TABLE_ORDERS)
+			->where(self::COLUMN_CUSTOMER, $userId)
+			->order(self::COLUMN_TIMESTAMP.' DESC');
+
+		$ret = array();
+		foreach ($query as $row) {
+			$ret[]= [
+				'id' => $row->id,
+				'timestamp' => $row->timestamp,
+				'total' => $row->total,
+				'state' => $row->state,
+			];
+		}
+		return $ret;
+	}
+
+	/**
 	 * Order items.
 	 * @param array $items Items to order.
 	 * @param SessionSection $session Contains total and note.
@@ -57,13 +80,14 @@ class OrderManager extends Nette\Object
 	 * @return bool True if OK.
 	 * @throws DuplicateNameException
 	 */
-	public function orderProducts(array $items, SessionSection $session, int $userId) {
+	public function orderProducts(array $items, SessionSection $session, int $userId)
+	{
 		$this->database->beginTransaction();
 		$orders = $this->database->table(self::TABLE_ORDERS)->insert(array(
 			self::COLUMN_CUSTOMER => $userId,
 			self::COLUMN_TIMESTAMP => date("Y-m-d H:i:s"),
 			self::COLUMN_TOTAL => $session->total,
-			self::COLUMN_STATE => 'vytvořena',
+			self::COLUMN_STATE => 'čeká na vyřízení',
 			self::COLUMN_NOTE => $session->note,
 		));
 
@@ -98,4 +122,3 @@ class OrderManager extends Nette\Object
 		return FALSE;
 	}
 }
-

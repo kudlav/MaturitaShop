@@ -5,16 +5,21 @@ namespace App\Presenters;
 use Nette;
 use App\Model;
 use App\Model\CartManager;
+use App\Model\OrderManager;
 
 
 class UserPresenter extends BasePresenter
 {
-	/** @var CartManager */
-	private $cartManager;
+	/**
+	 * @var CartManager $cartManager
+	 * @var OrderManager $orderManager
+	 */
+	private $cartManager, $orderManager;
 
-	public function injectCartManager(CartManager $cartManager)
+	public function __construct(CartManager $cartManager, OrderManager $orderManager)
 	{
-		parent::injectCartManager($this->cartManager = $cartManager);
+		$this->cartManager = $cartManager;
+		$this->orderManager = $orderManager;
 	}
 
 
@@ -42,6 +47,7 @@ class UserPresenter extends BasePresenter
 		if (!$this->getUser()->isLoggedIn()) {
 			$this->redirect('Sign:in', ['p' => $this->storeRequest()]);
 		}
+		$this->template->items = $this->orderManager->getOrders($this->getUser()->id);
 	}
 
 	public function renderCart()
