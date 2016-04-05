@@ -42,7 +42,7 @@ class Cart extends Control
 		} else {
 			$ret = [
 				'count' => 0,
-				'price' => 1,
+				'price' => 0,
 			];
 		}
 		return $ret;

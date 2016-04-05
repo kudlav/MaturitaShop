@@ -55,4 +55,14 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 		return $control;
 	}
 
+	protected function createComponentNavbar()
+	{
+		$items = [
+			'Kontakty' => ['Info:kontakty'],
+			'Obchodní podmínky' => ['Info:podminky'],
+			'Doprava a platba' => ['Info:nakup'],
+		];
+		$control = new Navbar('Nakupování', $items);
+		return $control;
+	}
 }
