@@ -13,9 +13,7 @@ class RegisterPresenter extends BasePresenter
 	/** @var UserDataFormFactory */
 	private $factory;
 
-	private $form;
-
-	public function injectIUserDataFactory(UserDataFormFactory $factory)
+	public function __construct(UserDataFormFactory $factory)
 	{
 		$this->factory = $factory;
 	}
@@ -27,9 +25,9 @@ class RegisterPresenter extends BasePresenter
 	 */
 	protected function createComponentUserData()
 	{
-		$this->form = $this->factory->createForm();
-		$this->form->onSuccess[] = array($this, 'formSucceeded');
-		return $this->form;
+		$form = $this->factory->createForm();
+		$form->onSuccess[] = array($this, 'formSucceeded');
+		return $form;
 	}
 
 	/**

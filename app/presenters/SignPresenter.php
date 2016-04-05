@@ -8,11 +8,17 @@ use App\Forms\SignFormFactory;
 
 class SignPresenter extends BasePresenter
 {
-	/** @var SignFormFactory @inject */
-	public $factory;
-
 	/** @persistent */
-	public $p = '';
+	public $state= '';
+
+	/** @var SignFormFactory */
+	private $factory;
+
+
+	public function __construct(SignFormFactory $factory)
+	{
+		$this->factory = $factory;
+	}
 
 
 	/**
@@ -23,7 +29,7 @@ class SignPresenter extends BasePresenter
 	{
 		$form = $this->factory->create();
 		$form->onSuccess[] = function () {
-			$this->restoreRequest($this->p);
+			$this->restoreRequest($this->state);
 			$this->redirect('Homepage:');
 		};
 		return $form;

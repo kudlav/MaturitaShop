@@ -9,9 +9,10 @@ use App\Model\ProductManager;
 
 class HomepagePresenter extends BasePresenter
 {
+	/* @var ProductManager */
 	private $productManager;
 
-	public function injectProductManager(ProductManager $productManager) {
+	public function __construct(ProductManager $productManager) {
 		$this->productManager = $productManager;
 	}
 
