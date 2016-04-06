@@ -48,7 +48,7 @@ class BuyFormFactory extends Nette\Object
 
 		$form->addCheckbox('terms','Souhlasím s obchodními podmínkami.')
 			->setAttribute('class','form-radio')
-			->setRequired('Musíte souhlasit s obchodními podmínkami');
+			->setRequired('Chete-li pokračovat, musíte souhlasit s obchodními podmínkami');
 
 		$form->addSubmit('deliverPay','Pokračovat v objednávce')
 			->setAttribute('class','form-button');

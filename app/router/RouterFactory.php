@@ -19,8 +19,13 @@ class RouterFactory
 		$router[] = new Route('kontakty', 'Front:Info:kontakty');
 		$router[] = new Route('obchodni-podminky', 'Front:Info:podminky');
 		$router[] = new Route('doprava-platba', 'Front:Info:nakup');
-
 		$router[] = new Route('product/<id [0-9]+>', 'Front:Product:default');
+
+		$router[] = new Route('administrace/<presenter>/<action>[/<id>]', array(
+			'module' => 'Admin',
+			'presenter' => 'Homepage',
+			'action' => 'default',
+		));
 
 		$router[] = new Route('<presenter>/<action>[/<id>]', array(
 			'module' => 'Front',

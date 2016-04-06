@@ -9,7 +9,7 @@ use App\FrontModule\Model\Registrator;
 use App\FrontModule\Model\DuplicateNameException;
 
 
-class UserDataFormFactory extends Nette\Object
+class RegisterFormFactory extends Nette\Object
 {
 	private $emailValidator;
 	private $registrator;

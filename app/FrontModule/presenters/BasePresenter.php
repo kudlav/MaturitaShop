@@ -25,8 +25,10 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 	protected function startup()
 	{
 		parent::startup();
-		$this->template->page = $this->getName();
 
+		$this->user->getStorage()->setNamespace('Front');
+
+		$this->template->page = $this->getName();
 		$this->template->cartCount = 1;
 		$this->template->cartPrice = 3600;
 

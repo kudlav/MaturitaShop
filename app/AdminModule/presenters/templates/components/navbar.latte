@@ -1,0 +1,11 @@
+<nav>
+	<h3>{$title}</h3>
+	<ul>
+		<li n:foreach="$items as $title => $link">
+			<a href="
+				{ifset $link[1]}{plink $link[0] p => $link[1]}
+				{else}{plink $link[0]}{/ifset}
+			" {if $link[0] == $page}class="selected"{/if}>{$title}</a>
+		</li>
+	</ul>
+</nav>

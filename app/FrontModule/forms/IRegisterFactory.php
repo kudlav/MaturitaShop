@@ -7,6 +7,6 @@ use Nette;
 
 interface IUserDataFactory
 {
-	/** @return UserDataFormFactory */
+	/** @return RegisterFormFactory */
 	function create();
 }

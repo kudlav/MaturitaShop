@@ -4,16 +4,16 @@ namespace App\FrontModule\Presenters;
 
 use Nette;
 use App\FrontModule\Model;
-use App\FrontModule\Forms\UserDataFormFactory;
+use App\FrontModule\Forms\RegisterFormFactory;
 use Nette\Application\UI\Form;
 
 
 class RegisterPresenter extends BasePresenter
 {
-	/** @var UserDataFormFactory */
+	/** @var RegisterFormFactory */
 	private $factory;
 
-	public function __construct(UserDataFormFactory $factory)
+	public function __construct(RegisterFormFactory $factory)
 	{
 		$this->factory = $factory;
 	}

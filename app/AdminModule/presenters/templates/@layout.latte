@@ -23,36 +23,23 @@
 </head>
 
 <body>
+
 	<div id="page">
 		<div class="orangeHeader">
 			<a n:href="Homepage:default"><img src="{$basePath}/images/orangeHeader.png"></a>
 		</div>
 
-		{control cart}
-		<div class="search">
-			{form search}
-				<div class="search-wrapper">
-					<input n:name=searchTerm>
-				</div>
-				<input n:name=send>
-				<div class="cleaner"></div>
-			{/form}
-		</div>
-
 		<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
 
 		<div class="content">
+			{if $user->isLoggedIn()}{control navbar}{/if}
+
 			{include content}
 		</div>
 
-		<footer n:if="$page!='Admin'">
+		<footer>
 			<img src="{$basePath}/images/orangeHeader.png"><br>
-			<ul>
-				<li class="mobileOnly">+420 776 057 409</li>
-				<li><a n:href="Info:kontakty">Kontakty</a></li>
-				<li><a n:href="Info:podminky">Obchodní podmínky</a></li>
-				<li><a n:href="Info:nakup">Doprava a platba</a></li>
-			</ul>
+			Uživatel: {if $user->loggedIn}{$user->identity->username}{else}nepřihlášen{/if}
 		</footer>
 	</div>
 </body>

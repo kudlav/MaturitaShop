@@ -29,7 +29,10 @@ services:
 
 	- App\FrontModule\Forms\IUserDataFactory
 	- App\FrontModule\Forms\SignFormFactory
-	- App\FrontModule\Forms\UserDataFormFactory
+	- App\FrontModule\Forms\RegisterFormFactory
 	- App\FrontModule\Forms\BuyFormFactory
+
+
+	- App\AdminModule\Forms\SignFormFactory
 
 	router: App\RouterFactory::createRouter
