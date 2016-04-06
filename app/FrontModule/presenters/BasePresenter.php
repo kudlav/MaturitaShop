@@ -1,0 +1,68 @@
+<?php
+
+namespace App\FrontModule\Presenters;
+
+use Nette;
+use App\FrontModule\Model;
+use Nette\Application\UI\Form;
+use App\FrontModule\Model\CartManager;
+
+
+/**
+ * Base presenter for all application presenters.
+ */
+abstract class BasePresenter extends Nette\Application\UI\Presenter
+{
+
+	/** @var CartManager */
+	private $cartManager;
+
+	public function injectCartManager(CartManager $cartManager)
+	{
+		$this->cartManager = $cartManager;
+	}
+
+	protected function startup()
+	{
+		parent::startup();
+		$this->template->page = $this->getName();
+
+		$this->template->cartCount = 1;
+		$this->template->cartPrice = 3600;
+
+	}
+
+	protected function createComponentSearch()
+	{
+		$form = new Form();
+
+		$form->addText('searchTerm')
+			->setType('search')
+			->setAttribute('placeholder', 'Hledaný produkt...');
+
+		$form->addSubmit('send','Hledat')
+			->setAttribute('class', 'button');
+
+		$form->onSuccess[] = array($this, 'postFormSucceeded');
+
+		return $form;
+	}
+
+	protected function createComponentCart()
+	{
+		$user = $this->getUser();
+		$control = new Cart($user, $this->cartManager);
+		return $control;
+	}
+
+	protected function createComponentNavbar()
+	{
+		$items = [
+			'Kontakty' => ['Info:kontakty'],
+			'Obchodní podmínky' => ['Info:podminky'],
+			'Doprava a platba' => ['Info:nakup'],
+		];
+		$control = new Navbar('Nakupování', $items);
+		return $control;
+	}
+}

@@ -1,0 +1,60 @@
+@charset "UTF-8";
+
+@media (min-width: 39em) {
+	footer {
+		height: 7.1em;
+		ul {
+			line-height: normal;
+		}
+		li {
+			display: inline-block;
+			margin-left: 4%;
+		}
+		.mobileOnly {
+			display: none;
+		}
+	}
+	.orangeHeader {
+		min-height: 6em;
+	}
+	.cart {
+		text-align: right;
+		position: absolute;
+		top: 2em;
+		right: @bodyPadding;
+		min-width: 40%;
+		ul {
+			text-align: left;
+		}
+		.sign-in {
+			float: none;
+			display: inline-block;
+		}
+	}
+	.search {
+		#frm-search-searchTerm {
+			width: 30em;
+		}
+	}
+	.form-input {
+		width: 18em;
+	}
+	.left-half {
+		float: left;
+		width: 40%;
+	}
+	.right-half {
+		float: left;
+		width: 60%;
+		padding: 0.5em 1em;
+		box-sizing: border-box;
+	}
+}
+
+@media (min-width: 63em) {
+	body {
+		background: @bgColor url("../../images/bgBeton.jpg") no-repeat fixed;
+		background-size: cover;
+		padding: 2%;
+	}
+}

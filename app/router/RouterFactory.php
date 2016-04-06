@@ -16,13 +16,17 @@ class RouterFactory
 	public static function createRouter()
 	{
 		$router = new RouteList;
-		$router[] = new Route('kontakty', 'Info:kontakty');
-		$router[] = new Route('obchodni-podminky', 'Info:podminky');
-		$router[] = new Route('doprava-platba', 'Info:nakup');
-		$router[] = new Route('product/buy', 'Product:buy');
-		$router[] = new Route('product/submit-order', 'Product:submitOrder');
-		$router[] = new Route('product/<id>', 'Product:default');
-		$router[] = new Route('<presenter>/<action>[/<id>]', 'Homepage:default');
+		$router[] = new Route('kontakty', 'Front:Info:kontakty');
+		$router[] = new Route('obchodni-podminky', 'Front:Info:podminky');
+		$router[] = new Route('doprava-platba', 'Front:Info:nakup');
+
+		$router[] = new Route('product/<id [0-9]+>', 'Front:Product:default');
+
+		$router[] = new Route('<presenter>/<action>[/<id>]', array(
+			'module' => 'Front',
+			'presenter' => 'Homepage',
+			'action' => 'default',
+		));
 		return $router;
 	}
 

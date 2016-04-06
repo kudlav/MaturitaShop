@@ -10,7 +10,7 @@ php:
 
 
 application:
-	errorPresenter: Error
+	errorPresenter: Front:Error
 	mapping:
 		*: App\*Module\Presenters\*Presenter
 
@@ -20,16 +20,16 @@ session:
 
 
 services:
-	- App\Model\UserManager
-	- App\Model\EmailValidator
-	- App\Model\Registrator
-	- App\Model\ProductManager
-	- App\Model\CartManager
-	- App\Model\OrderManager
+	- App\FrontModule\Model\UserManager
+	- App\FrontModule\Model\EmailValidator
+	- App\FrontModule\Model\Registrator
+	- App\FrontModule\Model\ProductManager
+	- App\FrontModule\Model\CartManager
+	- App\FrontModule\Model\OrderManager
 
-	- App\Forms\IUserDataFactory
-	- App\Forms\SignFormFactory
-	- App\Forms\UserDataFormFactory
-	- App\Forms\BuyFormFactory
+	- App\FrontModule\Forms\IUserDataFactory
+	- App\FrontModule\Forms\SignFormFactory
+	- App\FrontModule\Forms\UserDataFormFactory
+	- App\FrontModule\Forms\BuyFormFactory
 
 	router: App\RouterFactory::createRouter
