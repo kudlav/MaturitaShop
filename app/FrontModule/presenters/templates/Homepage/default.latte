@@ -4,25 +4,29 @@
 
 	<div class="item-list right-column">
 		<h2>Nové produkty</h2>
-		<ul>
-			<li n:foreach="$products as $product">
-				<div class="item">
-					<a n:href="Product:default $product->id, $product->name" class="spec">
-						<img src="{$basePath}/images/products/original/{sprintf("%05d", $product->id)}.jpg" alt="Obrázek produktu">
-						<div class="title">
-							{$product->name}
+		{if $products}
+			<ul>
+				<li n:foreach="$products as $product">
+					<div class="item">
+						<a n:href="Product:default $product['id'], $product['name']" class="spec">
+							<img src="{$basePath}/images/products/original/{sprintf("%05d", $product['id'])}.jpg" alt="Obrázek produktu">
+							<div class="title">
+								{$product['name']}
+							</div>
+						</a>
+						<div class="status">
+							<div class="condition">{$product['condition']}</div>
+							<div class="price">{$product['price']|number:0:',':' '} Kč</div>
+							<div class="to-cart"><a n:href="User:addToCart $product['id'], 'Homepage:'"><button>Do košíku</button></a></div>
+							<div class="cleaner"></div>
 						</div>
-					</a>
-					<div class="status">
-						<div class="condition">{$product->condition}</div>
-						<div class="price">{$product->price|number:0:',':' '} Kč</div>
-						<div class="to-cart"><a n:href="User:addToCart $product->id, 'Homepage:'"><button>Do košíku</button></a></div>
-						<div class="cleaner"></div>
 					</div>
-				</div>
-			</li>
-			<div class="cleaner"></div>
-		</ul>
+				</li>
+				<div class="cleaner"></div>
+			</ul>
+		{else}
+			<p class="center padding">Žádné položky k zobrazení.</p>
+		{/if}
 	</div>
 	<div class="cleaner"></div>
 

@@ -1,0 +1,63 @@
+@charset "UTF-8";
+
+@bgColor: #797D7C ;
+@bgOrange: #E8640C;
+@bgPage: #FFF;
+@bgFlash: #FFC107;
+@bgButton: #C9C9C9;
+@bodyPadding: 2%;
+@bgHover: #D84315;
+@colorShadow: #999;
+@bgShadow: #FCFCFC;
+@borderShadow: #BDBDBD;
+
+@import "fonts/styles";
+
+.striped {
+	display: block;
+	overflow-x: auto;
+	tbody {
+		tr:nth-child(odd) {
+			background-color: #EEE;
+		}
+		tr {
+			-webkit-transition: background-color 200ms ease;
+			-moz-transition: background-color 200ms ease;
+			-o-transition: background-color 200ms ease;
+			transition: background-color 200ms ease;
+
+		}
+		tr:hover {
+			background-color: #FF9C07;
+		}
+		select {
+			font: inherit;
+			font-size: 0.9em;
+		}
+		.nopad {
+			padding: 0;
+		}
+		.action {
+			background-color: @bgOrange;
+			color: @bgPage;
+			padding: 1em;
+			height: 1em;
+			font-size: 1.1em;
+			-webkit-transition: background-color 300ms ease;
+			-moz-transition: background-color 300ms ease;
+			-o-transition: background-color 300ms ease;
+			transition: background-color 300ms ease;
+			&:hover {
+				background-color: @bgHover;
+			}
+		}
+		.state0 {background-color: #FCFCFC;}
+		.state1 {background-color: #C1D3FF;}
+		.state2 {background-color: #FFE8A2;}
+		.state3 {background-color: #B8EA62;}
+		.state4 {background-color: #EC4141;}
+	}
+	a {
+		text-decoration: none;
+	}
+}

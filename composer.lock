@@ -4,9 +4,52 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a5c8f69538ccc14e0b6551542aeee99f",
-    "content-hash": "e0867f94a9e63cb5aa55cef2fcbe1a36",
+    "hash": "388ca010311c860b5f3a650896c87cb7",
+    "content-hash": "362e405bb964ef56b6a2d388b9b5fc54",
     "packages": [
+        {
+            "name": "bitbang/http",
+            "version": "v0.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bitbang/http.git",
+                "reference": "32586b8d66e847b4b33c404d50771b15369d9828"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bitbang/http/zipball/32586b8d66e847b4b33c404d50771b15369d9828",
+                "reference": "32586b8d66e847b4b33c404d50771b15369d9828",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "nette/tester": "~1.4.0"
+            },
+            "suggest": {
+                "ext-curl": "Allows you to use Bitbang\\Http\\CurlClient",
+                "kdyby/curl-ca-bundle": "Auto-updated trusted CA Certs bundle. Handy on Windows."
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/Http/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bitbang Contributors",
+                    "homepage": "https://github.com/bitbang/http/graphs/contributors"
+                }
+            ],
+            "description": "HTTP client library",
+            "time": "2015-11-26 13:43:32"
+        },
         {
             "name": "dg/adminer-custom",
             "version": "v1.7.0",
@@ -1001,6 +1044,164 @@
             "time": "2015-11-30 00:11:35"
         },
         {
+            "name": "nextras/datagrid",
+            "version": "v2.1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nextras/datagrid.git",
+                "reference": "eff150dbfaf696f44e7e72c16cbe7b4c219e135c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nextras/datagrid/zipball/eff150dbfaf696f44e7e72c16cbe7b4c219e135c",
+                "reference": "eff150dbfaf696f44e7e72c16cbe7b4c219e135c",
+                "shasum": ""
+            },
+            "require": {
+                "nette/application": "~2.2",
+                "nette/component-model": "~2.2",
+                "nette/utils": "~2.2",
+                "nextras/latte-macros": "~1.1.0",
+                "php": ">=5.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Nextras\\Datagrid\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jan Skrasek",
+                    "email": "hrach.cz@gmail.com",
+                    "homepage": "http://jan.skrasek.com"
+                }
+            ],
+            "description": "Datagrid component for Nette Framework.",
+            "keywords": [
+                "datagrid",
+                "nette",
+                "nextras"
+            ],
+            "time": "2015-07-23 12:44:36"
+        },
+        {
+            "name": "nextras/latte-macros",
+            "version": "v1.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nextras/latte-macros.git",
+                "reference": "3dba13fe4ae2c4b3f28009fb969224b28fb6c183"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nextras/latte-macros/zipball/3dba13fe4ae2c4b3f28009fb969224b28fb6c183",
+                "reference": "3dba13fe4ae2c4b3f28009fb969224b28fb6c183",
+                "shasum": ""
+            },
+            "require": {
+                "latte/latte": "~2.2",
+                "php": ">=5.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Nextras\\Latte\\Macros\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jan Skrasek",
+                    "email": "hrach.cz@gmail.com",
+                    "homepage": "http://jan.skrasek.com"
+                }
+            ],
+            "description": "Latte macros for Nette Framework.",
+            "keywords": [
+                "block-macros",
+                "latte",
+                "macros",
+                "nette",
+                "nextras"
+            ],
+            "time": "2015-06-21 16:22:22"
+        },
+        {
+            "name": "nextras/secured-links",
+            "version": "v1.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nextras/secured-links.git",
+                "reference": "244b85fb33fa8e582e3144a592a1a8adf8884aa0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nextras/secured-links/zipball/244b85fb33fa8e582e3144a592a1a8adf8884aa0",
+                "reference": "244b85fb33fa8e582e3144a592a1a8adf8884aa0",
+                "shasum": ""
+            },
+            "require": {
+                "nette/application": "~2.2",
+                "nette/utils": "~2.2",
+                "php": ">=5.4"
+            },
+            "replace": {
+                "nextras/application": "self.version"
+            },
+            "require-dev": {
+                "mockery/mockery": "~0.9",
+                "nette/tester": "~1.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Nextras\\Application\\UI\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jan Skrasek",
+                    "email": "hrach.cz@gmail.com",
+                    "homepage": "http://jan.skrasek.com"
+                }
+            ],
+            "description": "Package secures Nette Framework signals against CSRF attack.",
+            "keywords": [
+                "application",
+                "nette",
+                "nextras",
+                "secured signals"
+            ],
+            "time": "2015-06-21 16:18:06"
+        },
+        {
             "name": "tracy/tracy",
             "version": "v2.3.8",
             "source": {
@@ -1054,6 +1255,54 @@
                 "nette"
             ],
             "time": "2016-01-20 03:14:47"
+        },
+        {
+            "name": "ulozenka/api-v3",
+            "version": "0.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ulozenka/api-v3.git",
+                "reference": "3857920cbf5ed301947b2fcccaba146f68851d90"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ulozenka/api-v3/zipball/3857920cbf5ed301947b2fcccaba146f68851d90",
+                "reference": "3857920cbf5ed301947b2fcccaba146f68851d90",
+                "shasum": ""
+            },
+            "require": {
+                "bitbang/http": "0.2@dev",
+                "php": ">= 5.4.0"
+            },
+            "require-dev": {
+                "nette/tester": "@dev"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "UlozenkaLib\\": "src/UlozenkaLib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Ulozenka",
+                    "email": "info@ulozenka.cz",
+                    "homepage": "https://www.ulozenka.cz"
+                }
+            ],
+            "description": "Uloženka APIv3 library",
+            "homepage": "https://www.ulozenka.cz/",
+            "keywords": [
+                "api",
+                "restapi",
+                "transport",
+                "ulozenka"
+            ],
+            "time": "2016-03-23 10:21:03"
         }
     ],
     "packages-dev": [

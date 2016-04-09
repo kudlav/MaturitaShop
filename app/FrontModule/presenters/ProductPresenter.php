@@ -23,6 +23,8 @@ class ProductPresenter extends BasePresenter
 
 	public function __construct(BuyFormFactory $buyFormFactory, ProductManager $productManager, CartManager $cartManager, OrderManager $orderManager)
 	{
+		parent::__construct();
+
 		$this->buyFormFactory = $buyFormFactory;
 		$this->productManager = $productManager;
 		$this->cartManager = $cartManager;
@@ -56,6 +58,14 @@ class ProductPresenter extends BasePresenter
 	public function createComponentBuyForm()
 	{
 		$session =  $this->getSession('buy');
+
+		if (isset($session->delivery) && !array_key_exists($session->delivery, $this->orderManager->getDelivery())) {
+			unset($session->delivery);
+		}
+		if (isset($session->payment) && !array_key_exists($session->payment, $this->orderManager->getPayment())) {
+			unset($session->payment);
+		}
+
 		$phase = $this->orderManager->detectPurchasePhase($session);
 		if (!$phase) {
 			$form = $this->buyFormFactory->createForm();
@@ -63,7 +73,7 @@ class ProductPresenter extends BasePresenter
 				$this->redirect('Product:buy');
 			};
 		} else {
-			$form = new Buy($this->getSession('buy'), $this->user, $this->cartManager);
+			$form = new Buy($this->getSession('buy'), $this->user, $this->cartManager, $this->orderManager);
 		}
 		return $form;
 	}
@@ -76,17 +86,21 @@ class ProductPresenter extends BasePresenter
 			$userId = $this->getUser()->id;
 			$items = $this->cartManager->getItems($userId);
 
-			$order = ($this->orderManager->orderProducts($items, $session, $userId));
-			if ($order) {
-				$session->remove();
-				$this->flashMessage('Objednávka č.' . sprintf("%05d", $order) . ' byla úspěšně vytvořena');
-				$this->redirect('Homepage:');
+			try {
+				$order = ($this->orderManager->orderProducts($items, $session, $userId));
+				if ($order) {
+					$session->remove();
+					$this->flashMessage('Objednávka č.' . sprintf("%05d", $order) . ' byla úspěšně vytvořena');
+				} else {
+					$this->flashMessage('Objednávku nebylo možné vytvořit!', 'flash-error');
+				}
+			} catch (\Exception $e) {
+				$this->flashMessage('Objednávku nebylo možné vytvořit! '.$e->getMessage(), 'flash-error');
 			}
-			$this->flashMessage('Objednávku nebylo možné vytvořit!', 'flash-error');
-			$this->redirect('Homepage:');
+
 		} else {
 			$this->flashMessage('Před objednáním je nutné projít celým objednávkovým procesem!','flash-error');
-			$this->redirect('Homepage:');
 		}
+		$this->redirect('Homepage:');
 	}
 }

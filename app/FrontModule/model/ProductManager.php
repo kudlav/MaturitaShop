@@ -19,7 +19,8 @@ class ProductManager extends Nette\Object
 		COLUMN_PRICE = 'price',
 		COLUMN_QUANTITY = 'quantiti',
 		COLUMN_TIMESTAMP = 'timestamp',
-		COLUMN_CATEGORY  = 'category';
+		COLUMN_CATEGORY  = 'category',
+		COLUMN_SHOW = 'show';
 
 
 	/** @var Nette\Database\Context */
@@ -36,8 +37,19 @@ class ProductManager extends Nette\Object
 	 */
 	public function getProducts() {
 		$products = $this->database->table(self::TABLE_NAME)
-			->order(self::COLUMN_TIMESTAMP.' DESC');
-		return $products;
+			->order(self::COLUMN_TIMESTAMP.' DESC')
+			->where(self::COLUMN_SHOW.' = 1');
+
+		$ret = array();
+		foreach ($products as $product) {
+			$ret[]= [
+				'id' => $product->id,
+				'name' => $product->name,
+				'condition' => $product->condition,
+				'price' => $product->price,
+			];
+		}
+		return $ret;
 	}
 
 	/**

@@ -17,6 +17,8 @@ class SignPresenter extends BasePresenter
 
 	public function __construct(SignFormFactory $factory)
 	{
+		parent::__construct();
+
 		$this->factory = $factory;
 	}
 

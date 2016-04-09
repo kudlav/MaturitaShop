@@ -10,6 +10,8 @@ use Nette;
  */
 abstract class BasePresenter extends Nette\Application\UI\Presenter
 {
+	use \Nextras\Application\UI\SecuredLinksPresenterTrait;
+
 	protected function startup()
 	{
 		parent::startup();
@@ -26,11 +28,11 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 	protected function createComponentNavbar()
 	{
 		$items = [
-			'Základní přehled' => ['Homepage:'],
-			'Zákazníci' => ['Customers:'],
-			'Objednávky' => ['Orders:'],
-			'Produkty' => ['Homepage:'],
-			'Seznam správců' => ['Homepage:'],
+			'Základní přehled' => ['Homepage:default'],
+			'Zákazníci' => ['Customers:default'],
+			'Objednávky' => ['Orders:default'],
+			'Produkty' => ['Homepage:default'],
+			'Seznam správců' => ['Homepage:default'],
 			'Odhlásit se' => ['Sign:out'],
 		];
 		$control = new Navbar('Administrace', $items);

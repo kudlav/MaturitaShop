@@ -2,6 +2,7 @@
 
 namespace App\FrontModule\Forms;
 
+use App\FrontModule\Model\OrderManager;
 use Nette;
 use Nette\Application\UI\Form;
 use Nette\Http\Session;
@@ -9,16 +10,17 @@ use Nette\Http\Session;
 
 class BuyFormFactory extends Nette\Object
 {
-	const
-		DELIVERY_METHODS = ['Česká pošta (99 Kč)','PPL (99 Kč)', 'Uloženka (20 Kč)'],
-		PAYMENT_METHODS = ['Převodem předem (0 Kč)','Kartou online (99 Kč)', 'Dobírkou při převzetí (49 Kč)'];
 
-	/** @var Session */
-	private $session;
+	/**
+	 * @var Session $session
+	 * @var OrderManager $orderManager
+	 */
+	private $session, $orderManager;
 
-	public function __construct(Session $session)
+	public function __construct(Session $session, OrderManager $orderManager)
 	{
 		$this->session = $session->getSection('buy');
+		$this->orderManager = $orderManager;
 	}
 
 	/**
@@ -27,15 +29,14 @@ class BuyFormFactory extends Nette\Object
 	public function createForm()
 	{
 		$form = new Form;
-
 		$form->addGroup('Způsob dodání');
-		$form->addRadioList('delivery','', self::DELIVERY_METHODS)
+		$form->addRadioList('delivery','', $this->orderManager->getDelivery())
 			->setAttribute('class','form-radio')
 			->setRequired('Zvolte způsob placení.')
 			->setValue($this->session->delivery);
 
 		$form->addGroup('Způsob platby');
-		$form->addRadioList('payment','', self::PAYMENT_METHODS)
+		$form->addRadioList('payment','', $this->orderManager->getPayment())
 			->setAttribute('class','form-radio')
 			->setRequired('Zvolte způsob dopravy.')
 			->setValue($this->session->payment);

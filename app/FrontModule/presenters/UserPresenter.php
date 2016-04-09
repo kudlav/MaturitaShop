@@ -18,6 +18,8 @@ class UserPresenter extends BasePresenter
 
 	public function __construct(CartManager $cartManager, OrderManager $orderManager)
 	{
+		parent::__construct();
+
 		$this->cartManager = $cartManager;
 		$this->orderManager = $orderManager;
 	}

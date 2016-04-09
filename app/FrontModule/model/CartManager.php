@@ -76,6 +76,7 @@ class CartManager extends Nette\Object
 				'name' => $row->products->name,
 				'quantity' => $row->products->quantity,
 				'price' => $row->products->price,
+				'show' => $row->products->show,
 			];
 		}
 		return $ret;
@@ -104,7 +105,7 @@ class CartManager extends Nette\Object
 	public function addItem($userId, $productId)
 	{
 			$product = $this->database->table(self::TABLE_PRODUCTS)->get($productId);
-			if ($product) {
+			if ($product && $product->show) {
 				$basket = $this->database->table(self::TABLE_BASKETS)
 					->where(self::COLUMN_USERS_ID." = ? AND ".self::COLUMN_PRODUCTS_ID." = ?", $userId, $productId)->fetch();
 				if ($basket) {

@@ -5,6 +5,7 @@
 
 	<title>{ifset title}{include title|striptags} | {/ifset}Auto CVK</title>
 
+	<link rel="stylesheet" href="{$basePath}/css/admin/style.css">
 	<link rel="stylesheet" href="{$basePath}/css/front/style.css">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 
@@ -34,7 +35,10 @@
 		<div class="content">
 			{if $user->isLoggedIn()}{control navbar}{/if}
 
-			{include content}
+			<div class="right-column">
+				{include content}
+			</div>
+			<div class="cleaner"></div>
 		</div>
 
 		<footer>

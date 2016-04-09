@@ -15,6 +15,8 @@ class RegisterPresenter extends BasePresenter
 
 	public function __construct(RegisterFormFactory $factory)
 	{
+		parent::__construct();
+
 		$this->factory = $factory;
 	}
 
