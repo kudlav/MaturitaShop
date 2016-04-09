@@ -4,6 +4,7 @@
 
 <div class="show-cards right-column">
     <h1 n:block=title><span data-icon="D" class="icon"></span> Objednávky</h1>
+    {if $items}
     <ul>
         <li n:foreach="$items as $item">
             <div class="item">
@@ -23,6 +24,9 @@
     </ul>
 
     <div class="total">Počet objednávek: <strong>{count($items)|number:0:',':' '} </strong></div>
+    {else}
+        <p class="center padding">Dosud nebyla provedena žáná objednávka.</p>
+    {/if}
 
 </div>
 
