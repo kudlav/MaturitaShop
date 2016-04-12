@@ -4,7 +4,7 @@
 	<h3>{$title}</h3>
 	<ul>
 		<li n:foreach="$items as $count => $title">
-			<a class="{if $phase == $count}selected{elseif $phase <= $count} disabled{/if}"><span class="count">{$count+1}</span>{$title}</a>
+			<a class="{if $phase == $count}selected{elseif $phase <= $count} disabled{else}" href="{plink Product:buy 'true'}{/if}"><span class="count">{$count+1}</span>{$title}</a>
 		</li>
 	</ul>
 </nav>
