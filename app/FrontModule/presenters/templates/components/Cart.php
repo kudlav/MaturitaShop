@@ -20,6 +20,7 @@ class Cart extends Control
 	public function __construct(User $user, CartManager $cartManager)
 	{
 		parent::__construct();
+		
 		$this->user = $user;
 		$this->cartManager = $cartManager;
 	}

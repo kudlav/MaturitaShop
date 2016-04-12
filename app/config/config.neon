@@ -33,8 +33,6 @@ services:
 	- App\FrontModule\Forms\BuyFormFactory
 
 
-	- App\AdminModule\Model\OrderManager
-
 	- App\AdminModule\Forms\SignFormFactory
 
 	router: App\RouterFactory::createRouter

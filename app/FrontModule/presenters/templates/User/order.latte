@@ -1,0 +1,14 @@
+{block content}
+
+{control navbar}
+
+<div class="right-column">
+    {control order}
+
+    <div class="back"><a href="{plink User:orders}"><button class="form-button">&larr; Zpět</button></a></div>
+    <button class="form-button" id="print">Tisk</button>
+</div>
+
+<div class="cleaner"></div>
+
+<script src="{$basePath.'/js/print.js'}"></script>

@@ -1,0 +1,76 @@
+{block content}
+
+<h1 n:block=title><span data-icon="D" class="icon"></span> Detail objednávky</h1>
+
+<div class="show-cards">
+    <ul type="none">
+        <li>
+            <div class="item">
+                <div class="id normal"><h2>OBJ{sprintf("%05d", $order['id'])}</h2></div>
+                <div class="cleaner"></div>
+
+                <div class="order-info padding">
+                    <table>
+                        <tbody>
+                            <tr><td>Datum:</td><td>{$order['timestamp']|date:'j. n. Y'}</td></tr>
+                            <tr><td>Čas:</td><td>{$order['timestamp']|date:'G:i'}</td></tr>
+                            <tr><td colspan="2" class="id"></td></tr>
+                            <tr><td colspan="2"></td></tr>
+                            <tr><td>Stav:</td><td>{$order['state']}</td></tr>
+                            <tr><td>Platba:</td><td>{$order['payment']} ({$order['paymentPrice']} Kč)</td></tr>
+                            <tr><td>Doprava:</td><td>{$order['delivery']} ({$order['deliveryPrice']} Kč)</td></tr>
+                            <tr><td colspan="2" class="id"></td></tr>
+                            <tr><td colspan="2"></td></tr>
+                            <tr><td>Poznámka<br>zákazníka:</td><td>{$order['note']}</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="customer padding">
+                    <table class="right">
+                        <thead>
+                            <tr><th>Odběratel:</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td></td><td><strong>{$order['customerName']}</strong></td><td class="text-left"><strong>{$order['customerSurname']}</strong></td></tr>
+                            <tr><td colspan="3">{$order['customerStreet']}</td></tr>
+                            <tr><td colspan="2">{$order['customerPostcode']}</td><td>{$order['customerCity']}</td></tr>
+                            <tr><td colspan="3" class="id"></td></tr>
+                            <tr><td colspan="2"></td></tr>
+                            <tr><td colspan="3">{$order['customerUsername']}</td></tr>
+                            <tr><td colspan="3">+{$order['customerPhone']|number:0:',':' '}</td></tr>
+                        </tbody>
+                    </table>
+                    <br>
+                </div>
+                <div class="cleaner"></div>
+                <div class="id normal"></div>
+                <div class="cleaner"></div>
+                <div class="padding">
+                    <strong>Objednané položky:</strong>
+                    <table class="table-products">
+                        <thead>
+                            <tr>
+                                <th>Kód</th>
+                                <th>Název produktu</th>
+                                <th class="right">Počet ks</th>
+                                <th class="right">Cena za ks</th>
+                                <th class="right">Celkem</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr n:foreach="$products as $product">
+                                <td>{sprintf("%05d", $product['id'])}</td>
+                                <td>{$product['name']}</td>
+                                <td class="right">{$product['quantity']}</td>
+                                <td class="right">{$product['price']},-</td>
+                                <td class="right">{$product['price']*$product['quantity']},-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br><div class="total">Celkem k úhradě: <strong>{$order['total']|number:0:',':'.'},- Kč</strong></div>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>

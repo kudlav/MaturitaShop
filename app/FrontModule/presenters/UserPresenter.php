@@ -44,12 +44,25 @@ class UserPresenter extends BasePresenter
 		return $control;
 	}
 
+
 	public function renderOrders()
 	{
 		if (!$this->getUser()->isLoggedIn()) {
 			$this->redirect('Sign:in', ['state' => $this->storeRequest()]);
 		}
-		$this->template->items = $this->orderManager->getOrders($this->getUser()->id);
+		$this->template->items = $this->orderManager->getUserOrders($this->getUser()->id);
+	}
+
+	public function renderOrder($id)
+	{
+		$this->template->order = $this->orderManager->getOrder($id);
+		$this->template->products = $this->orderManager->getOrderedProducts($id);
+	}
+
+	public function createComponentOrder()
+	{
+		$control = new Order($this->template->order, $this->template->products);
+		return $control;
 	}
 
 	public function renderCart()

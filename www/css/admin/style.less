@@ -9,6 +9,7 @@
 @bgHover: #D84315;
 @colorShadow: #999;
 @bgShadow: #FCFCFC;
+@bgShadowLight: #EEE;
 @borderShadow: #BDBDBD;
 
 @import "fonts/styles";
@@ -18,7 +19,7 @@
 	overflow-x: auto;
 	tbody {
 		tr:nth-child(odd) {
-			background-color: #EEE;
+			background-color: @bgShadowLight;
 		}
 		tr {
 			-webkit-transition: background-color 200ms ease;

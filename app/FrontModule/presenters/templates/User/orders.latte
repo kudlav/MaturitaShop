@@ -8,7 +8,7 @@
     <ul>
         <li n:foreach="$items as $item">
             <div class="item">
-                <a class="spec">
+                <a n:href="User:order $item['id']" class="spec">
                     <div class="title">OBJ{sprintf("%05d", $item['id'])}</div>
                 </a>
                 <div class="id">{$item['timestamp']|date:'j. n. Y - G:i'}</div>

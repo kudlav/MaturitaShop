@@ -15,6 +15,7 @@ class OrderManager extends Nette\Object
 		STATE = 'čeká na vyřízení',
 
 		TABLE_ORDERS = 'orders',
+		COLUMN_ID = 'id',
 		COLUMN_CUSTOMER = 'customer',
 		COLUMN_DELIVERY = 'delivery',
 		COLUMN_PAYMENT = 'payment',
@@ -23,8 +24,8 @@ class OrderManager extends Nette\Object
 		COLUMN_STATE = 'state',
 		COLUMN_NOTE = 'note',
 
-		TABLE_ORDERED_PRODUCTS = 'ordered_products',
-		COLUMN_ORDER = 'orders_id',
+		TABLE_ORDERED = 'ordered_products',
+		COLUMN_ORDER_ID = 'orders_id',
 		COLUMN_PRODUCT = 'products_id',
 		COLUMN_PRICE = 'price',
 		COLUMN_QUANTITY = 'quantity',
@@ -35,6 +36,7 @@ class OrderManager extends Nette\Object
 		TABLE_DELIVERY = 'delivery',
 		TABLE_PAYMENT = 'payment',
 		COLUMN_SHOW = 'show';
+
 
 
 	/** @var Nette\Database\Context */
@@ -118,7 +120,7 @@ class OrderManager extends Nette\Object
 	 * @param $userId
 	 * @return array
 	 */
-	public function getOrders($userId)
+	public function getUserOrders($userId)
 	{
 		$query = $this->database->table(self::TABLE_ORDERS)
 			->where(self::COLUMN_CUSTOMER, $userId)
@@ -175,8 +177,8 @@ class OrderManager extends Nette\Object
 			try {
 				foreach ($items as $product) {
 					if ($product['show']) {
-						$orderedProducts = $this->database->table(self::TABLE_ORDERED_PRODUCTS)->insert(array(
-							self::COLUMN_ORDER => $orders->id,
+						$orderedProducts = $this->database->table(self::TABLE_ORDERED)->insert(array(
+							self::COLUMN_ORDER_ID => $orders->id,
 							self::COLUMN_PRODUCT => $product['id'],
 							self::COLUMN_PRICE => $product['price'],
 							self::COLUMN_QUANTITY => $product['quantity'],
@@ -206,5 +208,106 @@ class OrderManager extends Nette\Object
 		}
 		$this->database->rollBack();
 		return FALSE;
+	}
+
+	/**
+	 * Return array of orders in progress.
+	 * @return array
+	 */
+	public function getOrdersInProgress()
+	{
+		$query = $this->database->table(self::TABLE_ORDERS)
+			->where(self::COLUMN_STATE.' NOT LIKE ?', 'objednávka vyřízena')
+			->order(self::COLUMN_TIMESTAMP.' DESC');
+
+		$orders = [];
+		foreach ($query as $row) {
+			$orders[] = [
+				'id' => $row->id,
+				'timestamp' => $row->timestamp,
+				'customer' => [$row->ref('users', 'customer')->name, $row->ref('users', 'customer')->surname],
+				'total' => $row->total,
+				'delivery' => $row->ref('delivery', 'delivery')->name,
+				'payment' => $row->ref('payment', 'payment')->name,
+				'state' => $row->state,
+				'note' => $row->note,
+			];
+		}
+
+		return $orders;
+	}
+
+	/**
+	 * Return array with information of requested order.
+	 * @param $orderId
+	 * @return array
+	 */
+	public function getOrder($orderId)
+	{
+		$row = $this->database->table(self::TABLE_ORDERS)->get($orderId);
+
+		$orders = [
+			'id' => $row->id,
+			'timestamp' => $row->timestamp,
+			'customerName' => $row->ref('users','customer')->name,
+			'customerSurname' => $row->ref('users','customer')->surname,
+			'customerUsername' => $row->ref('users','customer')->username,
+			'customerPhone' => $row->ref('users','customer')->phone,
+			'customerStreet' => $row->ref('users','customer')->street,
+			'customerCity' => $row->ref('users','customer')->city,
+			'customerPostcode' => $row->ref('users','customer')->postcode,
+			'total' => $row->total,
+			'delivery' => $row->ref('delivery', 'delivery')->name,
+			'deliveryPrice' => $row->ref('delivery', 'delivery')->price,
+			'payment' => $row->ref('payment', 'payment')->name,
+			'paymentPrice' => $row->ref('payment', 'payment')->price,
+			'state' => $row->state,
+			'note' => $row->note,
+		];
+
+		return $orders;
+	}
+
+	/**
+	 * Return array of ordered products in requested order.
+	 * @param $orderId
+	 * @return array
+	 */
+	public function getOrderedProducts($orderId)
+	{
+		$query = $this->database->table(self::TABLE_ORDERED)
+			->where(self::COLUMN_ORDER_ID.' = ?', $orderId);
+
+		$products = [];
+		foreach ($query as $row) {
+			$products[] = [
+				'price' => $row->price,
+				'quantity' => $row->quantity,
+				'id' => $row->orders_id,
+				'name' => $row->products->name,
+				'description' => $row->products->description,
+				'condition' => $row->products->condition,
+				'weight' => $row->products->weight,
+			];
+		}
+
+		return $products;
+	}
+
+	/**
+	 * Delete order witch equal ID.
+	 * @param $orderId
+	 * @return bool Return TRUE in case of success.
+	 */
+	public function deleteOrder($orderId) {
+		$this->database->beginTransaction();
+		$ordered = $this->database->table(self::TABLE_ORDERED)->where(self::COLUMN_ORDER_ID.' = ?',$orderId)->delete();
+		$orders = $this->database->table(self::TABLE_ORDERS)->get($orderId)->delete();
+		$this->database->commit();
+		if ($ordered && $orders) {
+			return TRUE;
+		} else {
+			return FALSE;
+		}
 	}
 }

@@ -2,8 +2,9 @@
 
 namespace App\AdminModule\Presenters;
 
+use App\FrontModule\Presenters\Order;
 use Nette;
-use App\AdminModule\Model\OrderManager;
+use App\FrontModule\Model\OrderManager;
 use App\FrontModule\Model\ProductManager;
 
 
@@ -40,12 +41,19 @@ class OrdersPresenter extends BasePresenter
 		} else {
 			$this->flashMessage('Objednávku nebylo možné odstranit.','flash-error');
 		}
+		$this->redirect('Orders:');
 	}
 
-	public function renderDetail($id,$key)
+	public function renderDetail($id)
 	{
 		$this->template->order = $this->orderManager->getOrder($id);
-		$this->template->producs = $this->productManager($this->template->order['customer']);
+		$this->template->products = $this->orderManager->getOrderedProducts($id);
+	}
+	
+	public function createComponentOrder()
+	{
+		$control = new Order($this->template->order, $this->template->products);
+		return $control;
 	}
 
 	public function renderEdit()
