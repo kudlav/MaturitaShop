@@ -7,22 +7,12 @@
 
 	<h3><span data-icon="d" class="icon"></span> Doprava:</h3>
 	<ul>
-		<li><strong>Česká pošta:</strong> 99 Kč</li>
-		<li><strong>PPL:</strong> 99 Kč</li>
-		<li><strong>Uloženka:</strong> 20 Kč
-			<ul>
-				<li>Brno, Černopolní</li>
-				<li>Praha</li>
-				<li>Ostrava</li>
-			</ul>
-		</li>
+		<li n:foreach="$delivery as $method">{$method}</li>
 	</ul>
 
 	<h3><span data-icon="e" class="icon"></span> Platba:</h3>
 	<ul>
-		<li><strong>Převodem předem:</strong> 0 Kč</li>
-		<li><strong>Kartou online:</strong> 99 Kč</li>
-		<li><strong>Dobírkou při převzetí:</strong> 49 Kč</li>
+		<li n:foreach="$payment as $method">{$method}</li>
 	</ul>
 </div>
 <div class="cleaner"></div>
