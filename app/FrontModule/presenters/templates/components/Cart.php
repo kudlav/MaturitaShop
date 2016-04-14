@@ -11,16 +11,17 @@ use Nette\Security\User;
 class Cart extends Control
 {
 
-	/** @var User */
-	private $user;
+	/**
+	 * @var User $user
+	 * @var CartManager $cartManager
+	 */
+	private $user, $cartManager;
 
-	/** @var CartManager */
-	private $cartManager;
 
 	public function __construct(User $user, CartManager $cartManager)
 	{
 		parent::__construct();
-		
+
 		$this->user = $user;
 		$this->cartManager = $cartManager;
 	}

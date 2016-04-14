@@ -17,7 +17,7 @@ class Navbar extends Control
 	public function  __construct($title, $items)
 	{
 		parent::__construct();
-		
+
 		$this->title = $title;
 		$this->items = $items;
 	}

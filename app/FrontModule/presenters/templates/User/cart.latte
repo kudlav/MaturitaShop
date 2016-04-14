@@ -6,29 +6,36 @@
 	<h1 n:block=title><span data-icon="s" class="icon"></span> Nákupní košík</h1>
 	{if $items}
 		<ul>
-			<li n:foreach="$items as $item">
-				<div class="item">
-					<a n:href="User:removeFromCart $item['id']" class="delete"><span data-icon="x" class="icon"></span></a>
-					<a n:href="Product:default $item['id'], $item['name']" class="spec">
-						<img src="{$basePath}/images/products/original/{sprintf("%05d", $item['id'])}.jpg" alt="Miniatura produktu">
-						<div class="title">{$item['name']}</div>
-					</a>
-					<div class="id">{sprintf("%05d", $item['id'])}</div>
-					<div class="cleaner"></div>
-					<div class="left">
-						<div class="status">Skladem: {$item['quantity']|number:0:',':' '} ks</div>
-						<div class="order-quantity">Objednat <input type="number" class="form-input" value="{$item['count']}"> ks</div>
-					</div>
-					<div class="price">
-						{$item['price']|number:0:',':' '} Kč <br>
-						Celkem: {$item['price']*$item['count']|number:0:',':' '} Kč
-					</div>
-					<div class="cleaner"></div>
-				</div>
-			</li>
+			{snippet cartCards}
+				<form n:name="cartQuantityForm" class="ajax">
+					<li n:foreach="$items as $item">
+						<div class="item">
+							<a n:href="User:removeFromCart $item['id']" class="delete"><span data-icon="x" class="icon"></span></a>
+							<a n:href="Product:default $item['id'], $item['name']" class="spec">
+								<img src="{$basePath}/images/products/original/{sprintf("%05d", $item['id'])}.jpg" alt="Miniatura produktu">
+								<div class="title">{$item['name']}</div>
+							</a>
+							<div class="id">{sprintf("%05d", $item['id'])}</div>
+							<div class="cleaner"></div>
+							{snippet 'item-'.$item['id']}
+								<div class="left">
+									<div class="status">Skladem: {$item['quantity']|number:0:',':' '} ks</div>
+									<div class="order-quantity">Objednat <input n:name="'i'.$item['id']" class="form-input" min="1"> ks</div>
+								</div>
+								<div class="price">
+									{$item['price']|number:0:',':' '} Kč <br>
+									Celkem: {$item['price']*$item['count']|number:0:',':' '} Kč
+								</div>
+							{/snippet}
+							<div class="cleaner"></div>
+						</div>
+					</li>
+					{input recalc}
+				</form>
+			{/snippet}
 		</ul>
 
-		<div class="total">Celkem k úhradě: <strong>{$total|number:0:',':' '} Kč</strong></div>
+		<div class="total" n:snippet="total">Celkem k úhradě: <strong>{$total|number:0:',':' '} Kč</strong></div>
 		<div class="right"><a n:href="Product:buy"><button class="form-button">Pokračovat v objednávce</button></a></div>
 	{else}
 		<p class="center padding">Váš košík je prázdný.</p>

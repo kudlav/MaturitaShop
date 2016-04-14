@@ -2,6 +2,7 @@
 
 namespace App\FrontModule\Presenters;
 
+use App\FrontModule\Forms\CartQuantityFormFactory;
 use Nette;
 use App\FrontModule\Model;
 use App\FrontModule\Model\CartManager;
@@ -16,6 +17,7 @@ class UserPresenter extends BasePresenter
 	 */
 	private $cartManager, $orderManager;
 
+
 	public function __construct(CartManager $cartManager, OrderManager $orderManager)
 	{
 		parent::__construct();
@@ -25,6 +27,9 @@ class UserPresenter extends BasePresenter
 	}
 
 
+	/**
+	 * @return Navbar
+	 */
 	protected function createComponentNavbar()
 	{
 		if ($this->getUser()->isLoggedIn()) {
@@ -53,17 +58,23 @@ class UserPresenter extends BasePresenter
 		$this->template->items = $this->orderManager->getUserOrders($this->getUser()->id);
 	}
 
+
 	public function renderOrder($id)
 	{
 		$this->template->order = $this->orderManager->getOrder($id);
 		$this->template->products = $this->orderManager->getOrderedProducts($id);
 	}
 
+
+	/**
+	 * @return Order
+	 */
 	public function createComponentOrder()
 	{
 		$control = new Order($this->template->order, $this->template->products);
 		return $control;
 	}
+
 
 	public function renderCart()
 	{
@@ -76,6 +87,7 @@ class UserPresenter extends BasePresenter
 		}
 	}
 
+
 	/**
 	 * Remove selected product from cart
 	 * @param int $itemId
@@ -83,7 +95,7 @@ class UserPresenter extends BasePresenter
 	public function actionRemoveFromCart($itemId)
 	{
 		if ($this->getUser()->isLoggedIn()) {
-			if ($this->cartManager->removeItem($this->getUser()->id, $itemId)) {
+			if ($this->cartManager->removeItem($this->user->id, $itemId)) {
 				$this->flashMessage('Položka byla z košíku odebrána');
 			} else {
 				$this->flashMessage('Položku nebylo možné z košíku odebrat, patrně se v něm nenachází', 'flash-error');
@@ -94,6 +106,7 @@ class UserPresenter extends BasePresenter
 		}
 	}
 
+
 	/**
 	 * Add selected product to cart
 	 * @param int $itemId
@@ -102,7 +115,7 @@ class UserPresenter extends BasePresenter
 	public function actionAddToCart($itemId, $redirect)
 	{
 		if ($this->getUser()->isLoggedIn()) {
-			if ($this->cartManager->addItem($this->getUser()->id, $itemId)) {
+			if ($this->cartManager->addItem($this->user->id, $itemId)) {
 				$this->flashMessage('Položka byla přidána do košíku');
 			} else {
 				$this->flashMessage('Položku nebylo možné přidat do košíku', 'flash-error');
@@ -114,5 +127,15 @@ class UserPresenter extends BasePresenter
 				$this->redirect($redirect);
 		}
 		$this->redirect('User:cart');
+	}
+
+
+	/**
+	 * @return Nette\Application\UI\Form
+	 */
+	public function createComponentCartQuantityForm()
+	{
+		$form = new CartQuantityFormFactory($this->cartManager, $this);
+		return $form->create($this->cartManager->getItems($this->user->id));
 	}
 }

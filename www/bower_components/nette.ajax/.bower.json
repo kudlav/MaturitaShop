@@ -1,0 +1,14 @@
+{
+  "name": "nette.ajax",
+  "_cacheHeaders": {
+    "ETag": "\"f1fa281f82d34bbb2519fa7c17ba861a5bec1b26\"",
+    "Content-Length": "4610",
+    "Content-Type": "text/plain; charset=utf-8"
+  },
+  "_release": "e-tag:f1fa281f8",
+  "main": "index.js",
+  "_source": "https://raw.githubusercontent.com/vojtech-dobes/nette.ajax.js/master/nette.ajax.js",
+  "_target": "*",
+  "_originalSource": "https://raw.githubusercontent.com/vojtech-dobes/nette.ajax.js/master/nette.ajax.js",
+  "_direct": true
+}

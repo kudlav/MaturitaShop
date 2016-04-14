@@ -100,26 +100,35 @@ class CartManager extends Nette\Object
 	 * Add product from database to user basket or increase quantity.
 	 * @param $userId
 	 * @param $productId
+	 * @param int $quantity
 	 * @return int Return number of added products.
 	 */
-	public function addItem($userId, $productId)
+	public function addItem($userId, $productId, $quantity = NULL)
 	{
 			$product = $this->database->table(self::TABLE_PRODUCTS)->get($productId);
 			if ($product && $product->show) {
 				$basket = $this->database->table(self::TABLE_BASKETS)
 					->where(self::COLUMN_USERS_ID." = ? AND ".self::COLUMN_PRODUCTS_ID." = ?", $userId, $productId)->fetch();
 				if ($basket) {
-					$basket->update(array(
-						'quantity' => $basket->quantity + 1,
-					));
+					if (ctype_digit($quantity) && ((int) $quantity > 0)) {
+						$basket->update(array(
+							'quantity' => $quantity,
+						));
+						return 1;
+					} elseif ($quantity === NULL) {
+						$basket->update(array(
+							'quantity' => $basket->quantity + 1,
+						));
+						return 1;
+					}
 				} else {
 					$state = $this->database->table(self::TABLE_BASKETS)->insert(array(
 						self::COLUMN_USERS_ID => (int)$userId,
 						self::COLUMN_PRODUCTS_ID => (int)$productId,
 						self::COLUMN_QUANTITY => (int) 1,
 					));
+					return 1;
 				}
-				return 1;
 			}
 			return 0;
 	}
