@@ -181,7 +181,7 @@ class OrderManager extends Nette\Object
 							self::COLUMN_ORDER_ID => $orders->id,
 							self::COLUMN_PRODUCT => $product['id'],
 							self::COLUMN_PRICE => $product['price'],
-							self::COLUMN_QUANTITY => $product['quantity'],
+							self::COLUMN_QUANTITY => $product['count'],
 						));
 					} else {
 						$this->database->rollBack();
