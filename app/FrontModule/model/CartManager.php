@@ -68,7 +68,7 @@ class CartManager extends Nette\Object
 	{
 		$query = $this->database->table(self::TABLE_BASKETS)->where(self::COLUMN_USERS_ID, $userId);
 
-		$ret = array();
+		$ret = [];
 		foreach ($query as $row) {
 			$ret[]= [
 				'id' => $row->products_id,

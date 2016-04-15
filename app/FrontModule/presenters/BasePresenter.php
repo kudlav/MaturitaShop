@@ -4,8 +4,9 @@ namespace App\FrontModule\Presenters;
 
 use Nette;
 use App\FrontModule\Model;
-use Nette\Application\UI\Form;
 use App\FrontModule\Model\CartManager;
+use App\FrontModule\Model\ProductManager;
+use App\FrontModule\Forms\SearchFormFactory;
 
 
 /**
@@ -22,6 +23,14 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 		$this->cartManager = $cartManager;
 	}
 
+	/** @var  ProductManager */
+	private $productManager;
+
+	public function injectProductManager(ProductManager $productManager)
+	{
+		$this->productManager = $productManager;
+	}
+
 	protected function startup()
 	{
 		parent::startup();
@@ -36,18 +45,8 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 
 	protected function createComponentSearch()
 	{
-		$form = new Form();
-
-		$form->addText('searchTerm')
-			->setType('search')
-			->setAttribute('placeholder', 'Hledaný produkt...');
-
-		$form->addSubmit('send','Hledat')
-			->setAttribute('class', 'button');
-
-		$form->onSuccess[] = array($this, 'postFormSucceeded');
-
-		return $form;
+		$form = new SearchFormFactory($this->productManager, $this);
+		return $form->create();
 	}
 
 	protected function createComponentCart()

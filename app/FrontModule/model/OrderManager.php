@@ -95,7 +95,7 @@ class OrderManager extends Nette\Object
 	}
 
 	private function deliveryPaymentBrief($query) {
-		$ret = array();
+		$ret = [];
 		foreach ($query as $row) {
 			$ret[$row->id] = $row->name.' ('.$row->price.' Kč)';
 		}
@@ -103,7 +103,7 @@ class OrderManager extends Nette\Object
 	}
 
 	private function deliveryPaymentFull($query) {
-		$ret = array();
+		$ret = [];
 		foreach ($query as $row) {
 			$ret[$row->id] = [
 				'name' => $row->name,
@@ -126,7 +126,7 @@ class OrderManager extends Nette\Object
 			->where(self::COLUMN_CUSTOMER, $userId)
 			->order(self::COLUMN_TIMESTAMP.' DESC');
 
-		$ret = array();
+		$ret = [];
 		foreach ($query as $row) {
 			$ret[]= [
 				'id' => $row->id,

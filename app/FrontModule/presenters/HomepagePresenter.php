@@ -18,8 +18,14 @@ class HomepagePresenter extends BasePresenter
 		$this->productManager = $productManager;
 	}
 
-	public function renderDefault()
+	public function renderDefault($search = NULL)
 	{
-		$this->template->products =  $this->productManager->products;
+		if ($search === NULL) {
+			$this->template->products = $this->productManager->products;
+			$this->template->title = 'Nové produkty';
+		} else {
+			$this->template->products = $this->productManager->searchProduct($search);
+			$this->template->title = 'Hledaný výraz: '.$search;
+		}
 	}
 }

@@ -40,7 +40,7 @@ class ProductManager extends Nette\Object
 			->order(self::COLUMN_TIMESTAMP.' DESC')
 			->where(self::COLUMN_SHOW.' = 1');
 
-		$ret = array();
+		$ret = [];
 		foreach ($products as $product) {
 			$ret[]= [
 				'id' => $product->id,
@@ -63,5 +63,31 @@ class ProductManager extends Nette\Object
 			return NULL;
 		}
 		return $item;
+	}
+
+	/**
+	 * Return list of fulltext searched products.
+	 * @param $string
+	 * @return array
+	 */
+	public function searchProduct($string)
+	{
+		$query = $this->database->query("
+			SELECT *
+			FROM `products`
+			WHERE (MATCH(`name`,`description`) AGAINST (? IN BOOLEAN MODE))
+			ORDER BY 5 * MATCH(`name`) AGAINST (?) + MATCH(`description`) AGAINST (?) DESC
+			", $string, $string, $string);
+
+		$ret = [];
+		foreach ($query as $row) {
+			$ret[]= [
+				'id' => $row->id,
+				'name' => $row->name,
+				'condition' => $row->condition,
+				'price' => $row->price,
+			];
+		}
+		return $ret;
 	}
 }
