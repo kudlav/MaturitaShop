@@ -5,7 +5,11 @@
 	<h1 n:block=title>{$product['name']}</h1>
 	<div class="id">Objednací kód: {sprintf("%05d", $product['id'])}</div>
 
-	<img class="left-half" src="{$basePath}/images/products/original/{sprintf("%05d", $product['id'])}.jpg" alt="Obrázek produktu">
+	{if is_file('../www/images/products/original/'.sprintf("%05d", $product['id']).'.jpg')}
+		<img class="left-half" src="{$basePath}/images/products/original/{sprintf("%05d", $product['id'])}.jpg" alt="Obrázek produktu">
+	{else}
+		<img class="left-half" src="{$basePath}/images/products/original/default.png" alt="Obrázek produktu">
+	{/if}
 
 	<div class="right-half">
 		<div class="left">

@@ -10,7 +10,11 @@
 					<li n:foreach="$products as $product">
 						<div class="item">
 							<a n:href="Product:default $product['id'], $product['name']" class="spec">
-								<img src="{$basePath}/images/products/homepage/{sprintf("%05d", $product['id'])}.jpg" alt="Obrázek produktu">
+								{if is_file('../www/images/products/homepage/'.sprintf("%05d", $product['id']).'.jpg')}
+									<img src="{$basePath}/images/products/homepage/{sprintf("%05d", $product['id'])}.jpg" alt="Obrázek produktu">
+								{else}
+									<img src="{$basePath}/images/products/homepage/default.png" alt="Obrázek produktu">
+								{/if}
 								<div class="title">
 									{$product['name']}
 								</div>
