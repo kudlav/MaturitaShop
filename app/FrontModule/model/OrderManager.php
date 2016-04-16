@@ -35,8 +35,12 @@ class OrderManager extends Nette\Object
 
 		TABLE_DELIVERY = 'delivery',
 		TABLE_PAYMENT = 'payment',
-		COLUMN_SHOW = 'show';
+		COLUMN_SHOW = 'show',
 
+		VIEW_ENUM = 'enum',
+		ENUM_TABLE = 'TABLE',
+		ENUM_COLUMN = 'COLUMN',
+		ENUM_ENUM = 'ENUM';
 
 
 	/** @var Nette\Database\Context */
@@ -299,7 +303,8 @@ class OrderManager extends Nette\Object
 	 * @param $orderId
 	 * @return bool Return TRUE in case of success.
 	 */
-	public function deleteOrder($orderId) {
+	public function deleteOrder($orderId)
+	{
 		$this->database->beginTransaction();
 		$ordered = $this->database->table(self::TABLE_ORDERED)->where(self::COLUMN_ORDER_ID.' = ?',$orderId)->delete();
 		$orders = $this->database->table(self::TABLE_ORDERS)->get($orderId)->delete();
@@ -309,5 +314,33 @@ class OrderManager extends Nette\Object
 		} else {
 			return FALSE;
 		}
+	}
+
+	/**
+	 * Return array of possible states of order.
+	 * @return array
+	 */
+	public function getStates()
+	{
+		$enum = $this->database->table(self::VIEW_ENUM)
+			->where('`'.self::ENUM_TABLE.'` = ? && `'.self::ENUM_COLUMN.'` = ?', self::TABLE_ORDERS, self::COLUMN_STATE)
+			->fetch();
+
+		$enum = preg_replace('#(enum\()|\)|\'#','',$enum->ENUM);
+		$enum = explode(',',$enum);
+		return $enum;
+	}
+
+	/**
+	 * Change state of selected order.
+	 * @param $orderId
+	 * @param $value
+	 */
+	public function changeState($orderId, $value)
+	{
+		$row = $this->database->table(self::TABLE_ORDERS)->get($orderId)
+			->update(array(
+				self::COLUMN_STATE => $value
+			));
 	}
 }

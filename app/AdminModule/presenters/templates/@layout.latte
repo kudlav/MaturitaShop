@@ -17,8 +17,10 @@
 	{include favicons.latte}
 
 	{block scripts}
-		{*<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-		<script src="//nette.github.io/resources/js/netteForms.min.js"></script>*}
+		<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+		<script src="{$basePath}/bower_components/nette.ajax/index.js"></script>
+		<script src="{$basePath}/js/ajax.js"></script>
+		{*<script src="//nette.github.io/resources/js/netteForms.min.js"></script>*}
 	{/block}
 
 </head>
@@ -27,7 +29,7 @@
 
 	<div id="page">
 		<div class="orangeHeader">
-			<a n:href="Homepage:default"><img src="{$basePath}/images/orangeHeader.png"></a>
+			<a n:href="Homepage:default"><img src="{$basePath}/images/orangeHeader.png" alt="Auto CVK"></a>
 		</div>
 
 		<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>

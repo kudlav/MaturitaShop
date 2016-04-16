@@ -2,40 +2,42 @@
 
 <h1 n:block=title><span data-icon="D" class="icon"></span> Seznam objednávek</h1>
 
-<table class="striped">
-    <thead>
-        <tr>
-            <td><input type="checkbox"></td>
-            <th>Číslo</th>
-            <th>Datum vytvoření</th>
-            <th>Jméno zákazníka</th>
-            <th>Cena (Kč)</th>
-            <th>Doprava</th>
-            <th>Platba</th>
-            <th>Stav</th>
-            <th>Pozn.</th>
-            <th colspan="4">Akce</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr n:foreach="$orders as $order">
-            <td><input type="checkbox" value="{$order['id']}"></td>
-            <td>OBJ{sprintf("%05d", $order['id'])}</td>
-            <td class="center">{$order['timestamp']|date:'j. n. Y'}<br>{$order['timestamp']|date:'G:i'}</td>
-            <td class="center">{$order['customer'][0]} {$order['customer'][1]}</td>
-            <td class="right">{$order['total']|number:0:',':'.'},-</td>
-            <td class="center">{$order['delivery']}</td>
-            <td class="center">{$order['payment']}</td>
-            <td class="center">
-                <select size="1" name="state" class="state{array_search($order['state'],$states)}">
-                    <option n:foreach="$states as $state" value="{$state}" {if $state == $order['state']}selected{/if}>{$state}</option>
-                </select>
-            </td>
-            <td class="center" title="{$order['note']}"><span n:if="$order['note']!=''" class="icona-info icon"></span></td>
-            <td class="center nopad"><a href="{link delete! $order['id']}" title="Kontaktovat" onclick="return confirm('Smazat?')"><div class="icona-chat action"></div></a></td>
-            <td class="center nopad"><a href="{plink Orders:detail $order['id']}" title="Zobrazit"><div class="icona-eye action"></div></a></td>
-            <td class="center nopad"><a href="{plink Orders:detail $order['id']}" title="Upravit""><div class="icona-pencil action"></div></a></td>
-            <td class="center nopad"><a href="{link delete! $order['id']}" title="Smazat" onclick="return confirm('Smazat?')"><div class="icona-trash-1 action"></div></a></td>
-        </tr>
-    </tbody>
-</table>
+{snippet ordersList}
+<form n:name="changeStateForm" class="ajax">
+	<table class="striped">
+		<thead>
+			<tr>
+				<td><input type="checkbox"></td>
+				<th>Číslo</th>
+				<th>Datum vytvoření</th>
+				<th>Jméno zákazníka</th>
+				<th>Cena (Kč)</th>
+				<th>Doprava</th>
+				<th>Platba</th>
+				<th>Stav</th>
+				<th>Pozn.</th>
+				<th colspan="4">Akce</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr n:foreach="$orders as $order">
+				<td><input type="checkbox" value="{$order['id']}"></td>
+				<td>OBJ{sprintf("%05d", $order['id'])}</td>
+				<td class="center">{$order['timestamp']|date:'j. n. Y'}<br>{$order['timestamp']|date:'G:i'}</td>
+				<td class="center">{$order['customer'][0]} {$order['customer'][1]}</td>
+				<td class="right">{$order['total']|number:0:',':'.'},-</td>
+				<td class="center">{$order['delivery']}</td>
+				<td class="center">{$order['payment']}</td>
+				<td class="center">
+					<select n:name="'s'.$order['id']" n:snippet="'order'.$order['id']" class="state{array_search($order['state'],$states)}" onchange="$(this).closest('form').submit()"></select>
+				</td>
+				<td class="center" title="{$order['note']}"><span n:if="$order['note']!=''" class="icona-info icon"></span></td>
+				<td class="center nopad"><a href="{link delete! $order['id']}" title="Kontaktovat" onclick="return confirm('Smazat?')"><div class="icona-chat action"></div></a></td>
+				<td class="center nopad"><a href="{plink Orders:detail $order['id']}" title="Zobrazit"><div class="icona-eye action"></div></a></td>
+				<td class="center nopad"><a href="{plink Orders:detail $order['id']}" title="Upravit""><div class="icona-pencil action"></div></a></td>
+				<td class="center nopad"><a href="{link delete! $order['id']}" title="Smazat" onclick="return confirm('Smazat?')"><div class="icona-trash-1 action"></div></a></td>
+			</tr>
+		</tbody>
+	</table>
+</form>
+{/snippet}

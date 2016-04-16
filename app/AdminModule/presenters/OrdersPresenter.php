@@ -2,6 +2,7 @@
 
 namespace App\AdminModule\Presenters;
 
+use App\AdminModule\Forms\ChangeStateFormFactory;
 use App\FrontModule\Presenters\Order;
 use Nette;
 use App\FrontModule\Model\OrderManager;
@@ -28,7 +29,13 @@ class OrdersPresenter extends BasePresenter
 	public function renderDefault()
 	{
 		$this->template->orders = $this->orderManager->getOrdersInProgress();
-		$this->template->states = ['čeká na vyřízení', 'zboží odesláno', 'připraveno k vyzvednutí', 'objednávka vyřízena', 'objednávka zrušena'];
+		$this->template->states = $this->orderManager->getStates();
+	}
+
+	public function createComponentChangeStateForm()
+	{
+		$form = new ChangeStateFormFactory($this, $this->orderManager, $this->orderManager->getOrdersInProgress(), $this->orderManager->getStates());
+		return $form->create();
 	}
 
 	/**
