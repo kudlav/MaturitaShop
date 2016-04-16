@@ -8,4 +8,7 @@ use Nette;
 class HomepagePresenter extends BasePresenter
 {
 
+	public function renderDefault() {
+		$this->forward('Orders:');
+	}
 }

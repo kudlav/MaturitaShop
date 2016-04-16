@@ -2,28 +2,33 @@
 
 namespace App\AdminModule\Presenters;
 
+use App\AdminModule\Forms\ContactFormFactory;
+use Nette;
 use App\AdminModule\Forms\ChangeStateFormFactory;
 use App\FrontModule\Presenters\Order;
-use Nette;
 use App\FrontModule\Model\OrderManager;
 use App\FrontModule\Model\ProductManager;
+use App\FrontModule\Model\UserManager;
 
 
 class OrdersPresenter extends BasePresenter
 {
+	private $userId;
+
 	/**
 	 * @var OrderManager $orderManager
 	 * @var ProductManager $productManager
+	 * @var UserManager $userManager
 	 */
-	private $orderManager;
-	private $productManager;
+	private $orderManager, $productManager, $userManager;
 
-	public function __construct(OrderManager $orderManager, ProductManager $productManager)
+	public function __construct(OrderManager $orderManager, ProductManager $productManager, UserManager $userManager)
 	{
 		parent::__construct();
 
 		$this->orderManager = $orderManager;
 		$this->productManager = $productManager;
+		$this->userManager = $userManager;
 	}
 
 	public function renderDefault()
@@ -66,5 +71,16 @@ class OrdersPresenter extends BasePresenter
 	public function renderEdit()
 	{
 
+	}
+
+	public function renderKontakt($id)
+	{
+		$this->userId = $id;
+	}
+
+	public function createComponentContact()
+	{
+		$control = new Contact($this->userManager->getContact($this->userId));
+		return $control;
 	}
 }

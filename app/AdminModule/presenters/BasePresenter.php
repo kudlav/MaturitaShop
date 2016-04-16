@@ -28,11 +28,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 	protected function createComponentNavbar()
 	{
 		$items = [
-			'Základní přehled' => ['Homepage:default'],
-			'Zákazníci' => ['Customers:default'],
 			'Objednávky' => ['Orders:default'],
-			'Produkty' => ['Homepage:default'],
-			'Seznam správců' => ['Homepage:default'],
 			'Odhlásit se' => ['Sign:out'],
 		];
 		$control = new Navbar('Administrace', $items);

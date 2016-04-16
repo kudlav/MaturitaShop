@@ -24,7 +24,7 @@
 							{snippet 'item-'.$item['id']}
 								<div class="left">
 									<div class="status">Skladem: {$item['quantity']|number:0:',':' '} ks</div>
-									<div class="order-quantity">Objednat <input n:name="'i'.$item['id']" class="form-input" min="1"> ks</div>
+									<div class="order-quantity">Objednat <input n:name="'i'.$item['id']" class="form-input" style="width: 3em" min="1"> ks</div>
 								</div>
 								<div class="price">
 									{$item['price']|number:0:',':' '} Kč <br>

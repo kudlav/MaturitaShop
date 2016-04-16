@@ -54,4 +54,14 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator
 		unset($arr[self::COLUMN_PASSWORD_HASH]);
 		return new Nette\Security\Identity($row[self::COLUMN_ID], $row[self::COLUMN_ROLE], $arr);
 	}
+
+	/**
+	 * Return row of requested user.
+	 * @param $userId
+	 * @return Nette\Database\Table\IRow
+	 */
+	public function getContact($userId)
+	{
+		return $this->database->table(self::TABLE_NAME)->get($userId);
+	}
 }

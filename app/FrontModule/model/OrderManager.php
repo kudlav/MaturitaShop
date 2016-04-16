@@ -229,7 +229,7 @@ class OrderManager extends Nette\Object
 			$orders[] = [
 				'id' => $row->id,
 				'timestamp' => $row->timestamp,
-				'customer' => [$row->ref('users', 'customer')->name, $row->ref('users', 'customer')->surname],
+				'customer' => [$row->ref('users', 'customer')->name, $row->ref('users', 'customer')->surname, $row->customer],
 				'total' => $row->total,
 				'delivery' => $row->ref('delivery', 'delivery')->name,
 				'payment' => $row->ref('payment', 'payment')->name,
