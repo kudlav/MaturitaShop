@@ -187,6 +187,11 @@ class OrderManager extends Nette\Object
 							self::COLUMN_PRICE => $product['price'],
 							self::COLUMN_QUANTITY => $product['count'],
 						));
+
+					$products = $this->database->table('products')->get($product['id']);
+					$products->update(array(
+						'quantity' => ($products->quantity - $product['count'])
+					));
 					} else {
 						$this->database->rollBack();
 						throw new DisabledItemException($product);
