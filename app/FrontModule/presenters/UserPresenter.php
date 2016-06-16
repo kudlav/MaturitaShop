@@ -61,8 +61,14 @@ class UserPresenter extends BasePresenter
 
 	public function renderOrder($id)
 	{
+		if (!$this->getUser()->isLoggedIn()) {
+			$this->redirect('Sign:in', ['state' => $this->storeRequest()]);
+		}
 		$this->template->order = $this->orderManager->getOrder($id);
 		$this->template->products = $this->orderManager->getOrderedProducts($id);
+		if ($this->template->order['customerUsername'] != $this->user->identity->data['username']) {
+			$this->error();
+		}
 	}
 
 

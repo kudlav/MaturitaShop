@@ -255,6 +255,10 @@ class OrderManager extends Nette\Object
 	{
 		$row = $this->database->table(self::TABLE_ORDERS)->get($orderId);
 
+		if ($row == FALSE) {
+			return $row;
+		}
+
 		$orders = [
 			'id' => $row->id,
 			'timestamp' => $row->timestamp,
