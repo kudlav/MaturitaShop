@@ -1,17 +1,13 @@
 {
-	"name": "nette/sandbox",
-	"description": "The sandbox is a pre-packaged Nette Framework project, basic configured structure for your application.",
-	"homepage": "https://nette.org",
+	"name": "kudlav/maturita-shop",
+	"description": "Nette project made for school leaving exam. Basic system for e-shops containing order process, product list and static pages.",
+	"homepage": "http://kudlac.tode.cz/",
 	"type": "project",
-	"license": ["BSD-3-Clause", "GPL-2.0", "GPL-3.0"],
+	"license": ["Will be specified", "ask author"],
 	"authors": [
 		{
-			"name": "David Grudl",
-			"homepage": "https://davidgrudl.com"
-		},
-		{
-			"name": "Nette Community",
-			"homepage": "https://nette.org/contributors"
+			"name": "Vladan Kudlac",
+			"homepage": "http://kudlac.tode.cz/"
 		}
 	],
 	"require": {
