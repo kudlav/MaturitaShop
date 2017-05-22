@@ -1,5 +1,3 @@
-log/*
-temp/*
 vendor/*
 www/images/products/*
 !.gitignore
