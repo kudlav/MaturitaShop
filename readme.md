@@ -30,7 +30,6 @@ http://vladan.azurewebsites.net
 
    You can fill your database with testing data using stored procedures (*default_xxx*)
 
-   The fulltext search can be broken, you can try to fix that using *fix_fulltext_search* procedure
 3. Change *app\config\config.local.neon*  to fit your database
 
 ### License
