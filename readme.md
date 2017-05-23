@@ -24,5 +24,16 @@ http://vladan.azurewebsites.net
 
    This will download project into *folder* and resolve dependencies.
 
-2. Import database (TODO)
+2. Import database
+
+   Import database using *database.sql*. This file was exported from *database.mwb* using [MySQL Workbench 6.3](https://downloads.mysql.com/archives/workbench/).
+
+   You can fill your database with testing data using stored procedures (*default_xxx*)
+
+   The fulltext search can be broken, you can try to fix that using *fix_fulltext_search* procedure
 3. Change *app\config\config.local.neon*  to fit your database
+
+### License
+- MaturitaShop: Will be specified, ask author (http://kudlac.tode.cz)
+- Nette: New BSD License or GPL 2.0 or 3.0 (https://nette.org/license)
+- Adminer: Apache License 2.0 or GPL 2 (https://www.adminer.org)
