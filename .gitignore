@@ -1,5 +1,6 @@
 vendor/*
-www/images/products/*
+www/images/products/*/*
+!www/images/products/*/default.png
 !.gitignore
 !.htaccess
 !web.config
