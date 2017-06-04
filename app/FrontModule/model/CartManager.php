@@ -77,6 +77,7 @@ class CartManager extends Nette\Object
 				'quantity' => $row->products->quantity,
 				'price' => $row->products->price,
 				'show' => $row->products->show,
+				'photo' => $row->products->photo,
 			];
 		}
 		return $ret;

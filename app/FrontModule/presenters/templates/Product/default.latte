@@ -5,11 +5,23 @@
 	<h1 n:block=title>{$product['name']}</h1>
 	<div class="id">Objednací kód: {sprintf("%05d", $product['id'])}</div>
 
-	{if is_file('../www/images/products/original/'.sprintf("%05d", $product['id']).'.jpg')}
-		<img class="left-half" src="{$basePath}/images/products/original/{sprintf("%05d", $product['id'])}.jpg" alt="Obrázek produktu">
-	{else}
-		<img class="left-half" src="{$basePath}/images/products/original/default.png" alt="Obrázek produktu">
-	{/if}
+	<div class="left-half"
+	{foreach $productPhotos as $photo}
+		{* First big photo or other thumbnails *}
+		{if ($photo==$productPhotos[0])}
+			{if is_file('../www/images/products/original/'.$photo)}
+				><a href="{$basePath}/images/products/original/{$photo}" data-lightbox="productGallery"><img alt="Obrázek produktu" src="{$basePath}/images/products/original/{$photo}" style="width:100%"></a
+			{else}
+				><img alt="Obrázek produktu" src="{$basePath}/images/products/original/default.png" style="width:100%"
+			{/if}
+		{else}
+			{if is_file('../www/images/products/homepage/'.$photo) && is_file('../www/images/products/original/'.$photo)}
+				><a href="{$basePath}/images/products/original/{$photo}" data-lightbox="productGallery"><img alt="Obrázek produktu" src="{$basePath}/images/products/homepage/{$photo}" style="width:25%; padding: 3px; box-sizing: border-box;"></a
+			{/if}
+		{/if}
+	{/foreach}
+	>
+	</div>
 
 	<div class="right-half">
 		<div class="left">

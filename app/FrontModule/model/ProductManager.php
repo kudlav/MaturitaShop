@@ -20,7 +20,8 @@ class ProductManager extends Nette\Object
 		COLUMN_QUANTITY = 'quantiti',
 		COLUMN_TIMESTAMP = 'timestamp',
 		COLUMN_CATEGORY  = 'category',
-		COLUMN_SHOW = 'show';
+		COLUMN_SHOW = 'show',
+		COLUMN_PHOTO = 'photo';
 
 
 	/** @var Nette\Database\Context */
@@ -47,6 +48,7 @@ class ProductManager extends Nette\Object
 				'name' => $product->name,
 				'condition' => $product->condition,
 				'price' => $product->price,
+				'photo' => $product->photo,
 			];
 		}
 		return $ret;
@@ -86,8 +88,20 @@ class ProductManager extends Nette\Object
 				'name' => $row->name,
 				'condition' => $row->condition,
 				'price' => $row->price,
+				'photo' => $row->photo,
 			];
 		}
 		return $ret;
+	}
+
+	public function getPhotos($id){
+		$product = $this->getItem($id);
+
+		if (!$product && !$products->photo) {
+			return NULL;
+		}
+
+		$photoList = explode(';', $product->photo);
+		return $photoList;
 	}
 }

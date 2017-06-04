@@ -6,6 +6,7 @@
 	<title>{ifset title}{include title|striptags} | {/ifset}Auto CVK</title>
 
 	<link rel="stylesheet" href="{$basePath}/css/front/style.css">
+	<link n:if="$page=='Front:Product'" href="{$basePath}/css/lightbox.min.css" rel="stylesheet">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 
 	<!-- Chrome, Firefox OS and Opera -->
@@ -62,5 +63,6 @@
 			</ul>
 		</footer>
 	</div>
+	<script n:if="$page=='Front:Product'" src="{$basePath}/js/lightbox.min.js"></script>
 </body>
 </html>

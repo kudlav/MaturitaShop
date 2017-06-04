@@ -37,6 +37,7 @@ class ProductPresenter extends BasePresenter
 		if ($this->template->product === NULL) {
 			$this->error('Požadovaný produkt neexistuje');
 		}
+		$this->template->productPhotos = explode(';', $this->template->product['photo']);
 	}
 
 	public function renderBuy($back)

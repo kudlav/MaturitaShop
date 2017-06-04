@@ -17,8 +17,8 @@
 		<li n:foreach="$items as $item">
 			<div class="item">
 				<div class="spec">
-					{if is_file('../www/images/products/homepage/'.sprintf("%05d", $item['id']).'.jpg')}
-						<img src="{$basePath}/images/products/homepage/{sprintf("%05d", $item['id'])}.jpg" alt="Miniatura produktu">
+					{if is_file('../www/images/products/homepage/'.strtok($item['photo'], ';'))}
+						<img src="{$basePath}/images/products/homepage/{strtok($item['photo'], ';')}" alt="Miniatura produktu">
 					{else}
 						<img src="{$basePath}/images/products/homepage/default.png" alt="Obrázek produktu">
 					{/if}
