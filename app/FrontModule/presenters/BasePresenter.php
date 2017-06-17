@@ -38,9 +38,6 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 		$this->user->getStorage()->setNamespace('Front');
 
 		$this->template->page = $this->getName();
-		$this->template->cartCount = 1;
-		$this->template->cartPrice = 3600;
-
 	}
 
 	protected function createComponentSearch()
@@ -56,14 +53,17 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 		return $control;
 	}
 
+	/**
+	 * @return Navbar
+	 */
 	protected function createComponentNavbar()
 	{
 		$items = [
-			'Kontakty' => ['Info:kontakty'],
-			'Obchodní podmínky' => ['Info:podminky'],
-			'Doprava a platba' => ['Info:nakup'],
+			'Světla, blikače' => ['Homepage:default', '0'],
+			'<span class="subitem">Tajné</span>' => ['Homepage:default', '2'],
+			'<span class="subitem">Ostatní</span>' => ['Homepage:default', '1'],
 		];
-		$control = new Navbar('Nakupování', $items);
+		$control = new Navbar('Kategorie', $items, 'cat');
 		return $control;
 	}
 }

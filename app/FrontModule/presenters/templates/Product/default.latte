@@ -1,7 +1,7 @@
 {block content}
 
 <div class="product">
-	{* <div class="category">{$product['category']}</div> *}
+	<div class="category">Kategorie: {$categories|noescape}</div>
 	<h1 n:block=title>{$product['name']}</h1>
 	<div class="id">Objednací kód: {sprintf("%05d", $product['id'])}</div>
 

@@ -3,9 +3,9 @@
 	<ul>
 		<li n:foreach="$items as $title => $link">
 			<a href="
-				{ifset $link[1]}{plink $link[0] p => $link[1]}
+				{ifset $link[1]}{plink $link[0] $paramName => $link[1]}
 				{else}{plink $link[0]}{/ifset}
-			" {if 'Front:'.$link[0] == $page}class="selected"{/if}>{$title}</a>
+			" {if 'Front:'.$link[0] == $page}class="selected"{/if}>{$title|noescape}</a>
 		</li>
 	</ul>
 </nav>

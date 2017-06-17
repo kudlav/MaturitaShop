@@ -21,7 +21,10 @@ class ProductManager extends Nette\Object
 		COLUMN_TIMESTAMP = 'timestamp',
 		COLUMN_CATEGORY  = 'category',
 		COLUMN_SHOW = 'show',
-		COLUMN_PHOTO = 'photo';
+		COLUMN_PHOTO = 'photo',
+
+		TABLE_CAT = 'categories',
+		COLUMN_PARENT = 'parent';
 
 
 	/** @var Nette\Database\Context */
@@ -34,12 +37,34 @@ class ProductManager extends Nette\Object
 
 	/**
 	 * Return all product at database.
+	 * @param $category Only products belonging to this cat. Don't filter when NULL.
 	 * @return static
 	 */
-	public function getProducts() {
+	public function getProducts($category = NULL) {
+
 		$products = $this->database->table(self::TABLE_NAME)
 			->order(self::COLUMN_TIMESTAMP.' DESC')
-			->where(self::COLUMN_SHOW.' = 1');
+			->where(self::COLUMN_SHOW, 1);
+		if ($category !== NULL) {
+			$categories = [(int) $category];
+			$allCat = $this->database->table(self::TABLE_CAT)->fetchPairs(self::COLUMN_ID, self::COLUMN_PARENT);
+
+			foreach ($allCat as $catID => $catParent) {
+				if ($catID == $category) {
+					continue;
+				}
+				while($catParent !== NULL) {
+					if (in_array($catParent, $categories)) {
+						$categories[] = $catID;
+						break;
+					} else {
+						$catParent = $allCat[$catParent];
+					}
+				}
+			}
+
+			$products->where(self::COLUMN_CATEGORY, $categories);
+		}
 
 		$ret = [];
 		foreach ($products as $product) {
@@ -49,6 +74,7 @@ class ProductManager extends Nette\Object
 				'condition' => $product->condition,
 				'price' => $product->price,
 				'photo' => $product->photo,
+				'category' => $product->category,
 			];
 		}
 		return $ret;
@@ -89,6 +115,7 @@ class ProductManager extends Nette\Object
 				'condition' => $row->condition,
 				'price' => $row->price,
 				'photo' => $row->photo,
+				'category' => $row->category,
 			];
 		}
 		return $ret;
@@ -103,5 +130,43 @@ class ProductManager extends Nette\Object
 
 		$photoList = explode(';', $product->photo);
 		return $photoList;
+	}
+
+	/**
+	 * Return category with equal ID.
+	 * @param $id
+	 * @return Nette\Database\Table\IRow
+	 */
+	public function getCategory($id){
+		if (!is_numeric($id)) {
+			return NULL;
+		}
+		$category = $this->database->table(self::TABLE_CAT)->get($id);
+		
+		if (!$category) {
+			return NULL;
+		}
+		return $category;
+	}
+
+	/**
+	 * Return array with strings of parent categories.
+	 * @param $id
+	 * @return array
+	 */
+	public function getCategoryTree($id, $baseUrl){
+		$category = $this->getCategory($id);
+
+		if (!$category) {
+			return array();
+		}
+
+		$tree = ['<a href="'.$baseUrl.'/?cat='.$category->id.'">'.$category->name.'</a>'];
+		while($category->parent !== NULL) {
+			$category = $category->ref(self::TABLE_CAT, self::COLUMN_PARENT);
+			$tree[] = '<a href="'.$baseUrl.'/?cat='.$category->id.'">'.$category->name.'</a>';
+		}
+
+		return array_reverse($tree);
 	}
 }

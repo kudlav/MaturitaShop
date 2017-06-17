@@ -18,6 +18,7 @@
 @import "navbar/style";
 @import "product/style";
 @import "user/style";
+@import "info/style";
 
 html {
 	height:100%;
@@ -39,6 +40,14 @@ button {
 	font-family: "Lucida Sans Unicode","Lucida Grande",sans-serif;
 }
 
+a {
+    text-decoration: none;
+    color: #333;
+	&:hover {
+		text-decoration: underline;
+	}
+}
+
 footer {
 	position:absolute;
 	bottom:0;
@@ -55,10 +64,6 @@ footer {
 	}
 	a {
 		color: @bgPage;
-		text-decoration: none;
-	}
-	a:hover{
-		text-decoration: underline;
 	}
 	ul {
 		margin: 0;
@@ -114,9 +119,9 @@ footer {
 		-o-transition: color 300ms ease;
 		transition: color 300ms ease;
 		color: @bgPage;
-		text-decoration: none;
 		&:hover {
 			color: #FFDBAB;
+			text-decoration: none;
 		}
 	}
 	.sign-in {

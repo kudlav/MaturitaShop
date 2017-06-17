@@ -37,6 +37,7 @@ class ProductPresenter extends BasePresenter
 		if ($this->template->product === NULL) {
 			$this->error('Požadovaný produkt neexistuje');
 		}
+		$this->template->categories = implode(' &gt; ', $this->productManager->getCategoryTree($this->template->product['category'], $this->template->baseUrl));
 		$this->template->productPhotos = explode(';', $this->template->product['photo']);
 	}
 

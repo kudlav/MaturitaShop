@@ -18,14 +18,23 @@ class HomepagePresenter extends BasePresenter
 		$this->productManager = $productManager;
 	}
 
-	public function renderDefault($search = NULL)
+	public function renderDefault($search = NULL, $cat = NULL)
 	{
-		if ($search === NULL) {
+		if ($search !== NULL) {
+			$this->template->products = $this->productManager->searchProduct($search);
+			$this->template->title = 'Hledaný výraz: '.htmlspecialchars($search);
+		}
+		elseif ($cat !== NULL) {
+			$category = $this->productManager->getCategory($cat);
+			if ($category === NULL) {
+				$this->error('Požadovaná kategorie neexistuje');
+			}
+			$this->template->products = $this->productManager->getProducts($cat);
+			$this->template->title = 'Kategorie: '.implode(' &gt; ', $this->productManager->getCategoryTree($cat, $this->template->baseUrl));
+		}
+		else {
 			$this->template->products = $this->productManager->products;
 			$this->template->title = 'Nové produkty';
-		} else {
-			$this->template->products = $this->productManager->searchProduct($search);
-			$this->template->title = 'Hledaný výraz: '.$search;
 		}
 	}
 }

@@ -23,4 +23,18 @@ class InfoPresenter extends BasePresenter
 		$this->template->delivery = $this->orderManager->getDelivery();
 		$this->template->payment = $this->orderManager->getPayment();
 	}
+
+	/**
+	 * @return Navbar
+	 */
+	protected function createComponentNavbar()
+	{
+		$items = [
+			'Kontakty' => ['Info:kontakty'],
+			'Obchodní podmínky' => ['Info:podminky'],
+			'Doprava a platba' => ['Info:nakup'],
+		];
+		$control = new Navbar('Nakupování', $items);
+		return $control;
+	}
 }

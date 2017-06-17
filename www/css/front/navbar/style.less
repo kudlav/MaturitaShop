@@ -1,13 +1,11 @@
 nav {
 	ul {
 		list-style-type: none;
-
 		padding: 0;
 		border-bottom: @borderShadow 3px solid;
 		li {
 			a {
 				line-height: 2em;
-				text-decoration: none;
 				color: #000;
 				background-color: #EEE;
 				border-bottom: @borderShadow 1px solid;
@@ -19,7 +17,6 @@ nav {
 				transition: background-color 300ms ease;
 				&:hover {
 					background-color: @bgShadow;
-					text-decoration: underline;
 				}
 			}
 			.selected {
@@ -31,6 +28,9 @@ nav {
 					background-color: #EEE;
 					text-decoration: none;
 				}
+			}
+			.subitem {
+				margin-left: 1em;
 			}
 		}
 	}
