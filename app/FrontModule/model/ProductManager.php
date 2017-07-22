@@ -100,12 +100,22 @@ class ProductManager extends Nette\Object
 	 */
 	public function searchProduct($string)
 	{
-		$query = $this->database->query("
+		try {
+			$query = $this->database->query("
+				SELECT *
+				FROM `products`
+				WHERE (MATCH(`name`,`description`) AGAINST (? IN BOOLEAN MODE))
+				ORDER BY 5 * MATCH(`name`) AGAINST (?) + MATCH(`description`) AGAINST (?) DESC
+				", $string, $string, $string);
+		}
+		catch(Nette\Database\DriverException $e){
+			\Tracy\Debugger::log('Unable to use fulltext search');
+			$query = $this->database->query("
 			SELECT *
 			FROM `products`
-			WHERE (MATCH(`name`,`description`) AGAINST (? IN BOOLEAN MODE))
-			ORDER BY 5 * MATCH(`name`) AGAINST (?) + MATCH(`description`) AGAINST (?) DESC
-			", $string, $string, $string);
+			WHERE ".self::COLUMN_NAME." like ? OR ".self::COLUMN_DESCRIPTION." like ?", "%".$string."%", "%".$string."%");
+		}
+
 
 		$ret = [];
 		foreach ($query as $row) {
