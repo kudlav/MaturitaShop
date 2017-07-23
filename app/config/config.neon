@@ -2,7 +2,37 @@
 # WARNING: it is CRITICAL that this file & directory are NOT accessible directly via a web browser!
 # https://nette.org/security-warning
 #
+
 parameters:
+
+	#eshop - enable cart and order process
+	eshop: true
+
+	#fulltext_search - disable when MyISAM <4.6
+	fulltext_search: true
+
+	#contact - email and phone of operator
+	contact:
+		phone: +420 776 057 409
+		email: 'vladankudlac@<span style="display:none;">ignoruj mě</span>gmail.com'
+
+	#product - enable or disable features on product detail pages
+	product:
+		show_order_code: true
+		show_phone_order: true
+		show_email_order: true
+
+	#menu at homepage; 1.line = link title; 2.line = target presenter:action; 3.line = category id
+	category_menu:
+		'Světla, blikače':
+			- 'Homepage:default'
+			- '0'
+		'<span class="subitem">Tajné</span>':
+			- 'Homepage:default'
+			- '2'
+		'<span class="subitem">Ostatní</span>':
+			- 'Homepage:default'
+			- '1'
 
 
 php:
@@ -20,6 +50,7 @@ session:
 
 
 services:
+	- App\FrontModule\Model\Parameters(@container::getParameters())
 	- App\FrontModule\Model\UserManager
 	- App\FrontModule\Model\EmailValidator
 	- App\FrontModule\Model\Registrator

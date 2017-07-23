@@ -7,6 +7,7 @@ use App\FrontModule\Model;
 use App\FrontModule\Model\CartManager;
 use App\FrontModule\Model\ProductManager;
 use App\FrontModule\Forms\SearchFormFactory;
+use App\FrontModule\Model\Parameters;
 
 
 /**
@@ -14,6 +15,12 @@ use App\FrontModule\Forms\SearchFormFactory;
  */
 abstract class BasePresenter extends Nette\Application\UI\Presenter
 {
+	/** @var Parameters */
+	protected $parameters;
+
+	public function injectParameters(Parameters $parameters) {
+		$this->parameters = $parameters->getParam();
+	}
 
 	/** @var CartManager */
 	private $cartManager;
@@ -58,11 +65,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 	 */
 	protected function createComponentNavbar()
 	{
-		$items = [
-			'Světla, blikače' => ['Homepage:default', '0'],
-			'<span class="subitem">Tajné</span>' => ['Homepage:default', '2'],
-			'<span class="subitem">Ostatní</span>' => ['Homepage:default', '1'],
-		];
+		$items = $this->parameters['category_menu'];
 		$control = new Navbar('Kategorie', $items, 'cat');
 		return $control;
 	}
