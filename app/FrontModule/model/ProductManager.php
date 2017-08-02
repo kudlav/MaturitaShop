@@ -98,9 +98,9 @@ class ProductManager extends Nette\Object
 	 * @param $string
 	 * @return array
 	 */
-	public function searchProduct($string)
+	public function searchProduct($string, $fulltext_search)
 	{
-		try {
+		if ($fulltext_search === TRUE) {
 			$query = $this->database->query("
 				SELECT *
 				FROM `products`
@@ -108,14 +108,12 @@ class ProductManager extends Nette\Object
 				ORDER BY 5 * MATCH(`name`) AGAINST (?) + MATCH(`description`) AGAINST (?) DESC
 				", $string, $string, $string);
 		}
-		catch(Nette\Database\DriverException $e){
-			\Tracy\Debugger::log('Unable to use fulltext search');
+		else {
 			$query = $this->database->query("
 			SELECT *
 			FROM `products`
 			WHERE ".self::COLUMN_NAME." like ? OR ".self::COLUMN_DESCRIPTION." like ?", "%".$string."%", "%".$string."%");
 		}
-
 
 		$ret = [];
 		foreach ($query as $row) {

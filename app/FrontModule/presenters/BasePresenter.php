@@ -45,6 +45,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 		$this->user->getStorage()->setNamespace('Front');
 
 		$this->template->page = $this->getName();
+		$this->template->phone = $this->parameters['contact']['phone'];
 	}
 
 	protected function createComponentSearch()

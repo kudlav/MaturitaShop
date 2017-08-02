@@ -80,7 +80,7 @@ class OrdersPresenter extends BasePresenter
 
 	public function createComponentContact()
 	{
-		$control = new Contact($this->userManager->getContact($this->userId));
+		$control = new Contact($this->userManager->getContact($this->userId), $this->parameters['contact']['email_from']);
 		return $control;
 	}
 }
