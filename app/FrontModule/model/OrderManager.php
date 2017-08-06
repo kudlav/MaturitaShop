@@ -262,6 +262,7 @@ class OrderManager extends Nette\Object
 		$orders = [
 			'id' => $row->id,
 			'timestamp' => $row->timestamp,
+			'customerId' => $row->customer,
 			'customerName' => $row->ref('users','customer')->name,
 			'customerSurname' => $row->ref('users','customer')->surname,
 			'customerUsername' => $row->ref('users','customer')->username,

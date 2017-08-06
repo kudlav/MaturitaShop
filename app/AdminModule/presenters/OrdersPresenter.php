@@ -74,7 +74,7 @@ class OrdersPresenter extends BasePresenter
 
 	}
 
-	public function renderKontakt($id)
+	public function renderContact($id)
 	{
 		$this->userId = $id;
 	}

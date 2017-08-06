@@ -67,7 +67,7 @@ class UserPresenter extends BasePresenter
 		$this->template->order = $this->orderManager->getOrder($id);
 		$this->template->products = $this->orderManager->getOrderedProducts($id);
 		$this->template->show_order_code = $this->parameters['product']['show_order_code'];
-		if ($this->template->order['customerUsername'] != $this->user->identity->data['username']) {
+		if ($this->template->order['customerId'] != $this->user->id) {
 			$this->error();
 		}
 	}
