@@ -101,7 +101,10 @@ class OrderManager extends Nette\Object
 	private function deliveryPaymentBrief($query) {
 		$ret = [];
 		foreach ($query as $row) {
-			$ret[$row->id] = $row->name.' ('.$row->price.' Kč)';
+			$ret[$row->id] = $row->name;
+			if($row->price !== NULL) {
+				$ret[$row->id] .= ' ('.$row->price.' Kč)';
+			}
 		}
 		return $ret;
 	}
@@ -113,7 +116,6 @@ class OrderManager extends Nette\Object
 				'name' => $row->name,
 				'price' => $row->price,
 				'tooltip' => $row->tooltip,
-				'type' => $row->type,
 			];
 		}
 		return $ret;
