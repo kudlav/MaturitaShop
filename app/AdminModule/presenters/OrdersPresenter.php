@@ -60,11 +60,12 @@ class OrdersPresenter extends BasePresenter
 	{
 		$this->template->order = $this->orderManager->getOrder($id);
 		$this->template->products = $this->orderManager->getOrderedProducts($id);
+		$this->template->show_order_code = $this->parameters['product']['show_order_code'];
 	}
 
 	public function createComponentOrder()
 	{
-		$control = new Order($this->template->order, $this->template->products);
+		$control = new Order($this->template->order, $this->template->products, $this->template->show_order_code);
 		return $control;
 	}
 

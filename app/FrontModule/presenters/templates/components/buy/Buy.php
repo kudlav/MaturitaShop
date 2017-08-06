@@ -16,11 +16,11 @@ class Buy extends Control
 	 * @var User $user
 	 * @var CartManager $cartManager
 	 * @var OrderManager $orderManager
+	 * @var bool $show_order_code
 	 * */
-	private $session, $user, $cartManager, $orderManager;
+	private $session, $user, $cartManager, $orderManager, $show_order_code;
 
-
-	public function  __construct(SessionSection $session, User $user, CartManager $cartManager, OrderManager $orderManager)
+	public function  __construct(SessionSection $session, User $user, CartManager $cartManager, OrderManager $orderManager, bool $show_order_code)
 	{
 		parent::__construct();
 
@@ -28,6 +28,7 @@ class Buy extends Control
 		$this->user = $user;
 		$this->cartManager = $cartManager;
 		$this->orderManager = $orderManager;
+		$this->show_order_code = $show_order_code;
 	}
 
 	public function render()
@@ -38,6 +39,7 @@ class Buy extends Control
 
 		$template->setFile(__DIR__ . '/buy.latte');
 		$template->items = $this->cartManager->getItems($userId);
+		$template->show_order_code = $this->show_order_code;
 
 		$delivery = $this->orderManager->getDelivery(TRUE);
 		$payment = $this->orderManager->getPayment(TRUE);

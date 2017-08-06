@@ -19,7 +19,7 @@
 								{/if}
 								<div class="title">{$item['name']}</div>
 							</a>
-							<div class="id">{sprintf("%05d", $item['id'])}</div>
+							<div class="id">{if $show_order_code}{sprintf("%05d", $item['id'])}{/if}</div>
 							<div class="cleaner"></div>
 							{snippet 'item-'.$item['id']}
 								<div class="left">

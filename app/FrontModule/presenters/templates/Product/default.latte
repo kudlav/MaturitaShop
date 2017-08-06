@@ -3,7 +3,7 @@
 <div class="product">
 	<div class="category">Kategorie: {$categories|noescape}</div>
 	<h1 n:block=title>{$product['name']}</h1>
-	<div class="id">Objednací kód: {sprintf("%05d", $product['id'])}</div>
+	<div n:if="$product_parameters['show_order_code']" class="id">Objednací kód: {sprintf("%05d", $product['id'])}</div>
 
 	<div class="left-half"
 	{foreach $productPhotos as $photo}

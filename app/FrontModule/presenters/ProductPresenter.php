@@ -39,6 +39,7 @@ class ProductPresenter extends BasePresenter
 		}
 		$this->template->categories = implode(' &gt; ', $this->productManager->getCategoryTree($this->template->product['category'], $this->template->baseUrl));
 		$this->template->productPhotos = explode(';', $this->template->product['photo']);
+		$this->template->product_parameters = $this->parameters['product'];
 	}
 
 	public function renderBuy($back)
@@ -75,7 +76,7 @@ class ProductPresenter extends BasePresenter
 				$this->redirect('Product:buy');
 			};
 		} else {
-			$form = new Buy($this->getSession('buy'), $this->user, $this->cartManager, $this->orderManager);
+			$form = new Buy($this->getSession('buy'), $this->user, $this->cartManager, $this->orderManager, $this->parameters['product']['show_order_code']);
 		}
 		return $form;
 	}

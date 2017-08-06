@@ -17,7 +17,7 @@ parameters:
 		email: 'vladankudlac@<span style="display:none;">ignoruj mě</span>gmail.com'
 		email_from: 'vladankudlac@seznam.cz'
 
-	#product - enable or disable features on product detail pages
+	#product - enable or disable features on product detail pages [true/false]
 	product:
 		show_order_code: true
 		show_phone_order: true

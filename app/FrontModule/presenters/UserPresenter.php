@@ -66,6 +66,7 @@ class UserPresenter extends BasePresenter
 		}
 		$this->template->order = $this->orderManager->getOrder($id);
 		$this->template->products = $this->orderManager->getOrderedProducts($id);
+		$this->template->show_order_code = $this->parameters['product']['show_order_code'];
 		if ($this->template->order['customerUsername'] != $this->user->identity->data['username']) {
 			$this->error();
 		}
@@ -77,7 +78,7 @@ class UserPresenter extends BasePresenter
 	 */
 	public function createComponentOrder()
 	{
-		$control = new Order($this->template->order, $this->template->products);
+		$control = new Order($this->template->order, $this->template->products, $this->template->show_order_code);
 		return $control;
 	}
 
@@ -87,9 +88,9 @@ class UserPresenter extends BasePresenter
 		if ($this->getUser()->isLoggedIn()) {
 			$this->template->items = $this->cartManager->getItems($this->getUser()->id);
 			$this->template->total = $this->cartManager->getPrice($this->getUser()->id);
+			$this->template->show_order_code = $this->parameters['product']['show_order_code'];
 		} else {
 			$this->template->items = [];
-			$this->template->total = 0;
 		}
 	}
 
