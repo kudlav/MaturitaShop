@@ -299,7 +299,6 @@ class OrderManager extends Nette\Object
 				'id' => $row->products_id,
 				'name' => $row->products->name,
 				'description' => $row->products->description,
-				'condition' => $row->products->condition,
 				'weight' => $row->products->weight,
 			];
 		}

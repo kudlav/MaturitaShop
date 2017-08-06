@@ -15,7 +15,6 @@ class ProductManager extends Nette\Object
 		COLUMN_ID = 'id',
 		COLUMN_NAME = 'name',
 		COLUMN_DESCRIPTION = 'description',
-		COLUMN_CONDITION = 'condition',
 		COLUMN_PRICE = 'price',
 		COLUMN_QUANTITY = 'quantiti',
 		COLUMN_TIMESTAMP = 'timestamp',
@@ -71,7 +70,6 @@ class ProductManager extends Nette\Object
 			$ret[]= [
 				'id' => $product->id,
 				'name' => $product->name,
-				'condition' => $product->condition,
 				'price' => $product->price,
 				'photo' => $product->photo,
 				'category' => $product->category,
@@ -120,7 +118,6 @@ class ProductManager extends Nette\Object
 			$ret[]= [
 				'id' => $row->id,
 				'name' => $row->name,
-				'condition' => $row->condition,
 				'price' => $row->price,
 				'photo' => $row->photo,
 				'category' => $row->category,
