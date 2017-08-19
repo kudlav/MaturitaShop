@@ -7,6 +7,7 @@ use Nette;
 use App\FrontModule\Model;
 use App\FrontModule\Model\CartManager;
 use App\FrontModule\Model\OrderManager;
+use App\FrontModule\Model\PriceInvalidException;
 
 
 class UserPresenter extends BasePresenter
@@ -86,9 +87,11 @@ class UserPresenter extends BasePresenter
 	public function renderCart()
 	{
 		if ($this->getUser()->isLoggedIn()) {
-			$this->template->items = $this->cartManager->getItems($this->getUser()->id);
-			$this->template->total = $this->cartManager->getPrice($this->getUser()->id);
 			$this->template->show_order_code = $this->parameters['product']['show_order_code'];
+			$this->template->items = $this->cartManager->getItems($this->getUser()->id);
+			try {
+				$this->template->total = $this->cartManager->getPrice($this->getUser()->id);
+			} catch (PriceInvalidException $e) {}
 		} else {
 			$this->template->items = [];
 		}

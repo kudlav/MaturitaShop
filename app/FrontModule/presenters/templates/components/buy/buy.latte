@@ -30,10 +30,10 @@
 				<div class="id">{if $show_order_code}{sprintf("%05d", $item['id'])}{/if}</div>
 				<div class="cleaner"></div>
 				<div class="left">
-					{$item['price']|number:0:',':' '} Kč/ks <br>
+					{ifset $item['price_text']}{$item['price_text']} {/ifset}{ifset $item['price']}{$item['price']|number:0:',':' '} Kč/ks{/ifset}<br>
 				</div>
 				<div class="price">
-					<strong> {$item['price']*$item['count']|number:0:',':' '} Kč</strong>
+					<strong>{if isset($item['price_text'])}cenu upřesníme{else}{$item['price']*$item['count']|number:0:',':' '} Kč{/if}</strong>
 				</div>
 				<div class="cleaner"></div>
 			</div>
@@ -42,6 +42,6 @@
 </div>
 <div class="cleaner"></div>
 
-<div class="total">Celkem k úhradě: <strong>{$total|number:0:',':' '} Kč</strong></div>
+<div class="total">Celkem k úhradě: <strong>{if isset($total)}{$total|number:0:',':' '} Kč{else}bude upřesněno{/if}</strong></div>
 <div class="back"><a href="{plink Product:buy 'deliverPay'}"><button class="form-button">&larr; Doprava a platba</button></a></div>
 <div class="right"><a href="{plink Product:submitOrder}"><button class="form-button">Potvrdit objednávku</button></a></div>

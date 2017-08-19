@@ -63,12 +63,12 @@
                                 <td n:if="$show_order_code">{sprintf("%05d", $product['id'])}</td>
                                 <td>{$product['name']}</td>
                                 <td class="right">{$product['quantity']}</td>
-                                <td class="right">{$product['price']},-</td>
-                                <td class="right">{$product['price']*$product['quantity']},-</td>
+                                <td class="right">{ifset $product['price_text']}{$product['price_text']} {/ifset}{ifset $product['price']}{$product['price']|number:0:',':' '},-{/ifset}</td>
+                                <td class="right">{if isset($product['price_text'])} bude upřesněno{else}{$product['price']*$product['quantity']|number:0:',':' '},-{/if}</td>
                             </tr>
                         </tbody>
                     </table>
-                    <br><div class="total">Celkem k úhradě: <strong>{$order['total']|number:0:',':'.'},- Kč</strong></div>
+                    <br><div class="total">Celkem k úhradě: <strong>{if isset($order['total'])}{$order['total']|number:0:',':' '} Kč{else}bude upřesněno{/if}</strong></div>
                 </div>
             </div>
         </li>

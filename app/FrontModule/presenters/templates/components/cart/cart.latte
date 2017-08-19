@@ -10,7 +10,7 @@
                 {/if}
             </li>
             <li>{$cart['count']|number:0:',':' '} ks</li>
-            <li>{$cart['price']|number:0:',':' '} Kč</li>
+            <li n:ifset="$cart['price']">{$cart['price']|number:0:',':' '} Kč</li>
         </ul>
     </a>
     <div class="sign-in">

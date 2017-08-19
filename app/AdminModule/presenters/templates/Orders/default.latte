@@ -25,7 +25,7 @@
 				<td>OBJ{sprintf("%05d", $order['id'])}</td>
 				<td class="center">{$order['timestamp']|date:'j. n. Y'}<br>{$order['timestamp']|date:'G:i'}</td>
 				<td class="center">{$order['customer'][0]} {$order['customer'][1]}</td>
-				<td class="right">{$order['total']|number:0:',':'.'},-</td>
+				<td class="right">{if isset($order['total'])}{$order['total']|number:0:',':'.'},-{else}<span class="error">upřesnit</span>{/if}</td>
 				<td class="center">{$order['delivery']}</td>
 				<td class="center">{$order['payment']}</td>
 				<td class="center">

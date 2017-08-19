@@ -28,6 +28,7 @@ class OrderManager extends Nette\Object
 		COLUMN_ORDER_ID = 'orders_id',
 		COLUMN_PRODUCT = 'products_id',
 		COLUMN_PRICE = 'price',
+		COLUMN_PRICE_TEXT = 'price_text',
 		COLUMN_QUANTITY = 'quantity',
 
 		TABLE_BASKETS = 'baskets',
@@ -187,6 +188,7 @@ class OrderManager extends Nette\Object
 							self::COLUMN_ORDER_ID => $orders->id,
 							self::COLUMN_PRODUCT => $product['id'],
 							self::COLUMN_PRICE => $product['price'],
+							self::COLUMN_PRICE_TEXT => $product['price_text'],
 							self::COLUMN_QUANTITY => $product['count'],
 						));
 
@@ -298,6 +300,7 @@ class OrderManager extends Nette\Object
 		foreach ($query as $row) {
 			$products[] = [
 				'price' => $row->price,
+				'price_text' => $row->price_text,
 				'quantity' => $row->quantity,
 				'id' => $row->products_id,
 				'name' => $row->products->name,

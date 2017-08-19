@@ -44,9 +44,10 @@ class CartManager extends Nette\Object
 	}
 
 	/**
-	 * Return total price of cart of user.
+	 * Return total price of cart of specified user.
 	 * @param int $userId
-	 * @return int
+	 * @throws PriceInvalidException
+	 * @return int The price of user cart.
 	 */
 	public function getPrice($userId)
 	{
@@ -54,6 +55,9 @@ class CartManager extends Nette\Object
 
 		$ret = 0;
 		foreach ($query as $row) {
+			if ($row->product->price_text !== NULL) {
+				throw new PriceInvalidException;
+			}
 			$ret+= $row->quantity * $row->products->price;
 		}
 		return $ret;
@@ -76,6 +80,7 @@ class CartManager extends Nette\Object
 				'name' => $row->products->name,
 				'quantity' => $row->products->quantity,
 				'price' => $row->products->price,
+				'price_text' => $row->products->price_text,
 				'show' => $row->products->show,
 				'photo' => $row->products->photo,
 			];

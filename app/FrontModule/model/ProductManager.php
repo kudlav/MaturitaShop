@@ -16,6 +16,7 @@ class ProductManager extends Nette\Object
 		COLUMN_NAME = 'name',
 		COLUMN_DESCRIPTION = 'description',
 		COLUMN_PRICE = 'price',
+		COLUMN_PRICE_TEXT = 'price_text',
 		COLUMN_QUANTITY = 'quantiti',
 		COLUMN_TIMESTAMP = 'timestamp',
 		COLUMN_CATEGORY  = 'category',
@@ -71,6 +72,7 @@ class ProductManager extends Nette\Object
 				'id' => $product->id,
 				'name' => $product->name,
 				'price' => $product->price,
+				'price_text' => $product->price_text,
 				'photo' => $product->photo,
 				'category' => $product->category,
 			];
@@ -114,13 +116,14 @@ class ProductManager extends Nette\Object
 		}
 
 		$ret = [];
-		foreach ($query as $row) {
+		foreach ($query as $product) {
 			$ret[]= [
-				'id' => $row->id,
-				'name' => $row->name,
-				'price' => $row->price,
-				'photo' => $row->photo,
-				'category' => $row->category,
+				'id' => $product->id,
+				'name' => $product->name,
+				'price' => $product->price,
+				'price_text' => $product->price_text,
+				'photo' => $product->photo,
+				'category' => $product->category,
 			];
 		}
 		return $ret;

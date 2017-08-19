@@ -28,7 +28,7 @@
 			<br><div class="quantity">Skladem: {$product['quantity']|number:0:',':' '} ks</div>
 		</div>
 		<div class="price">
-			{$product['price']|number:0:',':' '} Kč
+			{ifset $product['price_text']}{$product['price_text']} {/ifset}{ifset $product['price']}{$product['price']|number:0:',':' '} Kč{/ifset}
 		</div>
 		<div class="cleaner"></div>
 		<div class="to-cart">

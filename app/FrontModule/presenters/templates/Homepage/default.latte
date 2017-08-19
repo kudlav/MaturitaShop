@@ -20,7 +20,7 @@
 								</div>
 							</a>
 							<div class="status">
-								<div class="price">{$product['price']|number:0:',':' '} Kč</div>
+								<div class="price">{ifset $product['price_text']}{$product['price_text']} {/ifset}{ifset $product['price']}{$product['price']|number:0:',':' '} Kč{/ifset}</div>
 								<div class="to-cart"><a n:href="User:addToCart $product['id'], 'Homepage:'"><button>Do košíku</button></a></div>
 								<div class="cleaner"></div>
 							</div>

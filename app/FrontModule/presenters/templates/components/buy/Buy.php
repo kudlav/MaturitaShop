@@ -3,6 +3,7 @@
 namespace App\FrontModule\Presenters;
 
 use App\FrontModule\Model\OrderManager;
+use App\FrontModule\Model\PriceInvalidException;
 use Nette\Application\UI\Control;
 use Nette\Http\SessionSection;
 use App\FrontModule\Model\CartManager;
@@ -49,7 +50,14 @@ class Buy extends Control
 			'Vaše poznámka' => ['name' => $this->session->note],
 			];
 
-		$template->total = $this->cartManager->getPrice($userId);
+		$this->session->total = NULL;
+
+		$template->total = NULL;
+		// Get price of cart
+		try {
+			$template->total = $this->cartManager->getPrice($userId);
+		} catch (PriceInvalidException $e) {}
+		// Get price of delivery and payment
 		foreach ($template->form as $item => $value) {
 			if (isset($value['price'])) {
 				$template->total += $value['price'];
