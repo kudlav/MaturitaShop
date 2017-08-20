@@ -26,8 +26,8 @@
 				<td class="center">{$order['timestamp']|date:'j. n. Y'}<br>{$order['timestamp']|date:'G:i'}</td>
 				<td class="center">{$order['customer'][0]} {$order['customer'][1]}</td>
 				<td class="right">{if isset($order['total'])}{$order['total']|number:0:',':'.'},-{else}<span class="error">upřesnit</span>{/if}</td>
-				<td class="center">{$order['delivery']}</td>
-				<td class="center">{$order['payment']}</td>
+				<td class="center">{ifset $order['delivery']}{$order['delivery']}{/ifset}</td>
+				<td class="center">{ifset $order['payment']}{$order['payment']}{/ifset}</td>
 				<td class="center">
 					<select n:name="'s'.$order['id']" n:snippet="'order'.$order['id']" class="state{array_search($order['state'],$states)}" onchange="$(this).closest('form').submit()"></select>
 				</td>

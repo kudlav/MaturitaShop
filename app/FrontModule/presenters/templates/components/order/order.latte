@@ -17,8 +17,8 @@
                             <tr><td colspan="2" class="id"></td></tr>
                             <tr><td colspan="2"></td></tr>
                             <tr><td>Stav:</td><td>{$order['state']}</td></tr>
-                            <tr><td>Platba:</td><td>{$order['payment']} {ifset $order['paymentPrice']}({$order['paymentPrice']} Kč){/ifset}</td></tr>
-                            <tr><td>Doprava:</td><td>{$order['delivery']} {ifset $order['deliveryPrice']}({$order['deliveryPrice']} Kč){/ifset}</td></tr>
+                            <tr><td>Platba:</td><td>{ifset $order['payment']}{$order['payment']} {ifset $order['paymentPrice']}({$order['paymentPrice']} Kč){/ifset}{/ifset}</td></tr>
+                            <tr><td>Doprava:</td><td>{ifset $order['delivery']}{$order['delivery']} {ifset $order['deliveryPrice']}({$order['deliveryPrice']} Kč){/ifset}{/ifset}</td></tr>
                             <tr><td colspan="2" class="id"></td></tr>
                             <tr><td colspan="2"></td></tr>
                             <tr><td>Poznámka<br>zákazníka:</td><td>{$order['note']}</td></tr>

@@ -44,25 +44,27 @@ class Buy extends Control
 
 		$delivery = $this->orderManager->getDelivery(TRUE);
 		$payment = $this->orderManager->getPayment(TRUE);
-		$template->form = [
-			'Doručení' => $delivery[$this->session->delivery],
-			'Platba' => $payment[$this->session->payment],
-			'Vaše poznámka' => ['name' => $this->session->note],
-			];
 
-		$this->session->total = NULL;
+		$template->form = [];
+		$template->form['Vaše poznámka'] = ['name' => $this->session->note];
+		if ($this->session->delivery != NULL) {
+			$template->form['Doručení'] = $delivery[$this->session->delivery];
+		}
+		if ($this->session->payment != NULL) {
+			$template->form['Platba'] = $payment[$this->session->payment];
+		}
 
 		$template->total = NULL;
 		// Get price of cart
 		try {
 			$template->total = $this->cartManager->getPrice($userId);
-		} catch (PriceInvalidException $e) {}
-		// Get price of delivery and payment
-		foreach ($template->form as $item => $value) {
-			if (isset($value['price'])) {
-				$template->total += $value['price'];
+			// Get price of delivery and payment
+			foreach ($template->form as $item => $value) {
+				if (isset($value['price'])) {
+					$template->total += $value['price'];
+				}
 			}
-		}
+		} catch (PriceInvalidException $e) {}
 		$this->session->total = $template->total;
 
 		$template->render();

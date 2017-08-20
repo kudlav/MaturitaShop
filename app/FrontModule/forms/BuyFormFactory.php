@@ -29,17 +29,24 @@ class BuyFormFactory extends Nette\Object
 	public function createForm()
 	{
 		$form = new Form;
-		$form->addGroup('Způsob dodání');
-		$form->addRadioList('delivery','', $this->orderManager->getDelivery())
-			->setAttribute('class','form-radio')
-			->setRequired('Zvolte způsob placení.')
-			->setValue($this->session->delivery);
 
-		$form->addGroup('Způsob platby');
-		$form->addRadioList('payment','', $this->orderManager->getPayment())
-			->setAttribute('class','form-radio')
-			->setRequired('Zvolte způsob dopravy.')
-			->setValue($this->session->payment);
+		$delivery = $this->orderManager->getDelivery();
+		if ($delivery) {
+			$form->addGroup('Způsob dodání');
+			$form->addRadioList('delivery','', $delivery)
+				->setAttribute('class','form-radio')
+				->setRequired('Zvolte způsob placení.')
+				->setValue($this->session->delivery);
+		}
+
+		$payment = $this->orderManager->getPayment();
+		if ($payment) {
+			$form->addGroup('Způsob platby');
+			$form->addRadioList('payment','', $payment)
+				->setAttribute('class','form-radio')
+				->setRequired('Zvolte způsob dopravy.')
+				->setValue($this->session->payment);
+		}
 
 		$form->setCurrentGroup();
 
@@ -61,9 +68,19 @@ class BuyFormFactory extends Nette\Object
 
 	public function onSuccess(Form $form, $values) {
 		$this->session->setExpiration('30 minutes');
-		$this->session->delivery = $values->delivery;
-		$this->session->payment = $values->payment;
 		$this->session->note = $values->note;
+
+		if (isset($values->delivery)) {
+			$this->session->delivery = $values->delivery;
+		} else {
+			$this->session->delivery = NULL;
+		}
+
+		if (isset($values->payment)) {
+			$this->session->payment = $values->payment;
+		} else {
+			$this->session->payment = NULL;
+		}
 
 		if (isset($this->session->back)) {
 			unset($this->session->back);
