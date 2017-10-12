@@ -21,6 +21,7 @@ class Registrator extends Nette\Object
 		COLUMN_STREET = 'street',
 		COLUMN_CITY = 'city',
 		COLUMN_POSTCODE = 'postcode',
+		COLUMN_PHONE = 'phone',
 		ROLE = 'customer';
 
 	/** @var Nette\Database\Context */
@@ -45,7 +46,11 @@ class Registrator extends Nette\Object
 		$surname = $values->surname;
 		$street = $values->street;
 		$city = $values->city;
-		$postcode = preg_replace('%\s+%', '', $values->postcode);
+		$postcode = preg_replace('%\s%', '', $values->postcode);
+		$phone = preg_replace('%(^\+|\s)%', '', $values->phone);
+		if (strlen($phone) == 9) {
+			$phone = "420" . $phone;
+		}
 
 		try {
 			$this->database->table(self::TABLE_NAME)->insert(array(
@@ -57,6 +62,7 @@ class Registrator extends Nette\Object
 				self::COLUMN_STREET => $street,
 				self::COLUMN_CITY => $city,
 				self::COLUMN_POSTCODE => $postcode,
+				self::COLUMN_PHONE => $phone,
 			));
 		} catch (Nette\Database\UniqueConstraintViolationException $e) {
 			throw new DuplicateNameException;
