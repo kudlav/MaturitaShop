@@ -13,6 +13,7 @@ parameters:
 
 	#contact - email and phone of operator
 	contact:
+		name: 'Vladimír Kudláč'
 		phone: +420 776 057 409
 		email: 'vladankudlac@<span style="display:none;">ignoruj mě</span>gmail.com'
 		email_from: 'vladankudlac@seznam.cz'
