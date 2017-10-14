@@ -22,6 +22,13 @@ class SignPresenter extends BasePresenter
 		$this->factory = $factory;
 	}
 
+	protected function startup() {
+		parent::startup();
+
+		if (!$this->parameters['eshop']) {
+			$this->error(); //Error 404
+		}
+	}
 
 	/**
 	 * Sign-in form factory.

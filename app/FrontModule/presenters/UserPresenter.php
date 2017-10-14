@@ -27,6 +27,13 @@ class UserPresenter extends BasePresenter
 		$this->orderManager = $orderManager;
 	}
 
+	protected function startup() {
+		parent::startup();
+
+		if (!$this->parameters['eshop']) {
+			$this->error(); //Error 404
+		}
+	}
 
 	/**
 	 * @return Navbar

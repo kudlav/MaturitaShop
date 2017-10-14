@@ -25,16 +25,16 @@
 
 	<div class="right-half">
 		<div class="left">
-			<br><div class="quantity">Skladem: {$product['quantity']|number:0:',':' '} ks</div>
+			<br><div n:if="$product['quantity']!==NULL" class="quantity">Skladem: {$product['quantity']|number:0:',':' '} ks</div>
 		</div>
 		<div class="price">
 			{ifset $product['price_text']}{$product['price_text']} {/ifset}{ifset $product['price']}{$product['price']|number:0:',':' '} Kč{/ifset}
 		</div>
 		<div class="cleaner"></div>
-		<div class="to-cart">
+		<div n:if="$eshop" class="to-cart">
 			<a n:href="User:addToCart $product->id, 'Product:default?id='.$product->id"><button><span data-icon="s" class="icon"></span>Do košíku</button></a>
 		</div>
-		<div class="cleaner"></div>
+		<div n:if="$eshop" class="cleaner"></div>
 
 		<p>{$product['description']|noescape}</p>
 	</div>
