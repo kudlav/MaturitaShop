@@ -37,6 +37,13 @@
 		<div n:if="$eshop" class="cleaner"></div>
 
 		<p>{$product['description']|noescape}</p>
+
+		<div n:if="$product_parameters['show_phone_order']" class="phone-order show-cards">
+			<div class="item">
+				<div class="id"><h3>Poptejte telefonicky:</h3></div>
+				{$phone}
+			</div>
+		</div>
 	</div>
 	<div class="cleaner"></div>
 </div>
