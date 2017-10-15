@@ -2,7 +2,7 @@
 Nette project made for school leaving exam. Basic system for e-shops containing order process, product list and static pages.
 
 ---
-Jedná se o mou maturitní práci. Cílem bylo vytvořit eshop s vlastní administrací a objednávkovým systémem. Momentálně toho umí eshop poměrně málo, to-do list je dosti dlouhý a chybějící funkce budou postupně doplňovány. V dohledné době budou vráceny zpět kategorie a přibude možnost mít více fotek k jednomu produktu. Stránka je responzivní a také ji lze v mobilním telefonu připnout stejně jako aplikaci. Momentálně nefunguje vyhledávání, to je způsobené starou verzí MySQL.
+Jedná se o mou maturitní práci. Cílem bylo vytvořit eshop s vlastní administrací a objednávkovým systémem. Momentálně toho umí eshop poměrně málo, to-do list je dosti dlouhý a chybějící funkce budou postupně doplňovány. Nyní jsou zpět kategorie produktů a přibyla možnost mít více fotek k jednomu produktu a vyhledávání je spolehlivé i pro starší verze databází. V dohledné době bude zjednodušen objednávkový systém, cíleno bude na objednávání emailovým formulářem a telefonickou cestou. Stránka je responzivní a také ji lze v mobilním telefonu připnout stejně jako aplikaci. Demo neobsahuje aktuální verzi, chybí v něm nové funkce.
 
 Testovací zákazník - a@b.cz, heslo: test
 Administrace - master, heslo: test

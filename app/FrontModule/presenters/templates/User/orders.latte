@@ -16,7 +16,7 @@
                     <div class="status">Stav: {$item['state']}</div>
                 </div>
                 <div class="price">
-                    Celkem: {$item['total']|number:0:',':' '} Kč
+                    Celkem: {if isset($item['total'])}{$item['total']|number:0:',':' '} Kč{else}bude upřesněno{/if}
                 </div>
                 <div class="cleaner"></div>
             </div>

@@ -17,8 +17,8 @@
                             <tr><td colspan="2" class="id"></td></tr>
                             <tr><td colspan="2"></td></tr>
                             <tr><td>Stav:</td><td>{$order['state']}</td></tr>
-                            <tr><td>Platba:</td><td>{$order['payment']} ({$order['paymentPrice']} Kč)</td></tr>
-                            <tr><td>Doprava:</td><td>{$order['delivery']} ({$order['deliveryPrice']} Kč)</td></tr>
+                            <tr><td>Platba:</td><td>{ifset $order['payment']}{$order['payment']} {ifset $order['paymentPrice']}({$order['paymentPrice']} Kč){/ifset}{/ifset}</td></tr>
+                            <tr><td>Doprava:</td><td>{ifset $order['delivery']}{$order['delivery']} {ifset $order['deliveryPrice']}({$order['deliveryPrice']} Kč){/ifset}{/ifset}</td></tr>
                             <tr><td colspan="2" class="id"></td></tr>
                             <tr><td colspan="2"></td></tr>
                             <tr><td>Poznámka<br>zákazníka:</td><td>{$order['note']}</td></tr>
@@ -51,7 +51,7 @@
                     <table class="table-products">
                         <thead>
                             <tr>
-                                <th>Kód</th>
+                                <th n:if="$show_order_code">Kód</th>
                                 <th>Název produktu</th>
                                 <th class="right">Počet ks</th>
                                 <th class="right">Cena za ks</th>
@@ -60,15 +60,15 @@
                         </thead>
                         <tbody>
                             <tr n:foreach="$products as $product">
-                                <td>{sprintf("%05d", $product['id'])}</td>
+                                <td n:if="$show_order_code">{sprintf("%05d", $product['id'])}</td>
                                 <td>{$product['name']}</td>
                                 <td class="right">{$product['quantity']}</td>
-                                <td class="right">{$product['price']},-</td>
-                                <td class="right">{$product['price']*$product['quantity']},-</td>
+                                <td class="right">{ifset $product['price_text']}{$product['price_text']} {/ifset}{ifset $product['price']}{$product['price']|number:0:',':' '},-{/ifset}</td>
+                                <td class="right">{if isset($product['price_text'])} bude upřesněno{else}{$product['price']*$product['quantity']|number:0:',':' '},-{/if}</td>
                             </tr>
                         </tbody>
                     </table>
-                    <br><div class="total">Celkem k úhradě: <strong>{$order['total']|number:0:',':'.'},- Kč</strong></div>
+                    <br><div class="total">Celkem k úhradě: <strong>{if isset($order['total'])}{$order['total']|number:0:',':' '} Kč{else}bude upřesněno{/if}</strong></div>
                 </div>
             </div>
         </li>

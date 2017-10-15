@@ -20,6 +20,13 @@ class RegisterPresenter extends BasePresenter
 		$this->factory = $factory;
 	}
 
+	protected function startup() {
+		parent::startup();
+
+		if (!$this->parameters['eshop']) {
+			$this->error(); //Error 404
+		}
+	}
 
 	/**
 	 * User-data form factory.

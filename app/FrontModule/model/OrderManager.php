@@ -28,6 +28,7 @@ class OrderManager extends Nette\Object
 		COLUMN_ORDER_ID = 'orders_id',
 		COLUMN_PRODUCT = 'products_id',
 		COLUMN_PRICE = 'price',
+		COLUMN_PRICE_TEXT = 'price_text',
 		COLUMN_QUANTITY = 'quantity',
 
 		TABLE_BASKETS = 'baskets',
@@ -58,8 +59,12 @@ class OrderManager extends Nette\Object
 	 */
 	public function detectPurchasePhase($session)
 	{
-		if (isset($session->delivery, $session->payment, $session->note) AND !isset($session->back)) {
-			return 1;
+		if (isset($session->note) AND !isset($session->back)) {
+			if (isset($session->delivery) OR !$this->getDelivery()) {
+				if (isset($session->payment) OR !$this->getPayment()) {
+					return 1;
+				}
+			}
 		}
 		return 0;
 	}
@@ -101,7 +106,10 @@ class OrderManager extends Nette\Object
 	private function deliveryPaymentBrief($query) {
 		$ret = [];
 		foreach ($query as $row) {
-			$ret[$row->id] = $row->name.' ('.$row->price.' Kč)';
+			$ret[$row->id] = $row->name;
+			if($row->price !== NULL) {
+				$ret[$row->id] .= ' ('.$row->price.' Kč)';
+			}
 		}
 		return $ret;
 	}
@@ -113,7 +121,6 @@ class OrderManager extends Nette\Object
 				'name' => $row->name,
 				'price' => $row->price,
 				'tooltip' => $row->tooltip,
-				'type' => $row->type,
 			];
 		}
 		return $ret;
@@ -155,12 +162,15 @@ class OrderManager extends Nette\Object
 	 */
 	public function orderProducts(array $items, SessionSection $session, int $userId)
 	{
-		if (!array_key_exists($session->delivery, $this->getDelivery())) {
+		$delivery = $this->getDelivery();
+		if (!array_key_exists($session->delivery, $delivery) AND $delivery) {
 			unset($session->delivery);
 			unset($session->payment);
 			throw new DeliveryInvalidException;
 		}
-		if (!array_key_exists($session->payment, $this->getPayment())) {
+
+		$payment = $this->getPayment();
+		if (!array_key_exists($session->payment, $payment) AND $payment) {
 			unset($session->delivery);
 			unset($session->payment);
 			throw new PaymentInvalidException;
@@ -185,6 +195,7 @@ class OrderManager extends Nette\Object
 							self::COLUMN_ORDER_ID => $orders->id,
 							self::COLUMN_PRODUCT => $product['id'],
 							self::COLUMN_PRICE => $product['price'],
+							self::COLUMN_PRICE_TEXT => $product['price_text'],
 							self::COLUMN_QUANTITY => $product['count'],
 						));
 
@@ -236,11 +247,17 @@ class OrderManager extends Nette\Object
 				'timestamp' => $row->timestamp,
 				'customer' => [$row->ref('users', 'customer')->name, $row->ref('users', 'customer')->surname, $row->customer],
 				'total' => $row->total,
-				'delivery' => $row->ref('delivery', 'delivery')->name,
-				'payment' => $row->ref('payment', 'payment')->name,
 				'state' => $row->state,
 				'note' => $row->note,
 			];
+		}
+
+		if ($row->delivery != NULL) {
+			$orders['delivery'] = $row->ref('delivery', 'delivery')->name;
+		}
+
+		if ($row->payment != NULL) {
+			$orders['payment'] = $row->ref('payment', 'payment')->name;
 		}
 
 		return $orders;
@@ -262,6 +279,7 @@ class OrderManager extends Nette\Object
 		$orders = [
 			'id' => $row->id,
 			'timestamp' => $row->timestamp,
+			'customerId' => $row->customer,
 			'customerName' => $row->ref('users','customer')->name,
 			'customerSurname' => $row->ref('users','customer')->surname,
 			'customerUsername' => $row->ref('users','customer')->username,
@@ -270,13 +288,19 @@ class OrderManager extends Nette\Object
 			'customerCity' => $row->ref('users','customer')->city,
 			'customerPostcode' => $row->ref('users','customer')->postcode,
 			'total' => $row->total,
-			'delivery' => $row->ref('delivery', 'delivery')->name,
-			'deliveryPrice' => $row->ref('delivery', 'delivery')->price,
-			'payment' => $row->ref('payment', 'payment')->name,
-			'paymentPrice' => $row->ref('payment', 'payment')->price,
 			'state' => $row->state,
 			'note' => $row->note,
 		];
+
+		if ($row->delivery != NULL) {
+			$orders['delivery'] = $row->ref('delivery', 'delivery')->name;
+			$orders['deliveryPrice'] = $row->ref('delivery', 'delivery')->price;
+		}
+
+		if ($row->payment != NULL) {
+			$orders['payment'] = $row->ref('payment', 'payment')->name;
+			$orders['paymentPrice'] =  $row->ref('payment', 'payment')->price;
+		}
 
 		return $orders;
 	}
@@ -295,12 +319,11 @@ class OrderManager extends Nette\Object
 		foreach ($query as $row) {
 			$products[] = [
 				'price' => $row->price,
+				'price_text' => $row->price_text,
 				'quantity' => $row->quantity,
-				'id' => $row->orders_id,
+				'id' => $row->products_id,
 				'name' => $row->products->name,
 				'description' => $row->products->description,
-				'condition' => $row->products->condition,
-				'weight' => $row->products->weight,
 			];
 		}
 

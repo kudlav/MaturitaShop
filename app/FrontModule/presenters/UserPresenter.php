@@ -7,6 +7,7 @@ use Nette;
 use App\FrontModule\Model;
 use App\FrontModule\Model\CartManager;
 use App\FrontModule\Model\OrderManager;
+use App\FrontModule\Model\PriceInvalidException;
 
 
 class UserPresenter extends BasePresenter
@@ -26,6 +27,13 @@ class UserPresenter extends BasePresenter
 		$this->orderManager = $orderManager;
 	}
 
+	protected function startup() {
+		parent::startup();
+
+		if (!$this->parameters['eshop']) {
+			$this->error(); //Error 404
+		}
+	}
 
 	/**
 	 * @return Navbar
@@ -66,7 +74,8 @@ class UserPresenter extends BasePresenter
 		}
 		$this->template->order = $this->orderManager->getOrder($id);
 		$this->template->products = $this->orderManager->getOrderedProducts($id);
-		if ($this->template->order['customerUsername'] != $this->user->identity->data['username']) {
+		$this->template->show_order_code = $this->parameters['product']['show_order_code'];
+		if ($this->template->order['customerId'] != $this->user->id) {
 			$this->error();
 		}
 	}
@@ -77,7 +86,7 @@ class UserPresenter extends BasePresenter
 	 */
 	public function createComponentOrder()
 	{
-		$control = new Order($this->template->order, $this->template->products);
+		$control = new Order($this->template->order, $this->template->products, $this->template->show_order_code);
 		return $control;
 	}
 
@@ -85,11 +94,13 @@ class UserPresenter extends BasePresenter
 	public function renderCart()
 	{
 		if ($this->getUser()->isLoggedIn()) {
+			$this->template->show_order_code = $this->parameters['product']['show_order_code'];
 			$this->template->items = $this->cartManager->getItems($this->getUser()->id);
-			$this->template->total = $this->cartManager->getPrice($this->getUser()->id);
+			try {
+				$this->template->total = $this->cartManager->getPrice($this->getUser()->id);
+			} catch (PriceInvalidException $e) {}
 		} else {
 			$this->template->items = [];
-			$this->template->total = 0;
 		}
 	}
 

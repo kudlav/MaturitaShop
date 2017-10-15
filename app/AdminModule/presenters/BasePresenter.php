@@ -3,6 +3,7 @@
 namespace App\AdminModule\Presenters;
 
 use Nette;
+use App\FrontModule\Model\Parameters;
 
 
 /**
@@ -11,6 +12,13 @@ use Nette;
 abstract class BasePresenter extends Nette\Application\UI\Presenter
 {
 	use \Nextras\Application\UI\SecuredLinksPresenterTrait;
+
+	/** @var Parameters */
+	protected $parameters;
+
+	public function injectParameters(Parameters $parameters) {
+		$this->parameters = $parameters->getParam();
+	}
 
 	protected function startup()
 	{

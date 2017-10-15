@@ -14,13 +14,13 @@ class ContactFormFactory extends Nette\Object
 
 	/**
 	 * @var Presenter $presenter
-	 * @var string $email
+	 * @var string $email_from
 	 */
-	private $presenter, $email;
+	private $presenter, $email_from;
 
-	public function __construct(Presenter $presenter, $email)
+	public function __construct(Presenter $presenter, $email_from)
 	{
-		$this->email = $email;
+		$this->email_from = $email_from;
 		$this->presenter = $presenter;
 	}
 
@@ -49,7 +49,7 @@ class ContactFormFactory extends Nette\Object
 	public function formSucceeded(Form $form, $values)
 	{
 		$mail = new Message();
-		$mail->setFrom('Auto CVK <info@auto-cvk.cz>')
+		$mail->setFrom('Auto CVK <'.$this->email_from.'>')
 			->addTo($values->email)
 			->setSubject($values->subject)
 			->setBody($values->message);

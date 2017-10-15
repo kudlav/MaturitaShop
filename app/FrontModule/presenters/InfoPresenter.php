@@ -24,6 +24,11 @@ class InfoPresenter extends BasePresenter
 		$this->template->payment = $this->orderManager->getPayment();
 	}
 
+	public function renderKontakty()
+	{
+		$this->template->contact = $this->parameters['contact'];
+	}
+
 	/**
 	 * @return Navbar
 	 */

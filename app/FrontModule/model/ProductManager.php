@@ -15,8 +15,8 @@ class ProductManager extends Nette\Object
 		COLUMN_ID = 'id',
 		COLUMN_NAME = 'name',
 		COLUMN_DESCRIPTION = 'description',
-		COLUMN_CONDITION = 'condition',
 		COLUMN_PRICE = 'price',
+		COLUMN_PRICE_TEXT = 'price_text',
 		COLUMN_QUANTITY = 'quantiti',
 		COLUMN_TIMESTAMP = 'timestamp',
 		COLUMN_CATEGORY  = 'category',
@@ -71,8 +71,8 @@ class ProductManager extends Nette\Object
 			$ret[]= [
 				'id' => $product->id,
 				'name' => $product->name,
-				'condition' => $product->condition,
 				'price' => $product->price,
+				'price_text' => $product->price_text,
 				'photo' => $product->photo,
 				'category' => $product->category,
 			];
@@ -98,9 +98,9 @@ class ProductManager extends Nette\Object
 	 * @param $string
 	 * @return array
 	 */
-	public function searchProduct($string)
+	public function searchProduct($string, $fulltext_search)
 	{
-		try {
+		if ($fulltext_search === TRUE) {
 			$query = $this->database->query("
 				SELECT *
 				FROM `products`
@@ -108,24 +108,22 @@ class ProductManager extends Nette\Object
 				ORDER BY 5 * MATCH(`name`) AGAINST (?) + MATCH(`description`) AGAINST (?) DESC
 				", $string, $string, $string);
 		}
-		catch(Nette\Database\DriverException $e){
-			\Tracy\Debugger::log('Unable to use fulltext search');
+		else {
 			$query = $this->database->query("
 			SELECT *
 			FROM `products`
 			WHERE ".self::COLUMN_NAME." like ? OR ".self::COLUMN_DESCRIPTION." like ?", "%".$string."%", "%".$string."%");
 		}
 
-
 		$ret = [];
-		foreach ($query as $row) {
+		foreach ($query as $product) {
 			$ret[]= [
-				'id' => $row->id,
-				'name' => $row->name,
-				'condition' => $row->condition,
-				'price' => $row->price,
-				'photo' => $row->photo,
-				'category' => $row->category,
+				'id' => $product->id,
+				'name' => $product->name,
+				'price' => $product->price,
+				'price_text' => $product->price_text,
+				'photo' => $product->photo,
+				'category' => $product->category,
 			];
 		}
 		return $ret;

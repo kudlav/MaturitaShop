@@ -20,8 +20,10 @@ class HomepagePresenter extends BasePresenter
 
 	public function renderDefault($search = NULL, $cat = NULL)
 	{
+		$this->template->eshop = $this->parameters['eshop'];
+
 		if ($search !== NULL) {
-			$this->template->products = $this->productManager->searchProduct($search);
+			$this->template->products = $this->productManager->searchProduct($search, $this->parameters['fulltext_search']);
 			$this->template->title = 'Hledaný výraz: '.htmlspecialchars($search);
 		}
 		elseif ($cat !== NULL) {

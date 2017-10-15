@@ -19,7 +19,7 @@
 						</table>
 					</div>
 					<div class="customer padding">
-						<form n:name="contactForm">
+						<form n:if="$detail['username']" n:name="contactForm">
 							{label subject /}<br><input n:name="subject" class="form-input"><br>
 							<input n:name="email" value="{$detail['username']}">
 							{label message /}<br><textarea n:name="message" class="form-input" style="height:4.5em"></textarea><br>

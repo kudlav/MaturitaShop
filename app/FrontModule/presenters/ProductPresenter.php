@@ -5,6 +5,7 @@ namespace App\FrontModule\Presenters;
 use Nette;
 use App\FrontModule\Model;
 use App\FrontModule\Forms\BuyFormFactory;
+use App\FrontModule\Forms\ContactFormFactory;
 use App\FrontModule\Model\ProductManager;
 use App\FrontModule\Model\CartManager;
 use App\FrontModule\Model\OrderManager;
@@ -39,10 +40,23 @@ class ProductPresenter extends BasePresenter
 		}
 		$this->template->categories = implode(' &gt; ', $this->productManager->getCategoryTree($this->template->product['category'], $this->template->baseUrl));
 		$this->template->productPhotos = explode(';', $this->template->product['photo']);
+		$this->template->product_parameters = $this->parameters['product'];
+		$this->template->eshop = $this->parameters['eshop'];
+	}
+
+	public function createComponentContactForm()
+	{
+		$operator_email = $this->parameters['contact']['email_from'];
+		$form = new ContactFormFactory($operator_email, $this->presenter);
+		return $form->create();
 	}
 
 	public function renderBuy($back)
 	{
+		if (!$this->parameters['eshop']) {
+			$this->error(); //Error 404
+		}
+
 		if (!$this->getUser()->isLoggedIn()) {
 			$this->flashMessage('Přihlaste se prosím.');
 			$this->redirect('Sign:in', ['state' => $this->storeRequest()]);
@@ -75,12 +89,16 @@ class ProductPresenter extends BasePresenter
 				$this->redirect('Product:buy');
 			};
 		} else {
-			$form = new Buy($this->getSession('buy'), $this->user, $this->cartManager, $this->orderManager);
+			$form = new Buy($this->getSession('buy'), $this->user, $this->cartManager, $this->orderManager, $this->parameters['product']['show_order_code']);
 		}
 		return $form;
 	}
 
 	public function actionSubmitOrder(){
+		if (!$this->parameters['eshop']) {
+			$this->error(); //Error 404
+		}	
+
 		$session = $this->getSession('buy');
 		$phase = $this->orderManager->detectPurchasePhase($session);
 

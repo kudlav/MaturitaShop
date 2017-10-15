@@ -7,6 +7,7 @@ use App\FrontModule\Model;
 use App\FrontModule\Model\CartManager;
 use App\FrontModule\Model\ProductManager;
 use App\FrontModule\Forms\SearchFormFactory;
+use App\FrontModule\Model\Parameters;
 
 
 /**
@@ -14,6 +15,12 @@ use App\FrontModule\Forms\SearchFormFactory;
  */
 abstract class BasePresenter extends Nette\Application\UI\Presenter
 {
+	/** @var Parameters */
+	protected $parameters;
+
+	public function injectParameters(Parameters $parameters) {
+		$this->parameters = $parameters->getParam();
+	}
 
 	/** @var CartManager */
 	private $cartManager;
@@ -38,6 +45,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 		$this->user->getStorage()->setNamespace('Front');
 
 		$this->template->page = $this->getName();
+		$this->template->phone = $this->parameters['contact']['phone'];
 	}
 
 	protected function createComponentSearch()
@@ -48,8 +56,13 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 
 	protected function createComponentCart()
 	{
-		$user = $this->getUser();
-		$control = new Cart($user, $this->cartManager);
+		if ($this->parameters['eshop']) {
+			$user = $this->getUser();
+			$control = new Cart($user, $this->cartManager);
+		}
+		else {
+			$control = new Operator($this->parameters['contact']);
+		}
 		return $control;
 	}
 
@@ -58,11 +71,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 	 */
 	protected function createComponentNavbar()
 	{
-		$items = [
-			'Světla, blikače' => ['Homepage:default', '0'],
-			'<span class="subitem">Tajné</span>' => ['Homepage:default', '2'],
-			'<span class="subitem">Ostatní</span>' => ['Homepage:default', '1'],
-		];
+		$items = $this->parameters['category_menu'];
 		$control = new Navbar('Kategorie', $items, 'cat');
 		return $control;
 	}

@@ -56,7 +56,7 @@ class CartQuantityFormFactory extends Nette\Object
 		if ($this->presenter->isAjax()) {
 			foreach ($values as $id => $value) {
 				if(!$this->cartManager->addItem($this->presenter->user->id, str_replace('i', '', $id), $value)){
-					$this->presenter->flashMessage('Chyba, množství musí být celé číslo, větší než 1.','flash-error');
+					$this->presenter->flashMessage('Chyba, množství musí být celé číslo, větší než 0.','flash-error');
 				}
 			}
 			$this->presenter->redrawControl('flashMessage');
