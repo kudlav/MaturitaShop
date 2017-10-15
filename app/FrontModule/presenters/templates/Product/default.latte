@@ -44,6 +44,14 @@
 				{$phone}
 			</div>
 		</div>
+
+		<div n:if="$product_parameters['show_email_order']" class="email-order show-cards">
+		<br>
+			<div class="item">
+				<div class="id"><h3>Kontaktovat emailem:</h3></div>
+				{control contactForm}
+			</div>
+		</div>
 	</div>
 	<div class="cleaner"></div>
 </div>

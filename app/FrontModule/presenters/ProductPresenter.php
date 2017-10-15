@@ -5,6 +5,7 @@ namespace App\FrontModule\Presenters;
 use Nette;
 use App\FrontModule\Model;
 use App\FrontModule\Forms\BuyFormFactory;
+use App\FrontModule\Forms\ContactFormFactory;
 use App\FrontModule\Model\ProductManager;
 use App\FrontModule\Model\CartManager;
 use App\FrontModule\Model\OrderManager;
@@ -41,6 +42,13 @@ class ProductPresenter extends BasePresenter
 		$this->template->productPhotos = explode(';', $this->template->product['photo']);
 		$this->template->product_parameters = $this->parameters['product'];
 		$this->template->eshop = $this->parameters['eshop'];
+	}
+
+	public function createComponentContactForm()
+	{
+		$operator_email = $this->parameters['contact']['email_from'];
+		$form = new ContactFormFactory($operator_email, $this->presenter);
+		return $form->create();
 	}
 
 	public function renderBuy($back)
