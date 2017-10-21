@@ -8,16 +8,16 @@ use Nette\Application\UI\Control;
 class Navbar extends Control
 {
 	/**
-	 * @var string $title
+	 * @var string $heading
 	 * @var array $items
 	 */
-	private $title;
+	private $heading;
 	private $items;
 
-	public function  __construct($title, $items)
+	public function  __construct($heading, $items)
 	{
 		parent::__construct();
-		$this->title = $title;
+		$this->heading = $heading;
 		$this->items = $items;
 	}
 
@@ -26,7 +26,7 @@ class Navbar extends Control
 		$template = $this->template;
 		$template->setFile(__DIR__ . '/navbar.latte');
 		$template->items = $this->items;
-		$template->title = $this->title;
+		$template->heading = $this->heading;
 		$template->page = $this->getPresenter()->getName().':'.$this->getPresenter()->getAction();
 
 		$template->render();

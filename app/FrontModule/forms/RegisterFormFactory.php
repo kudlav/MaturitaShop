@@ -34,7 +34,6 @@ class RegisterFormFactory extends Nette\Object
 
 		$form->addText('email','Email:')
 			->setAttribute('class','form-input')
-			->setType('email')
 			->addRule(Form::EMAIL, 'Zadejte platnou emailovou adresu.')
 			->addRule(Form::MAX_LENGTH,'Zadaný údaj je příliš dlouhý',45)
 			->setRequired('Zadejte prosím email');
@@ -57,7 +56,6 @@ class RegisterFormFactory extends Nette\Object
 		$form->addText('phone','Telefon:')
 			->setAttribute('class','form-input')
 			->setRequired('Zadejte prosím telefonní číslo.')
-			->addCondition(Form::FILLED)
 			->addRule(Form::PATTERN,'Číslo zadejte např. ve tvaru +420 765 246 265', '([\+]?\d{3})?([ ]?\d{3}){3}');
 
 		$form->addText('street','Ulice, č.p.:')
@@ -73,7 +71,6 @@ class RegisterFormFactory extends Nette\Object
 		$form->addText('postcode','PSČ:')
 			->setAttribute('class','form-input')
 			->setRequired('Zadejte prosím poštovní směrovací číslo')
-			->addCondition(Form::FILLED)
 			->addRule(Form::PATTERN, 'PSČ ve tvaru 61200 nebo 612 00', '[0-9]{3}[ ]?[0-9]{2}');
 
 		$form->addCheckbox('terms','Souhlasím s obchodními podmínkami.')

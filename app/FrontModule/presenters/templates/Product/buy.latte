@@ -1,7 +1,7 @@
 {block content}
 
 <nav>
-	<h3>{$title}</h3>
+	<h3>{$heading}</h3>
 	<ul>
 		<li n:foreach="$items as $count => $title">
 			<a class="{if $phase == $count}selected{elseif $phase <= $count} disabled{else}" href="{plink Product:buy 'true'}{/if}"><span class="count">{$count+1}</span>{$title}</a>

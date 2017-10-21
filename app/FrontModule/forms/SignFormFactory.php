@@ -26,7 +26,6 @@ class SignFormFactory extends Nette\Object
 	{
 		$form = new Form;
 		$form->addText('username', 'Email:')
-			->setType('email')
 			->setRequired('Zadejte prosím email.')
 			->addRule(Form::EMAIL, 'Zadejte platnou emailovou adresu.')
 			->setAttribute('placeholder','Zadejte přihlašovací email')

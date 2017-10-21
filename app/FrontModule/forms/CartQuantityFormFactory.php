@@ -36,7 +36,8 @@ class CartQuantityFormFactory extends Nette\Object
 		foreach ($items as $item) {
 			$form->addText('i'.$item['id'])
 				->setValue($item['count'])
-				->setType('number');
+				->setRequired(true)
+				->addRule(Form::INTEGER, 'Zadejte celé číslo, větší než 0.');
 		}
 
 		$form->addSubmit('recalc', 'Přepočítat')

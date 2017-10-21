@@ -33,7 +33,6 @@ class ContactFormFactory extends Nette\Object
 
 		$form->addText('email','Váš email:')
 			->setAttribute('class','form-input')
-			->setType('email')
 			->addRule(Form::EMAIL, 'Zadejte platnou emailovou adresu.')
 			->setRequired('Zadejte váš email');
 

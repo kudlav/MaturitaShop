@@ -66,7 +66,7 @@ class ProductPresenter extends BasePresenter
 			$session = $this->getSession('buy');
 			$session->back = TRUE;
 		}
-		$this->template->title = "Vaše objednávka:";
+		$this->template->heading = "Vaše objednávka:";
 		$this->template->items = ['Doprava a platba', 'Souhrn objednávky'];
 		$this->template->phase = $this->orderManager->detectPurchasePhase($this->getSession('buy'));
 	}
