@@ -40,6 +40,24 @@ class RegisterPresenter extends BasePresenter
 	}
 
 	/**
+	 * @return Navbar
+	 */
+	protected function createComponentNavbar()
+	{
+		if ($this->getUser()->isLoggedIn()) {
+			$items = $this->parameters['logged_menu'];
+		} else {
+			$items = [
+				'Košík' => ['User:cart'],
+				'Přihlásit se' => ['Sign:in', $this->storeRequest()],
+				'Zaregistrovat se' => ['Register:default'],
+			];
+		}
+		$control = new Navbar('Můj účet', $items);
+		return $control;
+	}
+
+	/**
 	 * @param Form $form
 	 * @param Nette\Utils\ArrayHash $values
 	 */

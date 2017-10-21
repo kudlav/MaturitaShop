@@ -36,6 +36,13 @@ parameters:
 			- 'Homepage:default'
 			- '1'
 
+	logged_menu:
+		'Košík':
+			- 'User:cart'
+		'Objednávky':
+			- 'User:orders'
+		'Odhlásit se':
+			- 'Sign:out'
 
 php:
 	date.timezone: Europe/Prague

@@ -44,6 +44,23 @@ class SignPresenter extends BasePresenter
 		return $form;
 	}
 
+	/**
+	 * @return Navbar
+	 */
+	protected function createComponentNavbar()
+	{
+		if ($this->getUser()->isLoggedIn()) {
+			$items = $this->parameters['logged_menu'];
+		} else {
+			$items = [
+				'Košík' => ['User:cart'],
+				'Přihlásit se' => ['Sign:in', $this->storeRequest()],
+				'Zaregistrovat se' => ['Register:default'],
+			];
+		}
+		$control = new Navbar('Můj účet', $items);
+		return $control;
+	}
 
 	public function actionOut()
 	{

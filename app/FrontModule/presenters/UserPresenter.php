@@ -41,11 +41,7 @@ class UserPresenter extends BasePresenter
 	protected function createComponentNavbar()
 	{
 		if ($this->getUser()->isLoggedIn()) {
-			$items = [
-				'Košík' => ['User:cart'],
-				'Objednávky' => ['User:orders'],
-				'Odhlásit se' => ['Sign:out'],
-			];
+			$items = $this->parameters['logged_menu'];
 		} else {
 			$items = [
 				'Košík' => ['User:cart'],
