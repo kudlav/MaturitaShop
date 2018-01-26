@@ -3,11 +3,13 @@
 	"description": "Nette project made for school leaving exam. Basic system for e-shops containing order process, product list and static pages.",
 	"homepage": "http://kudlac.tode.cz/",
 	"type": "project",
-	"license": ["Will be specified", "ask author"],
+	"license": ["MIT"],
 	"authors": [
 		{
 			"name": "Vladan Kudlac",
-			"homepage": "http://kudlac.tode.cz/"
+			"email": "vladankudlac@gmail.com",
+			"homepage": "http://kudlac.tode.cz/",
+			"role": "Developer"
 		}
 	],
 	"require": {
@@ -32,10 +34,5 @@
 	"require-dev": {
 		"nette/tester": "^2.0"
 	},
-	"minimum-stability": "stable",
-	"config": {
-		"platform": {
-			"php": "7.0"
-		}
-	}
+	"minimum-stability": "stable"
 }

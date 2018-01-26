@@ -33,6 +33,6 @@ http://vladan.azurewebsites.net
 3. Change *app\config\config.local.neon*  to fit your database
 
 ### License
-- MaturitaShop: Will be specified, ask author (http://kudlac.tode.cz)
+- MaturitaShop: MIT License (http://kudlac.tode.cz)
 - Nette: New BSD License or GPL 2.0 or 3.0 (https://nette.org/license)
 - Adminer: Apache License 2.0 or GPL 2 (https://www.adminer.org)

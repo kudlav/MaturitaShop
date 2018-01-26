@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "8d7bd38e0a9ecc5e9c0839a0fe8674db",
+    "content-hash": "0b71d4be898cbbe82db142adf05a7fc4",
     "packages": [
         {
             "name": "dg/adminer-custom",
-            "version": "v1.9.2",
+            "version": "v1.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dg/adminer-custom.git",
-                "reference": "f1982e3b59d1435e70c0f58a78d3b417a4887ccd"
+                "reference": "1bf191771b540b367d29161d67d1ca9c1503d7b0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dg/adminer-custom/zipball/f1982e3b59d1435e70c0f58a78d3b417a4887ccd",
-                "reference": "f1982e3b59d1435e70c0f58a78d3b417a4887ccd",
+                "url": "https://api.github.com/repos/dg/adminer-custom/zipball/1bf191771b540b367d29161d67d1ca9c1503d7b0",
+                "reference": "1bf191771b540b367d29161d67d1ca9c1503d7b0",
                 "shasum": ""
             },
             "type": "library",
@@ -33,7 +33,7 @@
                 "postgresql",
                 "sqlite"
             ],
-            "time": "2017-08-30T07:41:05+00:00"
+            "time": "2018-01-25T17:23:26+00:00"
         },
         {
             "name": "latte/latte",
@@ -1373,8 +1373,5 @@
     "platform": {
         "php": ">= 7.0"
     },
-    "platform-dev": [],
-    "platform-overrides": {
-        "php": "7.0"
-    }
+    "platform-dev": []
 }
