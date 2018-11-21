@@ -13,10 +13,10 @@ parameters:
 
 	#contact - email and phone of operator
 	contact:
-		name: 'Vladimír Kudláč'
-		phone: +420 776 057 409
-		email: 'vladankudlac@<span style="display:none;">ignoruj mě</span>gmail.com'
-		email_from: 'vladankudlac@seznam.cz'
+		name: 'Marek Musil & Vladan Kudláč'
+		phone: +420 123 456 789
+		email: 'IIS@<span style="display:none;">ignoruj mě</span>dochazku.cekuj.net'
+		email_from: 'noreply@dochazku.cekuj.net'
 
 	#product - enable or disable features on product detail pages [true/false]
 	product:
@@ -26,13 +26,19 @@ parameters:
 
 	#menu at homepage; 1.line = link title; 2.line = target presenter:action; 3.line = category id
 	category_menu:
-		'Světla, blikače':
+		'Pastelky':
 			- 'Homepage:default'
 			- '0'
-		'<span class="subitem">Tajné</span>':
+		'<span class="subitem">Obyčejné</span>':
 			- 'Homepage:default'
-			- '2'
-		'<span class="subitem">Ostatní</span>':
+			- '99'
+		'<span class="subitem">Progresso</span>':
+			- 'Homepage:default'
+			- '99'
+		'<span class="subitem">Voskovky</span>':
+			- 'Homepage:default'
+			- '99'
+		'Skicáky':
 			- 'Homepage:default'
 			- '1'
 
