@@ -8,8 +8,10 @@ use Nette;
 /**
  * User registrator
  */
-class ProductManager extends Nette\Object
+class ProductManager
 {
+	use Nette\SmartObject;
+
 	const
 		TABLE_NAME = 'products',
 		COLUMN_ID = 'id',

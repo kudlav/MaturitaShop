@@ -8,8 +8,9 @@ use Nette\Application\UI\Form;
 use Nette\Http\Session;
 
 
-class BuyFormFactory extends Nette\Object
+class BuyFormFactory
 {
+	use Nette\SmartObject;
 
 	/**
 	 * @var Session $session

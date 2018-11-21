@@ -35,7 +35,7 @@ class HomepagePresenter extends BasePresenter
 			$this->template->title = 'Kategorie: '.implode(' &gt; ', $this->productManager->getCategoryTree($cat, $this->template->baseUrl));
 		}
 		else {
-			$this->template->products = $this->productManager->products;
+			$this->template->products = $this->productManager->getProducts();
 			$this->template->title = 'Nové produkty';
 		}
 	}

@@ -8,8 +8,10 @@ use Nette;
 /**
  * Cart management.
  */
-class CartManager extends Nette\Object
+class CartManager
 {
+	use Nette\SmartObject;
+
 	const
 		TABLE_BASKETS = 'baskets',
 		TABLE_PRODUCTS = 'products',

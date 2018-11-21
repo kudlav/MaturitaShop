@@ -9,8 +9,10 @@ use Nette\Http\SessionSection;
 /**
  * Order manager
  */
-class OrderManager extends Nette\Object
+class OrderManager
 {
+	use Nette\SmartObject;
+
 	const
 		STATE = 'čeká na vyřízení',
 

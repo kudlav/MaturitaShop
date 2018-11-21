@@ -9,8 +9,10 @@ use Nette\Security\Passwords;
 /**
  * User registrator
  */
-class Registrator extends Nette\Object
+class Registrator
 {
+	use Nette\SmartObject;
+
 	const
 		TABLE_NAME = 'users',
 		COLUMN_EMAIL = 'username',

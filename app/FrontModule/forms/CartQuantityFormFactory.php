@@ -8,8 +8,9 @@ use Nette\Application\UI\Form;
 use Nette\Application\UI\Presenter;
 
 
-class CartQuantityFormFactory extends Nette\Object
+class CartQuantityFormFactory
 {
+	use Nette\SmartObject;
 
 	/**
 	 * @var CartManager $cartManager

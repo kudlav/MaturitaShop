@@ -8,8 +8,10 @@ use Nette,
 	App\FrontModule\Model\OrderManager;
 
 
-class ChangeStateFormFactory extends Nette\Object
+class ChangeStateFormFactory
 {
+	use Nette\SmartObject;
+
 	/** @var Presenter */
 	private $presenter;
 

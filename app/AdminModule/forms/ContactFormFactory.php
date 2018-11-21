@@ -9,8 +9,9 @@ use Nette\Mail\SendmailMailer;
 use Nette\Application\UI\Presenter;
 
 
-class ContactFormFactory extends Nette\Object
+class ContactFormFactory
 {
+	use Nette\SmartObject;
 
 	/**
 	 * @var Presenter $presenter

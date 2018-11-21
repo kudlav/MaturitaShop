@@ -8,8 +8,10 @@ use Nette;
 /**
  * Email validator
  */
-class EmailValidator extends Nette\Object
+class EmailValidator
 {
+	use Nette\SmartObject;
+
 	const
 		TABLE_NAME = 'users',
 		COLUMN_USERNAME = 'username';

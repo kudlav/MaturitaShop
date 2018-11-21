@@ -8,8 +8,9 @@ use App\FrontModule\Model\ProductManager;
 use Nette\Application\UI\Presenter;
 
 
-class SearchFormFactory extends Nette\Object
+class SearchFormFactory
 {
+	use Nette\SmartObject;
 
 	/**
 	 * @var ProductManager

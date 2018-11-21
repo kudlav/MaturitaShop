@@ -8,8 +8,10 @@ use Nette;
 /**
  * Provides access to parameters section of config.neon file
  */
-class Parameters extends Nette\Object
+class Parameters
 {
+	use Nette\SmartObject;
+
 	private $parameters;
 
 
