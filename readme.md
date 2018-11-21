@@ -1,5 +1,5 @@
 # MaturitaShop
-Nette project made for school leaving exam. Basic system for e-shops containing order process, product list and static pages. Order process can be disabled - useful for orders only over phone and email. orders.
+Nette project made for school leaving exam. Basic system for e-shops containing order process, product list and static pages. Order process can be disabled - useful for orders only over phone and email.
 
 ---
 Jedná se o mou maturitní práci. Cílem bylo vytvořit eshop s vlastní administrací a objednávkovým systémem. Produkty lze řadit do kategorií a přibyla možnost mít více fotek k jednomu produktu. Vyhledávání je spolehlivé i pro starší verze databází. Objednávkový systém lze vypnout, to může být užitečné, pokud plánujete objednávání emailovým formulářem a telefonickou cestou (např.: bazar, inzertní server). Stránka je responzivní a v mobilním telefonu ji lze připnout stejně jako aplikaci. Chybějící funkce budou postupně doplňovány, aktuálně je plánováno dokončit administrační rozhraní a košík pro nepřihlášené.
