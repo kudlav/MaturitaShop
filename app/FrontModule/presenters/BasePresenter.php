@@ -1,13 +1,15 @@
 <?php
+declare(strict_types=1);
 
 namespace App\FrontModule\Presenters;
 
 use Nette;
-use App\FrontModule\Model;
-use App\FrontModule\Model\CartManager;
-use App\FrontModule\Model\ProductManager;
+use App\Model\CartManager;
+use App\Model\ProductManager;
 use App\FrontModule\Forms\SearchFormFactory;
-use App\FrontModule\Model\Parameters;
+use App\Model\Parameters;
+use Nette\Application\UI\Control;
+use Nette\Application\UI\Form;
 
 
 /**
@@ -15,14 +17,19 @@ use App\FrontModule\Model\Parameters;
  */
 abstract class BasePresenter extends Nette\Application\UI\Presenter
 {
-	/** @var Parameters */
+	/**
+	 * @var Parameters $parameters
+	 */
 	protected $parameters;
 
-	public function injectParameters(Parameters $parameters) {
+	public function injectParameters(Parameters $parameters)
+	{
 		$this->parameters = $parameters->getParam();
 	}
 
-	/** @var CartManager */
+	/**
+	 * @var CartManager $cartManager
+	 */
 	private $cartManager;
 
 	public function injectCartManager(CartManager $cartManager)
@@ -30,7 +37,9 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 		$this->cartManager = $cartManager;
 	}
 
-	/** @var  ProductManager */
+	/**
+	 * @var ProductManager $productManager
+	 */
 	private $productManager;
 
 	public function injectProductManager(ProductManager $productManager)
@@ -48,13 +57,13 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 		$this->template->phone = $this->parameters['contact']['phone'];
 	}
 
-	protected function createComponentSearch()
+	protected function createComponentSearch(): Form
 	{
 		$form = new SearchFormFactory($this->productManager, $this);
 		return $form->create();
 	}
 
-	protected function createComponentCart()
+	protected function createComponentCart(): Control
 	{
 		if ($this->parameters['eshop']) {
 			$user = $this->getUser();
@@ -66,10 +75,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 		return $control;
 	}
 
-	/**
-	 * @return Navbar
-	 */
-	protected function createComponentNavbar()
+	protected function createComponentNavbar(): Navbar
 	{
 		$items = $this->parameters['category_menu'];
 		$control = new Navbar('Kategorie', $items, 'cat');

@@ -1,13 +1,14 @@
 <?php
+declare(strict_types=1);
 
 namespace App\FrontModule\Presenters;
 
 use App\FrontModule\Forms\CartQuantityFormFactory;
 use Nette;
-use App\FrontModule\Model;
-use App\FrontModule\Model\CartManager;
-use App\FrontModule\Model\OrderManager;
-use App\FrontModule\Model\PriceInvalidException;
+use Nette\Application\UI\Form;
+use App\Model\CartManager;
+use App\Model\OrderManager;
+use App\Model\PriceInvalidException;
 
 
 class UserPresenter extends BasePresenter
@@ -18,7 +19,6 @@ class UserPresenter extends BasePresenter
 	 */
 	private $cartManager, $orderManager;
 
-
 	public function __construct(CartManager $cartManager, OrderManager $orderManager)
 	{
 		parent::__construct();
@@ -27,18 +27,10 @@ class UserPresenter extends BasePresenter
 		$this->orderManager = $orderManager;
 	}
 
-	protected function startup() {
-		parent::startup();
-
-		if (!$this->parameters['eshop']) {
-			$this->error(); //Error 404
-		}
-	}
-
 	/**
 	 * @return Navbar
 	 */
-	protected function createComponentNavbar()
+	protected function createComponentNavbar(): Navbar
 	{
 		if ($this->getUser()->isLoggedIn()) {
 			$items = $this->parameters['logged_menu'];
@@ -53,8 +45,10 @@ class UserPresenter extends BasePresenter
 		return $control;
 	}
 
-
-	public function renderOrders()
+	/**
+	 * @throws Nette\Application\AbortException
+	 */
+	public function renderOrders(): void
 	{
 		if (!$this->getUser()->isLoggedIn()) {
 			$this->redirect('Sign:in', ['state' => $this->storeRequest()]);
@@ -62,8 +56,12 @@ class UserPresenter extends BasePresenter
 		$this->template->items = $this->orderManager->getUserOrders($this->getUser()->id);
 	}
 
-
-	public function renderOrder($id)
+	/**
+	 * @param string $id
+	 * @throws Nette\Application\AbortException
+	 * @throws Nette\Application\BadRequestException
+	 */
+	public function renderOrder(string $id): void
 	{
 		if (!$this->getUser()->isLoggedIn()) {
 			$this->redirect('Sign:in', ['state' => $this->storeRequest()]);
@@ -76,18 +74,16 @@ class UserPresenter extends BasePresenter
 		}
 	}
 
-
 	/**
 	 * @return Order
 	 */
-	public function createComponentOrder()
+	public function createComponentOrder(): Order
 	{
 		$control = new Order($this->template->order, $this->template->products, $this->template->show_order_code);
 		return $control;
 	}
 
-
-	public function renderCart()
+	public function renderCart(): void
 	{
 		if ($this->getUser()->isLoggedIn()) {
 			$this->template->show_order_code = $this->parameters['product']['show_order_code'];
@@ -100,12 +96,12 @@ class UserPresenter extends BasePresenter
 		}
 	}
 
-
 	/**
 	 * Remove selected product from cart
-	 * @param int $itemId
+	 * @param string $itemId
+	 * @throws Nette\Application\AbortException
 	 */
-	public function actionRemoveFromCart($itemId)
+	public function actionRemoveFromCart(string $itemId): void
 	{
 		if ($this->getUser()->isLoggedIn()) {
 			if ($this->cartManager->removeItem($this->user->id, $itemId)) {
@@ -115,17 +111,17 @@ class UserPresenter extends BasePresenter
 			}
 			$this->redirect('User:cart');
 		} else {
-			// TO-DO cart for unregistred users
+			// TODO cart for unregistred users
 		}
 	}
 
-
 	/**
 	 * Add selected product to cart
-	 * @param int $itemId
-	 * @param $redirect
+	 * @param string $itemId
+	 * @param string|null $redirect
+	 * @throws Nette\Application\AbortException
 	 */
-	public function actionAddToCart($itemId, $redirect)
+	public function actionAddToCart(string $itemId, ?string $redirect): void
 	{
 		if ($this->getUser()->isLoggedIn()) {
 			if ($this->cartManager->addItem($this->user->id, $itemId)) {
@@ -134,7 +130,7 @@ class UserPresenter extends BasePresenter
 				$this->flashMessage('Položku nebylo možné přidat do košíku', 'flash-error');
 			}
 		} else {
-			// TO-DO cart for unregistred users
+			// TODO cart for unregistred users
 		}
 		if (isset($redirect)) {
 				$this->redirect($redirect);
@@ -142,11 +138,10 @@ class UserPresenter extends BasePresenter
 		$this->redirect('User:cart');
 	}
 
-
 	/**
-	 * @return Nette\Application\UI\Form
+	 * @return Form
 	 */
-	public function createComponentCartQuantityForm()
+	public function createComponentCartQuantityForm(): Form
 	{
 		$form = new CartQuantityFormFactory($this->cartManager, $this);
 		return $form->create($this->cartManager->getItems($this->user->id));

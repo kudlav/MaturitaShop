@@ -1,14 +1,17 @@
 <?php
+declare(strict_types=1);
 
 namespace App\FrontModule\Presenters;
 
-use App\FrontModule\Model\OrderManager;
 use Nette;
+use App\Model\OrderManager;
 
 
 class InfoPresenter extends BasePresenter
 {
-	/** @var  OrderManager */
+	/**
+	 * @var OrderManager $orderManager
+	 */
 	private $orderManager;
 
 	public function __construct(OrderManager $orderManager)
@@ -18,13 +21,13 @@ class InfoPresenter extends BasePresenter
 		$this->orderManager = $orderManager;
 	}
 
-	public function renderNakup()
+	public function renderNakup(): void
 	{
 		$this->template->delivery = $this->orderManager->getDelivery();
 		$this->template->payment = $this->orderManager->getPayment();
 	}
 
-	public function renderKontakty()
+	public function renderKontakty(): void
 	{
 		$this->template->contact = $this->parameters['contact'];
 	}
@@ -32,7 +35,7 @@ class InfoPresenter extends BasePresenter
 	/**
 	 * @return Navbar
 	 */
-	protected function createComponentNavbar()
+	protected function createComponentNavbar(): Navbar
 	{
 		$items = [
 			'Kontakty' => ['Info:kontakty'],

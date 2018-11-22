@@ -1,11 +1,13 @@
 <?php
+declare(strict_types=1);
 
 namespace App\FrontModule\Forms;
 
-use App\FrontModule\Model\CartManager;
+use App\Model\CartManager;
 use Nette;
 use Nette\Application\UI\Form;
 use Nette\Application\UI\Presenter;
+use Nette\Utils\ArrayHash;
 
 
 class CartQuantityFormFactory
@@ -18,19 +20,17 @@ class CartQuantityFormFactory
 	 */
 	private $cartManager, $presenter;
 
-
 	public function __construct(CartManager $cartManager, Presenter $presenter)
 	{
 		$this->cartManager = $cartManager;
 		$this->presenter = $presenter;
 	}
 
-
 	/**
 	 * @param array $items
 	 * @return Form
 	 */
-	public function create($items)
+	public function create(array $items): Form
 	{
 		$form = new Form;
 
@@ -44,16 +44,15 @@ class CartQuantityFormFactory
 		$form->addSubmit('recalc', 'Přepočítat')
 			->setAttribute('class','submit');
 
-		$form->onSuccess[] = array($this, 'formSucceeded');
+		$form->onSuccess[] = [$this, 'formSucceeded'];
 		return $form;
 	}
 
-
 	/**
 	 * @param Form $form
-	 * @param array $values
+	 * @param ArrayHash $values
 	 */
-	public function formSucceeded(Form $form, $values)
+	public function formSucceeded(Form $form, ArrayHash $values): void
 	{
 		if ($this->presenter->isAjax()) {
 			foreach ($values as $id => $value) {

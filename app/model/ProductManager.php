@@ -1,35 +1,34 @@
 <?php
+declare(strict_types=1);
 
-namespace App\FrontModule\Model;
+namespace App\Model;
 
 use Nette;
+use Nette\Database\ResultSet;
+use Nette\Database\Table\IRow;
+use Nette\Database\Table\Selection;
 
 
-/**
- * User registrator
- */
 class ProductManager
 {
 	use Nette\SmartObject;
 
 	const
-		TABLE_NAME = 'products',
-		COLUMN_ID = 'id',
-		COLUMN_NAME = 'name',
-		COLUMN_DESCRIPTION = 'description',
-		COLUMN_PRICE = 'price',
-		COLUMN_PRICE_TEXT = 'price_text',
-		COLUMN_QUANTITY = 'quantiti',
-		COLUMN_TIMESTAMP = 'timestamp',
-		COLUMN_CATEGORY  = 'category',
-		COLUMN_SHOW = 'show',
-		COLUMN_PHOTO = 'photo',
-
-		TABLE_CAT = 'categories',
-		COLUMN_PARENT = 'parent';
+		TABLE_NAME = 'Produkt',
+		COLUMN_ID = 'katalogove_cislo',
+		COLUMN_NAME = 'nazev',
+		COLUMN_DESCRIPTION = 'popis',
+		COLUMN_PRICE = 'cena',
+		COLUMN_QUANTITY = 'mnozstvi_skladem',
+		COLUMN_PHOTO = 'fotografie',
+		COLUMN_CATEGORY  = 'kategorie',
+		COLUMN_SHOW = 'zobrazovat'
+	;
 
 
-	/** @var Nette\Database\Context */
+	/**
+	 * @var Nette\Database\Context $database
+	 */
 	private $database;
 
 	public function __construct(Nette\Database\Context $database)
@@ -39,133 +38,56 @@ class ProductManager
 
 	/**
 	 * Return all product at database.
-	 * @param $category Only products belonging to this cat. Don't filter when NULL.
-	 * @return static
+	 * @param string $category Only products belonging to this cat. Don't filter when NULL.
+	 * @return Selection
 	 */
-	public function getProducts($category = NULL) {
-
+	public function getProducts(string $category = ""): Selection {
 		$products = $this->database->table(self::TABLE_NAME)
-			->order(self::COLUMN_TIMESTAMP.' DESC')
-			->where(self::COLUMN_SHOW, 1);
-		if ($category !== NULL) {
-			$categories = [(int) $category];
-			$allCat = $this->database->table(self::TABLE_CAT)->fetchPairs(self::COLUMN_ID, self::COLUMN_PARENT);
-
-			foreach ($allCat as $catID => $catParent) {
-				if ($catID == $category) {
-					continue;
-				}
-				while($catParent !== NULL) {
-					if (in_array($catParent, $categories)) {
-						$categories[] = $catID;
-						break;
-					} else {
-						$catParent = $allCat[$catParent];
-					}
-				}
-			}
-
-			$products->where(self::COLUMN_CATEGORY, $categories);
+			->where(self::COLUMN_SHOW, 1)
+			->order(self::COLUMN_ID.' DESC');
+		if ($category != "") {
+			$products->where(self::COLUMN_CATEGORY, $category);
 		}
 
-		$ret = [];
-		foreach ($products as $product) {
-			$ret[]= [
-				'id' => $product->id,
-				'name' => $product->name,
-				'price' => $product->price,
-				'price_text' => $product->price_text,
-				'photo' => $product->photo,
-				'category' => $product->category,
-			];
-		}
-		return $ret;
+		return $products;
 	}
 
 	/**
 	 * Return product with equal ID.
-	 * @param $id
-	 * @return Nette\Database\Table\IRow
+	 * @param string $id
+	 * @return IRow
 	 */
-	public function getItem($id) {
+	public function getItem(string $id): ?Irow {
 		$item = $this->database->table(self::TABLE_NAME)->get($id);
 		if (!$item) {
-			return NULL;
+			return null;
 		}
 		return $item;
 	}
 
 	/**
 	 * Return list of fulltext searched products.
-	 * @param $string
-	 * @return array
+	 * @param string $string
+	 * @param bool $fulltext_search
+	 * @return ResultSet
 	 */
-	public function searchProduct($string, $fulltext_search)
+	public function searchProduct(string $string, bool $fulltext_search): ResultSet
 	{
-		if ($fulltext_search === TRUE) {
+		if ($fulltext_search === true) {
 			$query = $this->database->query("
 				SELECT *
-				FROM `products`
-				WHERE (MATCH(`name`,`description`) AGAINST (? IN BOOLEAN MODE))
-				ORDER BY 5 * MATCH(`name`) AGAINST (?) + MATCH(`description`) AGAINST (?) DESC
+				FROM `".self::TABLE_NAME."`
+				WHERE (MATCH(`".self::COLUMN_NAME."`,`".self::COLUMN_DESCRIPTION."`) AGAINST (? IN BOOLEAN MODE))
+				ORDER BY 5 * MATCH(`".self::COLUMN_NAME."`) AGAINST (?) + MATCH(`".self::COLUMN_DESCRIPTION."`) AGAINST (?) DESC
 				", $string, $string, $string);
 		}
 		else {
 			$query = $this->database->query("
 			SELECT *
-			FROM `products`
+			FROM `".self::TABLE_NAME."`
 			WHERE ".self::COLUMN_NAME." like ? OR ".self::COLUMN_DESCRIPTION." like ?", "%".$string."%", "%".$string."%");
 		}
-
-		$ret = [];
-		foreach ($query as $product) {
-			$ret[]= [
-				'id' => $product->id,
-				'name' => $product->name,
-				'price' => $product->price,
-				'price_text' => $product->price_text,
-				'photo' => $product->photo,
-				'category' => $product->category,
-			];
-		}
-		return $ret;
+		return $query;
 	}
 
-	/**
-	 * Return category with equal ID.
-	 * @param $id
-	 * @return Nette\Database\Table\IRow
-	 */
-	public function getCategory($id){
-		if (!is_numeric($id)) {
-			return NULL;
-		}
-		$category = $this->database->table(self::TABLE_CAT)->get($id);
-		
-		if (!$category) {
-			return NULL;
-		}
-		return $category;
-	}
-
-	/**
-	 * Return array with strings of parent categories.
-	 * @param $id
-	 * @return array
-	 */
-	public function getCategoryTree($id, $baseUrl){
-		$category = $this->getCategory($id);
-
-		if (!$category) {
-			return array();
-		}
-
-		$tree = ['<a href="'.$baseUrl.'/?cat='.$category->id.'">'.$category->name.'</a>'];
-		while($category->parent !== NULL) {
-			$category = $category->ref(self::TABLE_CAT, self::COLUMN_PARENT);
-			$tree[] = '<a href="'.$baseUrl.'/?cat='.$category->id.'">'.$category->name.'</a>';
-		}
-
-		return array_reverse($tree);
-	}
 }

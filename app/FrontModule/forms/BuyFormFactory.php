@@ -1,11 +1,13 @@
 <?php
+declare(strict_types=1);
 
 namespace App\FrontModule\Forms;
 
-use App\FrontModule\Model\OrderManager;
 use Nette;
+use App\Model\OrderManager;
 use Nette\Application\UI\Form;
 use Nette\Http\Session;
+use Nette\Utils\ArrayHash;
 
 
 class BuyFormFactory
@@ -27,7 +29,7 @@ class BuyFormFactory
 	/**
 	 * @return Form
 	 */
-	public function createForm()
+	public function createForm(): Form
 	{
 		$form = new Form;
 
@@ -62,12 +64,13 @@ class BuyFormFactory
 		$form->addSubmit('deliverPay','Pokračovat v objednávce')
 			->setAttribute('class','form-button');
 
-		$form->onSuccess[] = array($this, 'onSuccess');
+		$form->onSuccess[] = [$this, 'onSuccess'];
 
 		return $form;
 	}
 
-	public function onSuccess(Form $form, $values) {
+	public function onSuccess(Form $form, ArrayHash $values): void
+	{
 		$this->session->setExpiration('30 minutes');
 		$this->session->note = $values->note;
 

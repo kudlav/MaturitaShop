@@ -1,9 +1,9 @@
 {block content}
 
 <div class="product">
-	<div class="category">Kategorie: {$categories|noescape}</div>
-	<h1 n:block=title>{$product['name']}</h1>
-	<div n:if="$product_parameters['show_order_code']" class="id">Objednací kód: {sprintf("%05d", $product['id'])}</div>
+	<div class="category">Kategorie: {$product->kategorie}</div>
+	<h1 n:block=title>{$product->nazev}</h1>
+	<div class="id">Objednací kód: {$product->katalogove_cislo}</div>
 
 	<div class="left-half"
 	{foreach $productPhotos as $photo}
@@ -24,19 +24,15 @@
 	</div>
 
 	<div class="right-half">
-		<div class="left">
-			<br><div n:if="$product['quantity']!==NULL" class="quantity">Skladem: {$product['quantity']|number:0:',':' '} ks</div>
-		</div>
-		<div class="price">
-			{ifset $product['price_text']}{$product['price_text']} {/ifset}{ifset $product['price']}{$product['price']|number:0:',':' '} Kč{/ifset}
+		<div class="left quantity"><br>Skladem: {$product->mnozstvi_skladem|number:0:',':' '} ks</div>
+		<div class="price">{$product->cena|number:0:',':' '} Kč</div>
+		<div class="cleaner"></div>
+		<div class="to-cart">
+			<a n:href="User:addToCart $product->katalogove_cislo, 'Product:default?id='.$product->katalogove_cislo"><button><span data-icon="s" class="icon"></span>Do košíku</button></a>
 		</div>
 		<div class="cleaner"></div>
-		<div n:if="$eshop" class="to-cart">
-			<a n:href="User:addToCart $product->id, 'Product:default?id='.$product->id"><button><span data-icon="s" class="icon"></span>Do košíku</button></a>
-		</div>
-		<div n:if="$eshop" class="cleaner"></div>
 
-		<p>{$product['description']|noescape}</p>
+		<p>{$product->popis|noescape}</p>
 
 		<div n:if="$product_parameters['show_phone_order']" class="phone-order show-cards">
 			<div class="item">

@@ -1,41 +1,39 @@
 <?php
+declare(strict_types=1);
 
 namespace App\AdminModule\Forms;
 
-use Nette,
-	Nette\Application\UI\Form,
-	Nette\Application\UI\Presenter,
-	App\FrontModule\Model\OrderManager;
+use Nette;
+use Nette\Application\UI\Form;
+use Nette\Application\UI\Presenter;
+use App\Model\OrderManager;
+use Nette\Utils\ArrayHash;
 
 
 class ChangeStateFormFactory
 {
 	use Nette\SmartObject;
 
-	/** @var Presenter */
-	private $presenter;
-
-	/** @var array */
-	private $orders;
-
-	/** @var OrderManager */
-	private $orderManager;
-
-	/** @var array */
-	private $states;
+	/**
+	 * @var Presenter $presenter
+	 * @var OrderManager $orderManager
+	 * @var array $orders
+	 * @var array $states
+	 */
+	private $presenter, $orderManager, $orders, $states;
 
 	public function __construct(Presenter $presenter, OrderManager $orderManager, $orders, $states)
 	{
 		$this->presenter = $presenter;
-		$this->orders = $orders;
 		$this->orderManager = $orderManager;
+		$this->orders = $orders;
 		$this->states = $states;
 	}
 
 	/**
 	 * @return Form
 	 */
-	public function create()
+	public function create(): Form
 	{
 		$form = new Form;
 
@@ -45,11 +43,11 @@ class ChangeStateFormFactory
 				->setRequired();
 		}
 
-		$form->onSuccess[] = array($this, 'formSucceeded');
+		$form->onSuccess[] = [$this, 'formSucceeded'];
 		return $form;
 	}
 
-	public function formSucceeded(Form $form, $values)
+	public function formSucceeded(Form $form, ArrayHash $values): void
 	{
 		if ($this->presenter->isAjax()) {
 			$i = 0;

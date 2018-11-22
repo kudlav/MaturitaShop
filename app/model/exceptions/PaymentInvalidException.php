@@ -1,11 +1,14 @@
 <?php
+declare(strict_types=1);
 
-namespace App\FrontModule\Model;
+namespace App\Model;
 
 
 class PaymentInvalidException extends \Exception
 {
-	/** @var string */
+	/**
+	 * @var string $message
+	 */
 	protected $message;
 
 	/**

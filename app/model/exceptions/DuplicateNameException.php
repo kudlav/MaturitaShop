@@ -1,6 +1,7 @@
 <?php
+declare(strict_types=1);
 
-namespace App\FrontModule\Model;
+namespace App\Model;
 
 
 class DuplicateNameException extends \Exception
@@ -11,5 +12,6 @@ class DuplicateNameException extends \Exception
 	 */
 	public function __construct()
 	{
+
 	}
 }

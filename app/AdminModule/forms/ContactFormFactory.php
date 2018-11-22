@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\AdminModule\Forms;
 
@@ -7,6 +8,7 @@ use Nette\Application\UI\Form;
 use Nette\Mail\Message;
 use Nette\Mail\SendmailMailer;
 use Nette\Application\UI\Presenter;
+use Nette\Utils\ArrayHash;
 
 
 class ContactFormFactory
@@ -28,7 +30,7 @@ class ContactFormFactory
 	/**
 	 * @return Form
 	 */
-	public function create()
+	public function create(): Form
 	{
 		$form = new Form;
 
@@ -43,11 +45,16 @@ class ContactFormFactory
 
 		$form->addSubmit('send','Poslat email');
 
-		$form->onSuccess[] = array($this, 'formSucceeded');
+		$form->onSuccess[] = [$this, 'formSucceeded'];
 		return $form;
 	}
 
-	public function formSucceeded(Form $form, $values)
+	/**
+	 * @param Form $form
+	 * @param ArrayHash $values
+	 * @throws Nette\Application\AbortException
+	 */
+	public function formSucceeded(Form $form, ArrayHash $values): void
 	{
 		$mail = new Message();
 		$mail->setFrom('Auto CVK <'.$this->email_from.'>')

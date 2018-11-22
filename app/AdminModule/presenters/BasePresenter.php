@@ -1,9 +1,10 @@
 <?php
+declare(strict_types=1);
 
 namespace App\AdminModule\Presenters;
 
 use Nette;
-use App\FrontModule\Model\Parameters;
+use App\Model\Parameters;
 
 
 /**
@@ -16,7 +17,8 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 	/** @var Parameters */
 	protected $parameters;
 
-	public function injectParameters(Parameters $parameters) {
+	public function injectParameters(Parameters $parameters)
+	{
 		$this->parameters = $parameters->getParam();
 	}
 
@@ -33,7 +35,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 		}
 	}
 
-	protected function createComponentNavbar()
+	protected function createComponentNavbar(): Navbar
 	{
 		$items = [
 			'Objednávky' => ['Orders:default'],

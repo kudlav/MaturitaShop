@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\AdminModule\Presenters;
 
@@ -14,7 +15,7 @@ class Navbar extends Control
 	private $heading;
 	private $items;
 
-	public function  __construct($heading, $items)
+	public function  __construct(string $heading, array $items)
 	{
 		parent::__construct();
 		$this->heading = $heading;

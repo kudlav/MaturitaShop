@@ -1,12 +1,14 @@
 <?php
+declare(strict_types=1);
 
 namespace App\FrontModule\Forms;
 
 use Nette;
 use Nette\Application\UI\Form;
-use App\FrontModule\Model\EmailValidator;
-use App\FrontModule\Model\Registrator;
-use App\FrontModule\Model\DuplicateNameException;
+use App\Model\EmailValidator;
+use App\Model\Registrator;
+use App\Model\DuplicateNameException;
+use Nette\Utils\ArrayHash;
 
 
 class RegisterFormFactory
@@ -22,15 +24,7 @@ class RegisterFormFactory
 		$this->registrator = $registrator;
 	}
 
-	/**
-	 * @return Form
-	 */
-	public function create()
-	{
-
-	}
-
-	public function createForm()
+	public function createForm(): Form
 	{
 		$form = new Form;
 
@@ -86,22 +80,22 @@ class RegisterFormFactory
 
 	/**
 	 * @param Form $form
-	 * @param Nette\Utils\ArrayHash $values
+	 * @param ArrayHash $values
 	 * @return bool
 	 */
-	public function formSucceeded(Form $form, $values)
+	public function formSucceeded(Form $form, ArrayHash $values): bool
 	{
 		if ($this->emailValidator->validate($values->email)) {
 			$form->addError('Zadaný email je již zaregistrován.');
-			return FALSE;
+			return false;
 		} else {
 			try {
 				$this->registrator->add($values);
 			} catch (DuplicateNameException $e) {
 				$form->addError('Při registraci nastala chyba.');
-				return FALSE;
+				return false;
 			}
-			return TRUE;
+			return true;
 		}
 	}
 

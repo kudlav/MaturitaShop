@@ -1,38 +1,37 @@
 <?php
+declare(strict_types=1);
 
 namespace App\FrontModule\Presenters;
 
 use Nette;
-use App\FrontModule\Model;
-use App\FrontModule\Model\ProductManager;
+use App\Model\ProductManager;
 
 
 class HomepagePresenter extends BasePresenter
 {
-	/** @var ProductManager */
+	/**
+	 * @var ProductManager $productManager
+	 */
 	private $productManager;
 
-	public function __construct(ProductManager $productManager) {
+	public function __construct(ProductManager $productManager)
+	{
 		parent::__construct();
 
 		$this->productManager = $productManager;
 	}
 
-	public function renderDefault($search = NULL, $cat = NULL)
+	public function renderDefault(string $search = "", string $cat = ""): void
 	{
 		$this->template->eshop = $this->parameters['eshop'];
 
-		if ($search !== NULL) {
+		if ($search != "") {
 			$this->template->products = $this->productManager->searchProduct($search, $this->parameters['fulltext_search']);
-			$this->template->title = 'Hledaný výraz: '.htmlspecialchars($search);
+			$this->template->title = "Hledaný výraz: $search";
 		}
-		elseif ($cat !== NULL) {
-			$category = $this->productManager->getCategory($cat);
-			if ($category === NULL) {
-				$this->error('Požadovaná kategorie neexistuje');
-			}
-			$this->template->products = $this->productManager->getProducts($cat);
-			$this->template->title = 'Kategorie: '.implode(' &gt; ', $this->productManager->getCategoryTree($cat, $this->template->baseUrl));
+		elseif ($cat != "") {
+			$this->template->products = $this->productManager->getProducts((string) $cat);
+			$this->template->title = "Kategorie: $cat";
 		}
 		else {
 			$this->template->products = $this->productManager->getProducts();

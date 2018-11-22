@@ -1,16 +1,19 @@
 <?php
+declare(strict_types=1);
 
 namespace App\FrontModule\Presenters;
 
 use Nette;
-use App\FrontModule\Model;
 use App\FrontModule\Forms\RegisterFormFactory;
 use Nette\Application\UI\Form;
+use Nette\Utils\ArrayHash;
 
 
 class RegisterPresenter extends BasePresenter
 {
-	/** @var RegisterFormFactory */
+	/**
+	 * @var RegisterFormFactory $factory
+	 */
 	private $factory;
 
 	public function __construct(RegisterFormFactory $factory)
@@ -20,29 +23,21 @@ class RegisterPresenter extends BasePresenter
 		$this->factory = $factory;
 	}
 
-	protected function startup() {
-		parent::startup();
-
-		if (!$this->parameters['eshop']) {
-			$this->error(); //Error 404
-		}
-	}
-
 	/**
 	 * User-data form factory.
-	 * @return Nette\Application\UI\Form
+	 * @return Form
 	 */
-	protected function createComponentUserData()
+	protected function createComponentUserData(): Form
 	{
 		$form = $this->factory->createForm();
-		$form->onSuccess[] = array($this, 'formSucceeded');
+		$form->onSuccess[] = [$this, 'formSucceeded'];
 		return $form;
 	}
 
 	/**
 	 * @return Navbar
 	 */
-	protected function createComponentNavbar()
+	protected function createComponentNavbar(): Navbar
 	{
 		if ($this->getUser()->isLoggedIn()) {
 			$items = $this->parameters['logged_menu'];
@@ -59,9 +54,10 @@ class RegisterPresenter extends BasePresenter
 
 	/**
 	 * @param Form $form
-	 * @param Nette\Utils\ArrayHash $values
+	 * @param ArrayHash $values
+	 * @throws Nette\Application\AbortException
 	 */
-	public function formSucceeded(Form $form, $values)
+	public function formSucceeded(Form $form, ArrayHash $values): void
 	{
 		if ($this->factory->formSucceeded($form, $values) === TRUE) {
 			try {

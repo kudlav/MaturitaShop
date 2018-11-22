@@ -1,19 +1,24 @@
 <?php
+declare(strict_types=1);
 
-namespace App\FrontModule\Model;
+namespace App\Model;
+
+use Nette\Database\Table\IRow;
 
 
 class DisabledItemException extends \Exception
 {
-	/** @var string */
+	/**
+	 * @var string $message
+	 */
 	protected $message;
 
 	/**
 	 * DisabledItemException constructor.
-	 * @param string $message
+	 * @param IRow $product
 	 */
-	public function __construct($message)
+	public function __construct(Irow $product)
 	{
-		$this->message = 'Produkt '.sprintf("%05d",$message['id']).' ('.$message['name'].') již nelze objednat, odeberte jej.';
+		$this->message = "Produkt $product->katalogove_cislo ($product->nazev) již nelze objednat, odeberte jej.";
 	}
 }

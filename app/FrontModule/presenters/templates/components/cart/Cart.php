@@ -1,11 +1,12 @@
 <?php
+declare(strict_types=1);
 
 namespace App\FrontModule\Presenters;
 
 use Nette;
 use Nette\Application\UI\Control;
-use App\FrontModule\Model\CartManager;
-use \App\FrontModule\Model\PriceInvalidException;
+use App\Model\CartManager;
+use App\Model\PriceInvalidException;
 use Nette\Security\User;
 
 
@@ -40,7 +41,8 @@ class Cart extends Control
 	 * Gets the count and price of items in user cart.
 	 * @return array with 'count' and 'price'
 	 */
-	private function getCounts() {
+	private function getCounts(): array
+	{
 		if ($this->user->isLoggedIn()) {
 			$ret = [];
 			$ret['count'] = $this->cartManager->getCount($this->user->getId());

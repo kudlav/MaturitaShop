@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\FrontModule\Forms;
 
@@ -7,6 +8,7 @@ use Nette\Application\UI\Form;
 use Nette\Mail\Message;
 use Nette\Mail\SendmailMailer;
 use Nette\Application\UI\Presenter;
+use Nette\Utils\ArrayHash;
 
 
 class ContactFormFactory
@@ -28,7 +30,7 @@ class ContactFormFactory
 	/**
 	 * @return Form
 	 */
-	public function create()
+	public function create(): Form
 	{
 		$form = new Form;
 
@@ -54,7 +56,7 @@ class ContactFormFactory
 	}
 
 
-	public function onSuccess(Form $form, $values)
+	public function onSuccess(Form $form, ArrayHash $values): void
 	{
 		$mail = new Message();
 		$mail->setFrom('Auto CVK <'.$this->operator_email.'>')

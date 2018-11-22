@@ -1,14 +1,15 @@
 <?php
+declare(strict_types=1);
 
 namespace App\FrontModule\Presenters;
 
 use Nette;
-use App\FrontModule\Model;
 use App\FrontModule\Forms\BuyFormFactory;
 use App\FrontModule\Forms\ContactFormFactory;
-use App\FrontModule\Model\ProductManager;
-use App\FrontModule\Model\CartManager;
-use App\FrontModule\Model\OrderManager;
+use App\Model\ProductManager;
+use App\Model\CartManager;
+use App\Model\OrderManager;
+use Nette\Application\UI\Form;
 
 
 class ProductPresenter extends BasePresenter
@@ -21,7 +22,6 @@ class ProductPresenter extends BasePresenter
 	 */
 	private $buyFormFactory, $productManager, $cartManager, $orderManager;
 
-
 	public function __construct(BuyFormFactory $buyFormFactory, ProductManager $productManager, CartManager $cartManager, OrderManager $orderManager)
 	{
 		parent::__construct();
@@ -32,31 +32,38 @@ class ProductPresenter extends BasePresenter
 		$this->orderManager = $orderManager;
 	}
 
-	public function renderDefault($id, $produkt)
+	/**
+	 * @param string $id
+	 * @throws Nette\Application\BadRequestException
+	 */
+	public function renderDefault(string $id): void
 	{
 		$this->template->product = $this->productManager->getItem($id);
 		if ($this->template->product === NULL) {
 			$this->error('Požadovaný produkt neexistuje');
 		}
-		$this->template->categories = implode(' &gt; ', $this->productManager->getCategoryTree($this->template->product['category'], $this->template->baseUrl));
-		$this->template->productPhotos = explode(';', $this->template->product['photo']);
+
+		$this->template->productPhotos = explode(';', $this->template->product->fotografie ?? '');
 		$this->template->product_parameters = $this->parameters['product'];
 		$this->template->eshop = $this->parameters['eshop'];
 	}
 
-	public function createComponentContactForm()
+	/**
+	 * @return Form
+	 */
+	public function createComponentContactForm(): Form
 	{
 		$operator_email = $this->parameters['contact']['email_from'];
 		$form = new ContactFormFactory($operator_email, $this->presenter);
 		return $form->create();
 	}
 
-	public function renderBuy($back)
+	/**
+	 * @param $back
+	 * @throws Nette\Application\AbortException
+	 */
+	public function renderBuy($back): void
 	{
-		if (!$this->parameters['eshop']) {
-			$this->error(); //Error 404
-		}
-
 		if (!$this->getUser()->isLoggedIn()) {
 			$this->flashMessage('Přihlaste se prosím.');
 			$this->redirect('Sign:in', ['state' => $this->storeRequest()]);
@@ -94,11 +101,11 @@ class ProductPresenter extends BasePresenter
 		return $form;
 	}
 
-	public function actionSubmitOrder(){
-		if (!$this->parameters['eshop']) {
-			$this->error(); //Error 404
-		}	
-
+	/**
+	 * @throws Nette\Application\AbortException
+	 */
+	public function actionSubmitOrder(): void
+	{
 		$session = $this->getSession('buy');
 		$phase = $this->orderManager->detectPurchasePhase($session);
 
@@ -110,7 +117,7 @@ class ProductPresenter extends BasePresenter
 				$order = ($this->orderManager->orderProducts($items, $session, $userId));
 				if ($order) {
 					$session->remove();
-					$this->flashMessage('Objednávka č.' . sprintf("%05d", $order) . ' byla úspěšně vytvořena');
+					$this->flashMessage("Objednávka $order byla úspěšně vytvořena");
 				} else {
 					$this->flashMessage('Objednávku nebylo možné vytvořit!', 'flash-error');
 				}

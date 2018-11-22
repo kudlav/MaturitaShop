@@ -1,9 +1,12 @@
 <?php
+declare(strict_types=1);
 
 namespace App\AdminModule\Presenters;
 
 use App\AdminModule\Forms\ContactFormFactory;
 use Nette\Application\UI\Control;
+use Nette\Application\UI\Form;
+use Nette\Database\IRow;
 
 
 class Contact extends Control
@@ -15,7 +18,7 @@ class Contact extends Control
 	 */
 	private $details, $email_from;
 
-	public function  __construct($details, $email_from)
+	public function  __construct(IRow $details, string $email_from)
 	{
 		parent::__construct();
 
@@ -32,7 +35,7 @@ class Contact extends Control
 		$template->render();
 	}
 
-	public function createComponentContactForm()
+	public function createComponentContactForm(): Form
 	{
 		$form = new ContactFormFactory($this->getPresenter(), $this->email_from);
 		return $form->create();

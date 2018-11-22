@@ -1,9 +1,11 @@
 <?php
+declare(strict_types=1);
 
 namespace App\AdminModule\Presenters;
 
 use Nette;
 use App\AdminModule\Forms\SignFormFactory;
+use Nette\Application\UI\Form;
 
 
 class SignPresenter extends BasePresenter
@@ -11,9 +13,10 @@ class SignPresenter extends BasePresenter
 	/** @persistent */
 	public $state= '';
 
-	/** @var SignFormFactory */
+	/**
+	 * @var SignFormFactory $factory
+	 */
 	private $factory;
-
 
 	public function __construct(SignFormFactory $factory)
 	{
@@ -22,12 +25,11 @@ class SignPresenter extends BasePresenter
 		$this->factory = $factory;
 	}
 
-
 	/**
 	 * Sign-in form factory.
-	 * @return Nette\Application\UI\Form
+	 * @return Form
 	 */
-	protected function createComponentSignInForm()
+	protected function createComponentSignInForm(): Form
 	{
 		$form = $this->factory->create();
 		$form->onSuccess[] = function () {
@@ -38,7 +40,10 @@ class SignPresenter extends BasePresenter
 	}
 
 
-	public function actionOut()
+	/**
+	 * @throws Nette\Application\AbortException
+	 */
+	public function actionOut(): void
 	{
 		$this->getUser()->logout();
 		$this->flashMessage('Byl jste odhlášen.');

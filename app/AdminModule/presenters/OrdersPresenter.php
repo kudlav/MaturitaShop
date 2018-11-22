@@ -1,26 +1,27 @@
 <?php
+declare(strict_types=1);
 
 namespace App\AdminModule\Presenters;
 
-use App\AdminModule\Forms\ContactFormFactory;
 use Nette;
 use App\AdminModule\Forms\ChangeStateFormFactory;
 use App\FrontModule\Presenters\Order;
-use App\FrontModule\Model\OrderManager;
-use App\FrontModule\Model\ProductManager;
-use App\FrontModule\Model\UserManager;
+use App\Model\OrderManager;
+use App\Model\ProductManager;
+use App\Model\UserManager;
+use Nette\Application\UI\Form;
 
 
 class OrdersPresenter extends BasePresenter
 {
-	private $userId;
 
 	/**
 	 * @var OrderManager $orderManager
 	 * @var ProductManager $productManager
 	 * @var UserManager $userManager
+	 * @var int $userId
 	 */
-	private $orderManager, $productManager, $userManager;
+	private $orderManager, $productManager, $userManager, $userId;
 
 	public function __construct(OrderManager $orderManager, ProductManager $productManager, UserManager $userManager)
 	{
@@ -31,13 +32,13 @@ class OrdersPresenter extends BasePresenter
 		$this->userManager = $userManager;
 	}
 
-	public function renderDefault()
+	public function renderDefault(): void
 	{
 		$this->template->orders = $this->orderManager->getOrdersInProgress();
 		$this->template->states = $this->orderManager->getStates();
 	}
 
-	public function createComponentChangeStateForm()
+	public function createComponentChangeStateForm(): Form
 	{
 		$form = new ChangeStateFormFactory($this, $this->orderManager, $this->orderManager->getOrdersInProgress(), $this->orderManager->getStates());
 		return $form->create();
@@ -45,8 +46,10 @@ class OrdersPresenter extends BasePresenter
 
 	/**
 	 * @secured
+	 * @param string $id
+	 * @throws Nette\Application\AbortException
 	 */
-	public function handleDelete($id)
+	public function handleDelete(string $id): void
 	{
 		if ($this->orderManager->deleteOrder($id)) {
 			$this->flashMessage('Objednávka byla odstraněna');
@@ -56,30 +59,33 @@ class OrdersPresenter extends BasePresenter
 		$this->redirect('Orders:');
 	}
 
-	public function renderDetail($id)
+	/**
+	 * @param string $id
+	 */
+	public function renderDetail(string $id): void
 	{
 		$this->template->order = $this->orderManager->getOrder($id);
 		$this->template->products = $this->orderManager->getOrderedProducts($id);
 		$this->template->show_order_code = $this->parameters['product']['show_order_code'];
 	}
 
-	public function createComponentOrder()
+	public function createComponentOrder(): Order
 	{
 		$control = new Order($this->template->order, $this->template->products, $this->template->show_order_code);
 		return $control;
 	}
 
-	public function renderEdit()
+	public function renderEdit(): void
 	{
 
 	}
 
-	public function renderContact($id)
+	public function renderContact(int $id): void
 	{
 		$this->userId = $id;
 	}
 
-	public function createComponentContact()
+	public function createComponentContact(): Contact
 	{
 		$control = new Contact($this->userManager->getContact($this->userId), $this->parameters['contact']['email_from']);
 		return $control;

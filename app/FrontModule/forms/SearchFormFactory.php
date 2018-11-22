@@ -1,11 +1,13 @@
 <?php
+declare(strict_types=1);
 
 namespace App\FrontModule\Forms;
 
 use Nette;
 use Nette\Application\UI\Form;
-use App\FrontModule\Model\ProductManager;
+use App\Model\ProductManager;
 use Nette\Application\UI\Presenter;
+use Nette\Utils\ArrayHash;
 
 
 class SearchFormFactory
@@ -13,14 +15,10 @@ class SearchFormFactory
 	use Nette\SmartObject;
 
 	/**
-	 * @var ProductManager
+	 * @var ProductManager $productManager
+	 * @var Presenter $presenter
 	 */
-	private $productManager;
-
-	/**
-	 * @var Presenter
-	 */
-	private $presenter;
+	private $productManager, $presenter;
 
 	public function __construct(ProductManager $productManager, Presenter $presenter)
 	{
@@ -31,7 +29,7 @@ class SearchFormFactory
 	/**
 	 * @return Form
 	 */
-	public function create()
+	public function create(): Form
 	{
 		$form = new Form();
 
@@ -42,13 +40,13 @@ class SearchFormFactory
 		$form->addSubmit('send','Hledat')
 			->setAttribute('class', 'button');
 
-		$form->onSuccess[] = array($this, 'formSucceeded');
+		$form->onSuccess[] = [$this, 'formSucceeded'];
 
 		return $form;
 	}
 
 
-	public function formSucceeded(Form $form, $values)
+	public function formSucceeded(Form $form, ArrayHash $values): void
 	{
 		$this->presenter->redirect('Homepage:default', array('search' => $values->searchTerm));
 	}

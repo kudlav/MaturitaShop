@@ -1,10 +1,12 @@
 <?php
+declare(strict_types=1);
 
 namespace App\AdminModule\Forms;
 
 use Nette;
 use Nette\Application\UI\Form;
 use Nette\Security\User;
+use Nette\Utils\ArrayHash;
 
 
 class SignFormFactory
@@ -14,17 +16,15 @@ class SignFormFactory
 	/** @var User */
 	private $user;
 
-
 	public function __construct(User $user)
 	{
 		$this->user = $user;
 	}
 
-
 	/**
 	 * @return Form
 	 */
-	public function create()
+	public function create(): Form
 	{
 		$form = new Form;
 		$form->addText('username', 'Uživatel:')
@@ -43,12 +43,16 @@ class SignFormFactory
 		$form->addSubmit('send', 'Přihlásit se')
 			->setAttribute('class','submit');
 
-		$form->onSuccess[] = array($this, 'formSucceeded');
+		$form->onSuccess[] = [$this, 'formSucceeded'];
 		return $form;
 	}
 
 
-	public function formSucceeded(Form $form, $values)
+	/**
+	 * @param Form $form
+	 * @param ArrayHash $values
+	 */
+	public function formSucceeded(Form $form, ArrayHash $values): void
 	{
 		$this->user->setExpiration('20 minutes', TRUE);
 

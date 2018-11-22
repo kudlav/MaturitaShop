@@ -3,29 +3,29 @@
 	{control navbar}
 
 	<div class="item-list right-column">
-		<h2>{$title|noescape}</h2>
+		<h2>{$title}</h2>
 		{if $products}
 			{snippet productList}
 				<ul>
 					<li n:foreach="$products as $product">
 						<div class="item">
-							<a n:href="Product:default $product['id'], $product['name']" class="spec">
-								{if is_file('../www/images/products/homepage/'.strtok($product['photo'], ';'))}
-									<img src="{$basePath}/images/products/homepage/{strtok($product['photo'], ';')}" alt="Obrázek produktu">
+							<a n:href="Product:default $product->katalogove_cislo" class="spec">
+								{if is_file('../www/images/products/homepage/'.strtok($product->fotografie, ';'))}
+									<img src="{$basePath}/images/products/homepage/{strtok($product->fotografie, ';')}" alt="Obrázek produktu">
 								{else}
 									<img src="{$basePath}/images/products/homepage/default.png" alt="Obrázek produktu">
 								{/if}
 								<div class="title">
-									{$product['name']}
+									{$product->nazev}
 								</div>
 							</a>
 							<div class="status">
-								<div class="price">{ifset $product['price_text']}{$product['price_text']} {/ifset}{ifset $product['price']}{$product['price']|number:0:',':' '} Kč{/ifset}</div>
+								<div class="price">{$product->cena|number:0:',':' '} Kč</div>
 								<div class="to-cart">
 									{if $eshop}
-										<a n:href="User:addToCart $product['id'], 'Homepage:'"><button>Do košíku</button></a>
+										<a n:href="User:addToCart $product->katalogove_cislo, 'Homepage:'"><button>Do košíku</button></a>
 									{else}
-										<a n:href="Product:default $product['id'], $product['name']"><button>Detaily</button></a>
+										<a n:href="Product:default $product->katalogove_cislo"><button>Detaily</button></a>
 									{/if}
 								</div>
 								<div class="cleaner"></div>

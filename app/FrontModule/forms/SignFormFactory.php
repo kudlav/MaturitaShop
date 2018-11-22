@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\FrontModule\Forms;
 
@@ -11,20 +12,20 @@ class SignFormFactory
 {
 	use Nette\SmartObject;
 
-	/** @var User */
+	/**
+	 * @var User $user
+	 */
 	private $user;
-
 
 	public function __construct(User $user)
 	{
 		$this->user = $user;
 	}
 
-
 	/**
 	 * @return Form
 	 */
-	public function create()
+	public function create(): Form
 	{
 		$form = new Form;
 		$form->addText('username', 'Email:')
@@ -48,8 +49,7 @@ class SignFormFactory
 		return $form;
 	}
 
-
-	public function formSucceeded(Form $form, $values)
+	public function formSucceeded(Form $form, $values): void
 	{
 		if ($values->remember) {
 			$this->user->setExpiration('14 days', FALSE);

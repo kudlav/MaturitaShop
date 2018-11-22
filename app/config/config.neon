@@ -9,7 +9,7 @@ parameters:
 	eshop: true
 
 	#fulltext_search - disable when MyISAM <4.6
-	fulltext_search: true
+	fulltext_search: false
 
 	#contact - email and phone of operator
 	contact:
@@ -28,7 +28,7 @@ parameters:
 	category_menu:
 		'Pastelky':
 			- 'Homepage:default'
-			- '0'
+			- 'pastelky'
 		'<span class="subitem">Obyčejné</span>':
 			- 'Homepage:default'
 			- '99'
@@ -40,7 +40,7 @@ parameters:
 			- '99'
 		'Skicáky':
 			- 'Homepage:default'
-			- '1'
+			- 'skicáky'
 
 	logged_menu:
 		'Košík':
@@ -65,13 +65,13 @@ session:
 
 
 services:
-	- App\FrontModule\Model\Parameters(@container::getParameters())
-	- App\FrontModule\Model\UserManager
-	- App\FrontModule\Model\EmailValidator
-	- App\FrontModule\Model\Registrator
-	- App\FrontModule\Model\ProductManager
-	- App\FrontModule\Model\CartManager
-	- App\FrontModule\Model\OrderManager
+	- App\Model\Parameters(@container::getParameters())
+	- App\Model\UserManager
+	- App\Model\EmailValidator
+	- App\Model\Registrator
+	- App\Model\ProductManager
+	- App\Model\CartManager
+	- App\Model\OrderManager
 
 	- App\FrontModule\Forms\IUserDataFactory
 	- App\FrontModule\Forms\SignFormFactory

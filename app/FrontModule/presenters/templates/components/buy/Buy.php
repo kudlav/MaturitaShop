@@ -1,12 +1,13 @@
 <?php
+declare(strict_types=1);
 
 namespace App\FrontModule\Presenters;
 
-use App\FrontModule\Model\OrderManager;
-use App\FrontModule\Model\PriceInvalidException;
+use App\Model\OrderManager;
+use App\Model\PriceInvalidException;
 use Nette\Application\UI\Control;
 use Nette\Http\SessionSection;
-use App\FrontModule\Model\CartManager;
+use App\Model\CartManager;
 use Nette\Security\User;
 
 
@@ -17,11 +18,10 @@ class Buy extends Control
 	 * @var User $user
 	 * @var CartManager $cartManager
 	 * @var OrderManager $orderManager
-	 * @var bool $show_order_code
 	 * */
-	private $session, $user, $cartManager, $orderManager, $show_order_code;
+	private $session, $user, $cartManager, $orderManager;
 
-	public function  __construct(SessionSection $session, User $user, CartManager $cartManager, OrderManager $orderManager, bool $show_order_code)
+	public function  __construct(SessionSection $session, User $user, CartManager $cartManager, OrderManager $orderManager)
 	{
 		parent::__construct();
 
@@ -29,18 +29,15 @@ class Buy extends Control
 		$this->user = $user;
 		$this->cartManager = $cartManager;
 		$this->orderManager = $orderManager;
-		$this->show_order_code = $show_order_code;
 	}
 
 	public function render()
 	{
-
 		$userId = $this->user->id;
 		$template = $this->template;
 
 		$template->setFile(__DIR__ . '/buy.latte');
 		$template->items = $this->cartManager->getItems($userId);
-		$template->show_order_code = $this->show_order_code;
 
 		$delivery = $this->orderManager->getDelivery(TRUE);
 		$payment = $this->orderManager->getPayment(TRUE);
