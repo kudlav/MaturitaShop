@@ -4,7 +4,7 @@ namespace App\FrontModule\Forms;
 
 use Nette;
 use Nette\Application\UI\Form;
-use App\FrontModule\Model\ProductManager;
+use App\Model\ProductManager;
 use Nette\Application\UI\Presenter;
 
 

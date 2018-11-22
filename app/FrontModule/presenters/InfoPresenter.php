@@ -2,7 +2,7 @@
 
 namespace App\FrontModule\Presenters;
 
-use App\FrontModule\Model\OrderManager;
+use App\Model\OrderManager;
 use Nette;
 
 

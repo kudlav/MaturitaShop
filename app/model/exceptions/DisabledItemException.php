@@ -1,6 +1,6 @@
 <?php
 
-namespace App\FrontModule\Model;
+namespace App\Model;
 
 
 class DisabledItemException extends \Exception

@@ -2,11 +2,11 @@
 
 namespace App\FrontModule\Presenters;
 
-use App\FrontModule\Model\OrderManager;
-use App\FrontModule\Model\PriceInvalidException;
+use App\Model\OrderManager;
+use App\Model\PriceInvalidException;
 use Nette\Application\UI\Control;
 use Nette\Http\SessionSection;
-use App\FrontModule\Model\CartManager;
+use App\Model\CartManager;
 use Nette\Security\User;
 
 

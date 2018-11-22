@@ -3,7 +3,7 @@
 namespace App\FrontModule\Presenters;
 
 use Nette;
-use App\FrontModule\Model;
+use App\Model;
 use App\FrontModule\Forms\RegisterFormFactory;
 use Nette\Application\UI\Form;
 

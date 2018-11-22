@@ -3,7 +3,7 @@
 namespace App\AdminModule\Presenters;
 
 use Nette;
-use App\FrontModule\Model\Parameters;
+use App\Model\Parameters;
 
 
 /**

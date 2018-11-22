@@ -3,11 +3,11 @@
 namespace App\FrontModule\Presenters;
 
 use Nette;
-use App\FrontModule\Model;
-use App\FrontModule\Model\CartManager;
-use App\FrontModule\Model\ProductManager;
+use App\Model;
+use App\Model\CartManager;
+use App\Model\ProductManager;
 use App\FrontModule\Forms\SearchFormFactory;
-use App\FrontModule\Model\Parameters;
+use App\Model\Parameters;
 
 
 /**

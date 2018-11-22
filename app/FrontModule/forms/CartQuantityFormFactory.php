@@ -2,7 +2,7 @@
 
 namespace App\FrontModule\Forms;
 
-use App\FrontModule\Model\CartManager;
+use App\Model\CartManager;
 use Nette;
 use Nette\Application\UI\Form;
 use Nette\Application\UI\Presenter;

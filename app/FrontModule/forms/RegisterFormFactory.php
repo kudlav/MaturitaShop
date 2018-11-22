@@ -4,9 +4,9 @@ namespace App\FrontModule\Forms;
 
 use Nette;
 use Nette\Application\UI\Form;
-use App\FrontModule\Model\EmailValidator;
-use App\FrontModule\Model\Registrator;
-use App\FrontModule\Model\DuplicateNameException;
+use App\Model\EmailValidator;
+use App\Model\Registrator;
+use App\Model\DuplicateNameException;
 
 
 class RegisterFormFactory

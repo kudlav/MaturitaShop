@@ -3,8 +3,8 @@
 namespace App\FrontModule\Presenters;
 
 use Nette;
-use App\FrontModule\Model;
-use App\FrontModule\Model\ProductManager;
+use App\Model;
+use App\Model\ProductManager;
 
 
 class HomepagePresenter extends BasePresenter

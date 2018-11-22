@@ -59,13 +59,13 @@ session:
 
 
 services:
-	- App\FrontModule\Model\Parameters(@container::getParameters())
-	- App\FrontModule\Model\UserManager
-	- App\FrontModule\Model\EmailValidator
-	- App\FrontModule\Model\Registrator
-	- App\FrontModule\Model\ProductManager
-	- App\FrontModule\Model\CartManager
-	- App\FrontModule\Model\OrderManager
+	- App\Model\Parameters(@container::getParameters())
+	- App\Model\UserManager
+	- App\Model\EmailValidator
+	- App\Model\Registrator
+	- App\Model\ProductManager
+	- App\Model\CartManager
+	- App\Model\OrderManager
 
 	- App\FrontModule\Forms\IUserDataFactory
 	- App\FrontModule\Forms\SignFormFactory

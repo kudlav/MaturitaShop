@@ -4,10 +4,10 @@ namespace App\FrontModule\Presenters;
 
 use App\FrontModule\Forms\CartQuantityFormFactory;
 use Nette;
-use App\FrontModule\Model;
-use App\FrontModule\Model\CartManager;
-use App\FrontModule\Model\OrderManager;
-use App\FrontModule\Model\PriceInvalidException;
+use App\Model;
+use App\Model\CartManager;
+use App\Model\OrderManager;
+use App\Model\PriceInvalidException;
 
 
 class UserPresenter extends BasePresenter

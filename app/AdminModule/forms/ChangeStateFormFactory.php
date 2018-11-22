@@ -5,7 +5,7 @@ namespace App\AdminModule\Forms;
 use Nette,
 	Nette\Application\UI\Form,
 	Nette\Application\UI\Presenter,
-	App\FrontModule\Model\OrderManager;
+	App\Model\OrderManager;
 
 
 class ChangeStateFormFactory

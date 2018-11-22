@@ -3,12 +3,12 @@
 namespace App\FrontModule\Presenters;
 
 use Nette;
-use App\FrontModule\Model;
+use App\Model;
 use App\FrontModule\Forms\BuyFormFactory;
 use App\FrontModule\Forms\ContactFormFactory;
-use App\FrontModule\Model\ProductManager;
-use App\FrontModule\Model\CartManager;
-use App\FrontModule\Model\OrderManager;
+use App\Model\ProductManager;
+use App\Model\CartManager;
+use App\Model\OrderManager;
 
 
 class ProductPresenter extends BasePresenter

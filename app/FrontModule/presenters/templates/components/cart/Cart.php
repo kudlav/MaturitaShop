@@ -4,8 +4,8 @@ namespace App\FrontModule\Presenters;
 
 use Nette;
 use Nette\Application\UI\Control;
-use App\FrontModule\Model\CartManager;
-use \App\FrontModule\Model\PriceInvalidException;
+use App\Model\CartManager;
+use App\Model\PriceInvalidException;
 use Nette\Security\User;
 
 

@@ -6,9 +6,9 @@ use App\AdminModule\Forms\ContactFormFactory;
 use Nette;
 use App\AdminModule\Forms\ChangeStateFormFactory;
 use App\FrontModule\Presenters\Order;
-use App\FrontModule\Model\OrderManager;
-use App\FrontModule\Model\ProductManager;
-use App\FrontModule\Model\UserManager;
+use App\Model\OrderManager;
+use App\Model\ProductManager;
+use App\Model\UserManager;
 
 
 class OrdersPresenter extends BasePresenter

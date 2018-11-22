@@ -2,7 +2,7 @@
 
 namespace App\FrontModule\Forms;
 
-use App\FrontModule\Model\OrderManager;
+use App\Model\OrderManager;
 use Nette;
 use Nette\Application\UI\Form;
 use Nette\Http\Session;
