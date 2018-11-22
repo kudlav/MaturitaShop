@@ -131,17 +131,6 @@ class ProductManager
 		return $ret;
 	}
 
-	public function getPhotos($id){
-		$product = $this->getItem($id);
-
-		if (!$product && !$products->photo) {
-			return NULL;
-		}
-
-		$photoList = explode(';', $product->photo);
-		return $photoList;
-	}
-
 	/**
 	 * Return category with equal ID.
 	 * @param $id
