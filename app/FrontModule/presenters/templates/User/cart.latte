@@ -4,31 +4,31 @@
 
 <div class="show-cards right-column">
 	<h1 n:block=title><span data-icon="s" class="icon"></span> Nákupní košík</h1>
-	{if $items}
+	{if $items!==null && $items->getRowCount()}
 		<ul>
 			{snippet cartCards}
 				<form n:name="cartQuantityForm" class="ajax">
 					<li n:foreach="$items as $item">
 						<div class="item">
-							<a n:href="User:removeFromCart $item['id']" class="delete"><span data-icon="x" class="icon"></span></a>
-							<a n:href="Product:default $item['id'], $item['name']" class="spec">
-								{if is_file('../www/images/products/homepage/'.strtok($item['photo'], ';'))}
-									<img src="{$basePath}/images/products/homepage/{strtok($item['photo'], ';')}" alt="Miniatura produktu">
+							<a n:href="User:removeFromCart $item->katalogove_cislo" class="delete"><span data-icon="x" class="icon"></span></a>
+							<a n:href="Product:default $item->katalogove_cislo" class="spec">
+								{if is_file('../www/images/products/homepage/'.strtok($item->fotografie, ';'))}
+									<img src="{$basePath}/images/products/homepage/{strtok($item->fotografie, ';')}" alt="Miniatura produktu">
 								{else}
 									<img src="{$basePath}/images/products/homepage/default.png" alt="Obrázek produktu">
 								{/if}
-								<div class="title">{$item['name']}</div>
+								<div class="title">{$item->nazev}</div>
 							</a>
-							<div class="id">{if $show_order_code}{sprintf("%05d", $item['id'])}{/if}</div>
+							<div class="id">{$item->katalogove_cislo}</div>
 							<div class="cleaner"></div>
-							{snippet 'item-'.$item['id']}
+							{snippet 'item-'.$item->katalogove_cislo}
 								<div class="left">
-									<div class="status">Skladem: {$item['quantity']|number:0:',':' '} ks</div>
-									<div class="order-quantity">Objednat <input n:name="'i'.$item['id']" class="form-input" style="width: 3em" min="1"> ks</div>
+									<div class="status">Skladem: {$item->mnozstvi_skladem|number:0:',':' '} ks</div>
+									<div class="order-quantity">Objednat <input n:name="'i'.$item->katalogove_cislo" class="form-input" style="width: 3em" min="1"> ks</div>
 								</div>
 								<div class="price">
-									{ifset $item['price_text']}{$item['price_text']} {/ifset}{ifset $item['price']}{$item['price']|number:0:',':' '} Kč{/ifset}<br>
-									Celkem: {if isset($item['price_text'])} bude upřesněno{else}{$item['price']*$item['count']|number:0:',':' '} Kč{/if}
+									{$item->cena|number:0:',':' '} Kč<br>
+									Celkem: {$item->cena*$item->pocet_kusu|number:0:',':' '} Kč
 								</div>
 							{/snippet}
 							<div class="cleaner"></div>
@@ -39,7 +39,7 @@
 			{/snippet}
 		</ul>
 
-		<div class="total" n:snippet="total">Celkem k úhradě: <strong>{if isset($total)}{$total|number:0:',':' '} Kč{else}bude upřesněno{/if}</strong></div>
+		<div class="total" n:snippet="total">Celkem k úhradě: <strong>{$total|number:0:',':' '} Kč</strong></div>
 		<div class="right"><a n:href="Product:buy"><button class="form-button">Pokračovat v objednávce</button></a></div>
 	{else}
 		<p class="center padding">Váš košík je prázdný.</p>

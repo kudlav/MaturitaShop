@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\FrontModule\Presenters;
 
 use App\Model\OrderManager;
-use App\Model\PriceInvalidException;
 use Nette\Application\UI\Control;
 use Nette\Http\SessionSection;
 use App\Model\CartManager;
@@ -53,15 +52,13 @@ class Buy extends Control
 
 		$template->total = NULL;
 		// Get price of cart
-		try {
-			$template->total = $this->cartManager->getPrice($userId);
-			// Get price of delivery and payment
-			foreach ($template->form as $item => $value) {
-				if (isset($value['price'])) {
-					$template->total += $value['price'];
-				}
+		$template->total = $this->cartManager->getPrice($userId);
+		// Get price of delivery and payment
+		foreach ($template->form as $item => $value) {
+			if (isset($value['price'])) {
+				$template->total += $value['price'];
 			}
-		} catch (PriceInvalidException $e) {}
+		}
 		$this->session->total = $template->total;
 
 		$template->render();

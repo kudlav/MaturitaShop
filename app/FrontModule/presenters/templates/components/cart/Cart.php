@@ -6,7 +6,6 @@ namespace App\FrontModule\Presenters;
 use Nette;
 use Nette\Application\UI\Control;
 use App\Model\CartManager;
-use App\Model\PriceInvalidException;
 use Nette\Security\User;
 
 
@@ -46,9 +45,7 @@ class Cart extends Control
 		if ($this->user->isLoggedIn()) {
 			$ret = [];
 			$ret['count'] = $this->cartManager->getCount($this->user->getId());
-			try {
-				$ret['price'] = $this->cartManager->getPrice($this->user->getId());
-			} catch (PriceInvalidException $e) {}
+			$ret['price'] = $this->cartManager->getPrice($this->user->getId());
 		} else {
 			$ret = [
 				'count' => 0,

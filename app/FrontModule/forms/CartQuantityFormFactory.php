@@ -7,6 +7,7 @@ use App\Model\CartManager;
 use Nette;
 use Nette\Application\UI\Form;
 use Nette\Application\UI\Presenter;
+use Nette\Database\ResultSet;
 use Nette\Utils\ArrayHash;
 
 
@@ -27,16 +28,16 @@ class CartQuantityFormFactory
 	}
 
 	/**
-	 * @param array $items
+	 * @param ResultSet $items
 	 * @return Form
 	 */
-	public function create(array $items): Form
+	public function create(ResultSet $items): Form
 	{
 		$form = new Form;
 
 		foreach ($items as $item) {
-			$form->addText('i'.$item['id'])
-				->setValue($item['count'])
+			$form->addText('i'.$item->katalogove_cislo)
+				->setValue($item->pocet_kusu)
 				->setRequired(true)
 				->addRule(Form::INTEGER, 'Zadejte celé číslo, větší než 0.');
 		}
@@ -56,7 +57,7 @@ class CartQuantityFormFactory
 	{
 		if ($this->presenter->isAjax()) {
 			foreach ($values as $id => $value) {
-				if(!$this->cartManager->addItem($this->presenter->user->id, str_replace('i', '', $id), $value)){
+				if($value<=0 || !$this->cartManager->addItem($this->presenter->user->id, str_replace('i', '', $id), (int) $value)){
 					$this->presenter->flashMessage('Chyba, množství musí být celé číslo, větší než 0.','flash-error');
 				}
 			}

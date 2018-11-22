@@ -4,7 +4,7 @@
         <ul>
             <li>
                 {if $user->loggedIn}
-                    {$user->identity->name.' '.$user->identity->surname}
+                    {$user->identity->jmeno.' '.$user->identity->prijmeni}
                 {else}
                     Nepřihlášen
                 {/if}
