@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Model;
 
@@ -12,15 +13,17 @@ class Parameters
 {
 	use Nette\SmartObject;
 
+	/**
+	 * @var array $parameters
+	 */
 	private $parameters;
 
-
-	public function __construct($parameters)
+	public function __construct(array $parameters)
 	{
 		$this->parameters = $parameters;
 	}
 
-	public function getParam()
+	public function getParam(): array
 	{
 		return $this->parameters;
 	}

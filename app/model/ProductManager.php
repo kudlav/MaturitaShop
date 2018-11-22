@@ -14,7 +14,7 @@ class ProductManager
 	use Nette\SmartObject;
 
 	const
-		TABLE_NAME = 'Produkt',
+		TABLE_NAME = 'produkt',
 		COLUMN_ID = 'katalogove_cislo',
 		COLUMN_NAME = 'nazev',
 		COLUMN_DESCRIPTION = 'popis',

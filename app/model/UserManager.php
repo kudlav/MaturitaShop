@@ -1,8 +1,12 @@
 <?php
+declare(strict_types=1);
+
 
 namespace App\Model;
 
 use Nette;
+use Nette\Database\Table\IRow;
+use Nette\Security\Identity;
 use Nette\Security\Passwords;
 
 
@@ -14,11 +18,13 @@ class UserManager implements Nette\Security\IAuthenticator
 	use Nette\SmartObject;
 
 	const
-		TABLE_NAME = 'users',
-		COLUMN_ID = 'id',
-		COLUMN_NAME = 'username',
-		COLUMN_PASSWORD_HASH = 'password',
-		COLUMN_ROLE = 'role';
+		TABLE_NAME = 'zakaznik',
+		COLUMN_ID = 'zakaznicke_cislo',
+		COLUMN_FIRSTNAME = 'jmeno',
+		COLUMN_SURNAME = 'prijmeni',
+		COLUMN_EMAIL = 'email',
+		COLUMN_PASSWORD = 'heslo'
+	;
 
 
 	/** @var Nette\Database\Context */
@@ -31,39 +37,46 @@ class UserManager implements Nette\Security\IAuthenticator
 
 	/**
 	 * Performs an authentication.
+	 * @param array $credentials
 	 * @return Nette\Security\Identity
 	 * @throws Nette\Security\AuthenticationException
 	 */
-	public function authenticate(array $credentials)
+	public function authenticate(array $credentials): Identity
 	{
 		list($username, $password) = $credentials;
 
-		$row = $this->database->table(self::TABLE_NAME)->where(self::COLUMN_NAME, $username)->fetch();
+		$row = $this->database->table(self::TABLE_NAME)->where(self::COLUMN_EMAIL, $username)->fetch();
 
 		if (!$row) {
 			throw new Nette\Security\AuthenticationException('Nesprávné přihlašovací údaje.', self::IDENTITY_NOT_FOUND);
 
-		} elseif (!Passwords::verify($password, $row[self::COLUMN_PASSWORD_HASH])) {
+		} elseif (!Passwords::verify($password, $row->heslo)) {
 			throw new Nette\Security\AuthenticationException('Nesprávné přihlašovací údaje.', self::INVALID_CREDENTIAL);
 
-		} elseif (Passwords::needsRehash($row[self::COLUMN_PASSWORD_HASH])) {
+		} elseif (Passwords::needsRehash($row->heslo)) {
 			$row->update(array(
-				self::COLUMN_PASSWORD_HASH => Passwords::hash($password),
+				self::COLUMN_PASSWORD => Passwords::hash($password),
 			));
 		}
 
 		$arr = $row->toArray();
-		unset($arr[self::COLUMN_PASSWORD_HASH]);
-		return new Nette\Security\Identity($row[self::COLUMN_ID], $row[self::COLUMN_ROLE], $arr);
+		unset($arr[self::COLUMN_PASSWORD]);
+		return new Identity($row->zakaznicke_cislo, 'customer', $arr);
 	}
 
 	/**
 	 * Return row of requested user.
-	 * @param $userId
-	 * @return Nette\Database\Table\IRow
+	 * @param int $userId
+	 * @return IRow|null
 	 */
-	public function getContact($userId)
+	public function getContact(int $userId): ?IRow
 	{
-		return $this->database->table(self::TABLE_NAME)->get($userId);
+		$row = $this->database->table(self::TABLE_NAME)->get($userId);
+
+		if ($row === false) {
+			return null;
+		}
+
+		return $row;
 	}
 }

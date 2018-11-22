@@ -6,6 +6,7 @@ namespace App\FrontModule\Forms;
 use Nette;
 use Nette\Application\UI\Form;
 use Nette\Security\User;
+use Nette\Utils\ArrayHash;
 
 
 class SignFormFactory
@@ -49,7 +50,7 @@ class SignFormFactory
 		return $form;
 	}
 
-	public function formSucceeded(Form $form, $values): void
+	public function formSucceeded(Form $form, ArrayHash $values): void
 	{
 		if ($values->remember) {
 			$this->user->setExpiration('14 days', FALSE);
