@@ -50,6 +50,32 @@ parameters:
 		'Odhlásit se':
 			- 'Sign:out'
 
+	#delivery options
+	delivery:
+		0:
+			name: 'Česká pošta'
+			price: 99
+			show: true
+		1:
+			name: 'PPL'
+			price: 99
+			show: true
+		2:
+			name: 'TTL'
+			price: 20
+			show: true
+
+	#payment options
+	payment:
+		0:
+			name: 'Převodem předem'
+			price: 0
+			show: true
+		1:
+			name: 'Dobírkou při převzetí'
+			price: 49
+			show: true
+
 php:
 	date.timezone: Europe/Prague
 
@@ -71,7 +97,7 @@ services:
 	- App\Model\Registrator
 	- App\Model\ProductManager
 	- App\Model\CartManager
-	- App\Model\OrderManager
+	- App\Model\OrderManager(@container::getParameters())
 
 	- App\FrontModule\Forms\IUserDataFactory
 	- App\FrontModule\Forms\SignFormFactory

@@ -69,16 +69,16 @@ CREATE TABLE parametr (
 -- Table Objednavka
 -- -----------------------------------------------------
 CREATE TABLE objednavka (
-  cislo_objednavky VARCHAR(45) NOT NULL,
+  cislo_objednavky INT AUTO_INCREMENT NOT NULL,
   zakaznicke_cislo INT NOT NULL,
-  datum_cas DATE NOT NULL,
+  datum_cas DATETIME NOT NULL,
   stav VARCHAR(45) NOT NULL,
   zaplaceno NUMERIC(1) NOT NULL,
   ulice VARCHAR(45) NOT NULL,
   mesto VARCHAR(45) NOT NULL,
   psc NUMERIC(5) NOT NULL,
-  zpusob_doruceni VARCHAR(45) NOT NULL,
-  platebni_metoda VARCHAR(45) NOT NULL,
+  zpusob_doruceni INT NOT NULL,
+  platebni_metoda INT NOT NULL,
   poznamka VARCHAR(255),
   CONSTRAINT pk_objednavka PRIMARY KEY (cislo_objednavky, zakaznicke_cislo),
   CONSTRAINT fk_objednavka_zakaznik FOREIGN KEY (zakaznicke_cislo) REFERENCES zakaznik (zakaznicke_cislo)
@@ -89,7 +89,7 @@ CREATE TABLE objednavka (
 -- Table Obsahuje
 -- -----------------------------------------------------
 CREATE TABLE obsahuje (
-  cislo_objednavky VARCHAR(45) NOT NULL,
+  cislo_objednavky INT NOT NULL,
   zakaznicke_cislo INT NOT NULL,
   katalogove_cislo VARCHAR(45) NOT NULL,
   mnozstvi INT NOT NULL,
@@ -148,8 +148,8 @@ INSERT INTO dodavatel VALUES (26359723, 'RANDOM DISTRIBUTION, s.r.o.', 'Vojta Ok
 INSERT INTO produkt VALUES ('SVT33300460', 'Bobo Skicak KRTEK lepeny A4 10 listu', 'Lepeny skicak s motivem krtecka obsahuje 10 cistych listu.', 30, 500, 'bobo-skicak-krtek-lepeny-a4-10-listu-33300460.jpg', 'Skicaky', 1);
 INSERT INTO produkt (katalogove_cislo, nazev, cena, mnozstvi_skladem, zobrazovat) VALUES ('SVT44102600', 'Pastelky CONCORDE trojhranne - 18 barev', 39, 0, 1);
 INSERT INTO parametr VALUES ('Pocet stran');
-INSERT INTO objednavka VALUES ('1', 1, '2018-03-26 13:29:26', 'Prijata', 0, 'Pekarova 4', 'Praha', 18106, 'Ceska posta', 'Dobirkou', 'Dodani do Vanoc, prosim.');
-INSERT INTO obsahuje VALUES ('1', 1, 'SVT33300460', 2, 30);
+INSERT INTO objednavka VALUES (1, 1, '2018-03-26 13:29:26', 'Prijata', 0, 'Pekarova 4', 'Praha', 18106, 0, 1, 'Dodani do Vanoc, prosim.');
+INSERT INTO obsahuje VALUES (1, 1, 'SVT33300460', 2, 30);
 INSERT INTO upresnuje VALUES ('SVT33300460', 'Pocet stran', '10');
 INSERT INTO vlozil_do_kosiku VALUES ('SVT33300460', 1, 42);
 INSERT INTO ohodnotil VALUES ('SVT33300460', 1, 4, 'Vydareny vzhled - krtecek.', 'Vysoka cena, malo listu. Listy se trhaji.', 'Za ty penize bych cekal lepsi kvalitu.');

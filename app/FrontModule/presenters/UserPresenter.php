@@ -53,6 +53,8 @@ class UserPresenter extends BasePresenter
 			$this->redirect('Sign:in', ['state' => $this->storeRequest()]);
 		}
 		$this->template->items = $this->orderManager->getUserOrders($this->getUser()->id);
+		$this->template->delivery = $this->orderManager->getDelivery();
+		$this->template->payment = $this->orderManager->getPayment();
 	}
 
 	/**

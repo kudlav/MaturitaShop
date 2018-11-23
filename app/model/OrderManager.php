@@ -1,8 +1,11 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Model;
 
+use App\FrontModule\Presenters\Cart;
 use Nette;
+use Nette\Database\ResultSet;
 use Nette\Http\SessionSection;
 
 
@@ -16,52 +19,47 @@ class OrderManager
 	const
 		STATE = 'čeká na vyřízení',
 
-		TABLE_ORDERS = 'orders',
-		COLUMN_ID = 'id',
-		COLUMN_CUSTOMER = 'customer',
-		COLUMN_DELIVERY = 'delivery',
-		COLUMN_PAYMENT = 'payment',
-		COLUMN_TIMESTAMP = 'timestamp',
-		COLUMN_TOTAL = 'total',
-		COLUMN_STATE = 'state',
-		COLUMN_NOTE = 'note',
+		TABLE_ORDERS = 'objednavka',
+		ORDERS_ID = 'cislo_objednavky',
+		ORDERS_CUSTOMER = 'zakaznicke_cislo',
+		ORDERS_TIMESTAMP = 'datum_cas',
+		ORDERS_STATE = 'stav',
+		ORDERS_PAID = 'zaplaceno',
+		ORDERS_ADDR_STREET = 'ulice',
+		ORDERS_ADDR_CITY = 'mesto',
+		ORDERS_ADDR_ZIP = 'psc',
+		ORDERS_DELIVERY = 'zpusob_doruceni',
+		ORDERS_PAYMENT = 'platebni_metoda',
+		ORDERS_NOTE = 'poznamka',
 
-		TABLE_ORDERED = 'ordered_products',
-		COLUMN_ORDER_ID = 'orders_id',
-		COLUMN_PRODUCT = 'products_id',
-		COLUMN_PRICE = 'price',
-		COLUMN_PRICE_TEXT = 'price_text',
-		COLUMN_QUANTITY = 'quantity',
+		TABLE_ORDERED = 'obsahuje',
+		ORDERED_ORDER = 'cislo_objednavky',
+		ORDERED_CUSTOMER = 'zakaznicke_cislo',
+		ORDERED_PRODUCT = 'katalogove_cislo',
+		ORDERED_QUANTITY = 'mnozstvi',
+		ORDERED_PRICE = 'cena'
+	;
 
-		TABLE_BASKETS = 'baskets',
-		COLUMN_USER = 'users_id',
+	/**
+	 * @var array $parameters
+	 * @var Nette\Database\Context $database
+	 */
+	private $parameters, $database;
 
-		TABLE_DELIVERY = 'delivery',
-		TABLE_PAYMENT = 'payment',
-		COLUMN_SHOW = 'show',
-
-		VIEW_ENUM = 'enum',
-		ENUM_TABLE = 'TABLE',
-		ENUM_COLUMN = 'COLUMN',
-		ENUM_ENUM = 'ENUM';
-
-
-	/** @var Nette\Database\Context */
-	private $database;
-
-	public function __construct(Nette\Database\Context $database)
+	public function __construct(array $parameters, Nette\Database\Context $database)
 	{
+		$this->parameters = $parameters;
 		$this->database = $database;
 	}
 
 	/**
 	 * Check if order parameters are already saved in session.
-	 * @param Nette\Http\SessionSection $session Section 'buy'.
+	 * @param SessionSection $session Section 'buy'.
 	 * @return int
 	 */
-	public function detectPurchasePhase($session)
+	public function detectPurchasePhase(SessionSection $session): int
 	{
-		if (isset($session->note) AND !isset($session->back)) {
+		if (isset($session->note, $session->street, $session->city, $session->zip) AND !isset($session->back)) {
 			if (isset($session->delivery) OR !$this->getDelivery()) {
 				if (isset($session->payment) OR !$this->getPayment()) {
 					return 1;
@@ -73,96 +71,52 @@ class OrderManager
 
 	/**
 	 * Return array of activated delivery methods.
-	 * @param bool $full Brief or Full description of methods.
 	 * @return array
 	 */
-	public function getDelivery($full = FALSE)
+	public function getDelivery(): array
 	{
-		$query = $this->database->table(self::TABLE_DELIVERY)
-			->where(self::COLUMN_SHOW.' = 1');
-
-		if ($full) {
-			return $this->deliveryPaymentFull($query);
-		} else {
-			return $this->deliveryPaymentBrief($query);
-		}
+		return $this->parameters['delivery'];
 	}
 
 	/**
 	 * Return array of activated payment methods.
-	 * @param bool $full Brief or Full description of methods.
 	 * @return array
 	 */
-	public function getPayment($full = FALSE)
+	public function getPayment(): array
 	{
-		$query = $this->database->table(self::TABLE_PAYMENT)
-			->where(self::COLUMN_SHOW.' = 1');
-
-		if ($full) {
-			return $this->deliveryPaymentFull($query);
-		} else {
-			return $this->deliveryPaymentBrief($query);
-		}
-	}
-
-	private function deliveryPaymentBrief($query) {
-		$ret = [];
-		foreach ($query as $row) {
-			$ret[$row->id] = $row->name;
-			if($row->price !== NULL) {
-				$ret[$row->id] .= ' ('.$row->price.' Kč)';
-			}
-		}
-		return $ret;
-	}
-
-	private function deliveryPaymentFull($query) {
-		$ret = [];
-		foreach ($query as $row) {
-			$ret[$row->id] = [
-				'name' => $row->name,
-				'price' => $row->price,
-				'tooltip' => $row->tooltip,
-			];
-		}
-		return $ret;
+		return $this->parameters['payment'];
 	}
 
 	/**
-	 * Return array of user's orders.
-	 * @param $userId
-	 * @return array
+	 * Return users orders.
+	 * @param int $userId
+	 * @return ResultSet
 	 */
-	public function getUserOrders($userId)
+	public function getUserOrders(int $userId): ResultSet
 	{
-		$query = $this->database->table(self::TABLE_ORDERS)
-			->where(self::COLUMN_CUSTOMER, $userId)
-			->order(self::COLUMN_TIMESTAMP.' DESC');
+		$query = $this->database->query('
+			SELECT objednavka.*, SUM(obsahuje.mnozstvi * obsahuje.cena) AS suma
+			FROM objednavka LEFT JOIN obsahuje ON objednavka.cislo_objednavky = obsahuje.cislo_objednavky AND objednavka.zakaznicke_cislo = obsahuje.zakaznicke_cislo
+			WHERE objednavka.zakaznicke_cislo = ?
+			GROUP BY objednavka.cislo_objednavky
+			ORDER BY objednavka.cislo_objednavky DESC
+		', $userId);
 
-		$ret = [];
-		foreach ($query as $row) {
-			$ret[]= [
-				'id' => $row->id,
-				'timestamp' => $row->timestamp,
-				'total' => $row->total,
-				'state' => $row->state,
-			];
-		}
-		return $ret;
+		return $query;
 	}
 
 	/**
 	 * Order items.
-	 * @param array $items Items to order.
+	 * @param ResultSet $items Items to order.
 	 * @param SessionSection $session Contains total and note.
 	 * @param int $userId User that orders items.
-	 * @return bool True if OK.
+	 * @return int Number of new order, -1 when error occurs.
 	 * @throws DeliveryInvalidException
+	 * @throws PaymentInvalidException
 	 * @throws DisabledItemException
 	 * @throws DuplicateNameException
-	 * @throws PaymentInvalidException
 	 */
-	public function orderProducts(array $items, SessionSection $session, int $userId)
+	public function orderProducts(ResultSet $items, SessionSection $session, int $userId): int
 	{
 		$delivery = $this->getDelivery();
 		if (!array_key_exists($session->delivery, $delivery) AND $delivery) {
@@ -180,38 +134,41 @@ class OrderManager
 
 		$this->database->beginTransaction();
 		$orders = $this->database->table(self::TABLE_ORDERS)->insert(array(
-			self::COLUMN_CUSTOMER => $userId,
-			self::COLUMN_DELIVERY => $session->delivery,
-			self::COLUMN_PAYMENT => $session->payment,
-			self::COLUMN_TIMESTAMP => date("Y-m-d H:i:s"),
-			self::COLUMN_TOTAL => $session->total,
-			self::COLUMN_STATE => self::STATE,
-			self::COLUMN_NOTE => $session->note,
+			self::ORDERS_CUSTOMER => $userId,
+			self::ORDERS_TIMESTAMP => date("Y-m-d H:i:s"),
+			self::ORDERS_STATE => self::STATE,
+			self::ORDERS_PAID => 0,
+			self::ORDERS_ADDR_STREET => $session->street,
+			self::ORDERS_ADDR_CITY => $session->city,
+			self::ORDERS_ADDR_ZIP => preg_replace('%\s%', '', $session->zip),
+			self::ORDERS_DELIVERY => $session->delivery,
+			self::ORDERS_PAYMENT => $session->payment,
+			self::ORDERS_NOTE => $session->note,
 		));
 
 		if ($orders) {
 			try {
 				foreach ($items as $product) {
-					if ($product['show']) {
-						$orderedProducts = $this->database->table(self::TABLE_ORDERED)->insert(array(
-							self::COLUMN_ORDER_ID => $orders->id,
-							self::COLUMN_PRODUCT => $product['id'],
-							self::COLUMN_PRICE => $product['price'],
-							self::COLUMN_PRICE_TEXT => $product['price_text'],
-							self::COLUMN_QUANTITY => $product['count'],
-						));
+					if ($product->zobrazovat) {
+						$orderedProducts = $this->database->table(self::TABLE_ORDERED)->insert([
+							self::ORDERED_ORDER => $orders->cislo_objednavky,
+							self::ORDERED_CUSTOMER => $orders->zakaznicke_cislo,
+							self::ORDERED_PRODUCT => $product->katalogove_cislo,
+							self::ORDERED_QUANTITY => $product->pocet_kusu,
+							self::ORDERED_PRICE => $product->cena,
+						]);
 
-					$products = $this->database->table('products')->get($product['id']);
-					$products->update(array(
-						'quantity' => ($products->quantity - $product['count'])
-					));
+						$productRow = $this->database->table(ProductManager::TABLE_NAME)->get($product->katalogove_cislo);
+						$productRow->update([
+							ProductManager::COLUMN_QUANTITY => ($productRow->mnozstvi_skladem - $product->pocet_kusu)
+						]);
 					} else {
 						$this->database->rollBack();
 						throw new DisabledItemException($product);
 					}
 					if (!$orderedProducts) {
 						$this->database->rollBack();
-						return FALSE;
+						return -1;
 					}
 				}
 			} catch (Nette\Database\UniqueConstraintViolationException $e) {
@@ -219,17 +176,17 @@ class OrderManager
 				throw new DuplicateNameException;
 			}
 
-			$basket = $query = $this->database->table(self::TABLE_BASKETS)
-				->where(self::COLUMN_USER, $userId)
+			$basket = $query = $this->database->table(CartManager::TABLE_BASKETS)
+				->where(CartManager::COLUMN_USERS_ID, $userId)
 				->delete();
 
 			if ($basket) {
 				$this->database->commit();
-				return $orders->id;
+				return (int) $orders->cislo_objednavky;
 			}
 		}
 		$this->database->rollBack();
-		return FALSE;
+		return -1;
 	}
 
 	/**

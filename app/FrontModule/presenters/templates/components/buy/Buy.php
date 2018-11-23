@@ -30,7 +30,7 @@ class Buy extends Control
 		$this->orderManager = $orderManager;
 	}
 
-	public function render()
+	public function render(): void
 	{
 		$userId = $this->user->id;
 		$template = $this->template;
@@ -38,19 +38,18 @@ class Buy extends Control
 		$template->setFile(__DIR__ . '/buy.latte');
 		$template->items = $this->cartManager->getItems($userId);
 
-		$delivery = $this->orderManager->getDelivery(TRUE);
-		$payment = $this->orderManager->getPayment(TRUE);
+		$delivery = $this->orderManager->getDelivery();
+		$payment = $this->orderManager->getPayment();
 
 		$template->form = [];
 		$template->form['Vaše poznámka'] = ['name' => $this->session->note];
-		if ($this->session->delivery != NULL) {
+		if ($this->session->delivery !== null) {
 			$template->form['Doručení'] = $delivery[$this->session->delivery];
 		}
-		if ($this->session->payment != NULL) {
+		if ($this->session->payment !== null) {
 			$template->form['Platba'] = $payment[$this->session->payment];
 		}
 
-		$template->total = NULL;
 		// Get price of cart
 		$template->total = $this->cartManager->getPrice($userId);
 		// Get price of delivery and payment

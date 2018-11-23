@@ -45,7 +45,6 @@ class ProductPresenter extends BasePresenter
 
 		$this->template->productPhotos = explode(';', $this->template->product->fotografie ?? '');
 		$this->template->product_parameters = $this->parameters['product'];
-		$this->template->eshop = $this->parameters['eshop'];
 	}
 
 	/**
@@ -78,6 +77,9 @@ class ProductPresenter extends BasePresenter
 		$this->template->phase = $this->orderManager->detectPurchasePhase($this->getSession('buy'));
 	}
 
+	/**
+	 * @return Buy|Form
+	 */
 	public function createComponentBuyForm()
 	{
 		$session =  $this->getSession('buy');
@@ -96,7 +98,7 @@ class ProductPresenter extends BasePresenter
 				$this->redirect('Product:buy');
 			};
 		} else {
-			$form = new Buy($this->getSession('buy'), $this->user, $this->cartManager, $this->orderManager, $this->parameters['product']['show_order_code']);
+			$form = new Buy($this->getSession('buy'), $this->user, $this->cartManager, $this->orderManager);
 		}
 		return $form;
 	}
@@ -115,14 +117,15 @@ class ProductPresenter extends BasePresenter
 
 			try {
 				$order = ($this->orderManager->orderProducts($items, $session, $userId));
-				if ($order) {
+				if ($order !== -1) {
 					$session->remove();
 					$this->flashMessage("Objednávka $order byla úspěšně vytvořena");
 				} else {
 					$this->flashMessage('Objednávku nebylo možné vytvořit!', 'flash-error');
 				}
 			} catch (\Exception $e) {
-				$this->flashMessage('Objednávku nebylo možné vytvořit! '.$e->getMessage(), 'flash-error');
+				\Tracy\Debugger::barDump($e);
+				$this->flashMessage('Objednávku nebylo možné vytvořit!', 'flash-error');
 			}
 
 		} else {

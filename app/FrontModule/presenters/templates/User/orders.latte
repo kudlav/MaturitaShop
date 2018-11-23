@@ -4,26 +4,26 @@
 
 <div class="show-cards right-column">
     <h1 n:block=title><span data-icon="D" class="icon"></span> Objednávky</h1>
-    {if $items}
+    {if $items->getRowCount() > 0}
     <ul>
-        <li n:foreach="$items as $item">
+        <li n:foreach="$items as $order">
             <div class="item">
-                <a n:href="User:order $item['id']" class="spec">
-                    <div class="title">OBJ{sprintf("%05d", $item['id'])}</div>
+                <a n:href="User:order $order->cislo_objednavky" class="spec">
+                    <div class="title">OBJ{sprintf("%05d", $order->cislo_objednavky)}</div>
                 </a>
-                <div class="id">{$item['timestamp']|date:'j. n. Y - G:i'}</div>
+                <div class="id">{$order->datum_cas|date:'j. n. Y - G:i'}</div>
                 <div class="left">
-                    <div class="status">Stav: {$item['state']}</div>
+                    <div class="status">Stav: {$order->stav}</div>
                 </div>
                 <div class="price">
-                    Celkem: {if isset($item['total'])}{$item['total']|number:0:',':' '} Kč{else}bude upřesněno{/if}
+                    Celkem: {($order->suma + $delivery[$order->zpusob_doruceni]['price'] + $payment[$order->platebni_metoda]['price'])|number:0:',':' '} Kč
                 </div>
                 <div class="cleaner"></div>
             </div>
         </li>
     </ul>
 
-    <div class="total">Počet objednávek: <strong>{count($items)|number:0:',':' '} </strong></div>
+    <div class="total">Počet objednávek: <strong>{$items->getRowCount()|number:0:',':' '} </strong></div>
     {else}
         <p class="center padding">Dosud nebyla provedena žáná objednávka.</p>
     {/if}
