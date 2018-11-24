@@ -142,6 +142,18 @@ CREATE TABLE ohodnotil (
 );
 
 
+-- -----------------------------------------------------
+-- Table zamestnanec
+-- -----------------------------------------------------
+CREATE TABLE zamestnanec (
+  uzivatelske_jmeno VARCHAR(45) NOT NULL,
+  jmeno VARCHAR(45) NOT NULL,
+  prijmeni VARCHAR(45) NOT NULL,
+  heslo VARCHAR(100) NULL,
+  role VARCHAR(45) NOT NULL,
+  CONSTRAINT pk_zamestnanec PRIMARY KEY (uzivatelske_jmeno)
+);
+
 -- Insert into tables --
 INSERT INTO zakaznik VALUES (1, 'Petr', 'Kapr', '', NULL);
 INSERT INTO dodavatel VALUES (26359723, 'RANDOM DISTRIBUTION, s.r.o.', 'Vojta Okoun', 'Zahradni 173/2', 'Plzen', 32600);

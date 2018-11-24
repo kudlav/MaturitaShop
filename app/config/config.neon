@@ -98,12 +98,19 @@ services:
 	- App\Model\ProductManager
 	- App\Model\CartManager
 	- App\Model\OrderManager(@container::getParameters())
+	- App\Model\EmployeeManager
 
 	- App\FrontModule\Forms\IUserDataFactory
 	- App\FrontModule\Forms\SignFormFactory
 	- App\FrontModule\Forms\RegisterFormFactory
 	- App\FrontModule\Forms\BuyFormFactory
 
+	-
+		factory: App\Model\UserAuthenticator
+		autowired: self
+	-
+		factory: App\Model\EmployeeAuthenticator
+		autowired: self
 
 	- App\AdminModule\Forms\SignFormFactory
 

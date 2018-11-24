@@ -44,7 +44,7 @@
 
 		<footer>
 			<img src="{$basePath}/images/orangeHeader.png"><br>
-			Uživatel: {if $user->loggedIn}{$user->identity->username}{else}nepřihlášen{/if}
+			Uživatel: {if $user->loggedIn}{$user->identity->uzivatelske_jmeno} ({$user->identity->jmeno} {$user->identity->prijmeni}){else}nepřihlášen{/if}
 		</footer>
 	</div>
 </body>

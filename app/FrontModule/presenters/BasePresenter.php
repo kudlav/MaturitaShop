@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\FrontModule\Presenters;
 
+use App\Model\UserAuthenticator;
+use App\Model\UserManager;
 use Nette;
 use App\Model\CartManager;
 use App\Model\ProductManager;
@@ -25,6 +27,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 	public function injectParameters(Parameters $parameters)
 	{
 		$this->parameters = $parameters->getParam();
+
 	}
 
 	/**
@@ -47,11 +50,22 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 		$this->productManager = $productManager;
 	}
 
+	/**
+	 * @var UserAuthenticator $userAuthenticator
+	 */
+	private $userAuthenticator;
+
+	public function injectUserAuthenticator(UserAuthenticator $userAuthenticator)
+	{
+		$this->userAuthenticator = $userAuthenticator;
+	}
+
 	protected function startup()
 	{
 		parent::startup();
 
 		$this->user->getStorage()->setNamespace('Front');
+		$this->user->setAuthenticator($this->userAuthenticator);
 
 		$this->template->page = $this->getName();
 		$this->template->phone = $this->parameters['contact']['phone'];
