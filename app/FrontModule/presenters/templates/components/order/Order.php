@@ -12,26 +12,25 @@ class Order extends Control
 	/**
 	 * @var array $order
 	 * @var array $products
-	 * @var bool $show_order_code
+	 * @var int $total
 	 */
-	private $order, $products, $show_order_code;
+	private $order, $products, $total;
 
-
-	public function __construct(array $order, array  $products, bool $show_order_code)
+	public function __construct(array $order, array $products, int $total)
 	{
 		parent::__construct();
 
 		$this->order = $order;
 		$this->products = $products;
-		$this->show_order_code = $show_order_code;
+		$this->total = $total;
 	}
 
-	public function render()
+	public function render(): void
 	{
 		$template = $this->template;
 		$template->order = $this->order;
 		$template->products = $this->products;
-		$template->show_order_code = $this->show_order_code;
+		$template->total = $this->total;
 		$template->setFile(__DIR__ . '/order.latte');
 
 		$template->render();

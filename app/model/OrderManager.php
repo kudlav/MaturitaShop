@@ -224,65 +224,57 @@ class OrderManager
 
 	/**
 	 * Return array with information of requested order.
-	 * @param $orderId
+	 * @param int $orderId
 	 * @return array
 	 */
-	public function getOrder($orderId)
+	public function getOrder(int $orderId): array
 	{
-		$row = $this->database->table(self::TABLE_ORDERS)->get($orderId);
+		$row = $this->database->table(self::TABLE_ORDERS)
+			->where(self::ORDERS_ID, $orderId)
+			->fetch();
 
-		if ($row == FALSE) {
-			return $row;
+		if ($row === false) {
+			return [];
 		}
 
-		$orders = [
-			'id' => $row->id,
-			'timestamp' => $row->timestamp,
-			'customerId' => $row->customer,
-			'customerName' => $row->ref('users','customer')->name,
-			'customerSurname' => $row->ref('users','customer')->surname,
-			'customerUsername' => $row->ref('users','customer')->username,
-			'customerPhone' => $row->ref('users','customer')->phone,
-			'customerStreet' => $row->ref('users','customer')->street,
-			'customerCity' => $row->ref('users','customer')->city,
-			'customerPostcode' => $row->ref('users','customer')->postcode,
-			'total' => $row->total,
-			'state' => $row->state,
-			'note' => $row->note,
+		return [
+			'id' => $row->cislo_objednavky,
+			'timestamp' => $row->datum_cas,
+			'customerId' => $row->zakaznicke_cislo,
+			'customerName' => $row->ref(UserManager::TABLE_NAME, self::ORDERS_CUSTOMER)->jmeno,
+			'customerSurname' => $row->ref(UserManager::TABLE_NAME, self::ORDERS_CUSTOMER)->prijmeni,
+			'customerUsername' => $row->ref(UserManager::TABLE_NAME, self::ORDERS_CUSTOMER)->email,
+			'customerStreet' => $row->ulice,
+			'customerCity' => $row->mesto,
+			'customerPostcode' => $row->psc,
+			'state' => $row->stav,
+			'paid' => $row->zaplaceno,
+			'delivery' => $this->parameters['delivery'][$row->zpusob_doruceni]['name'],
+			'deliveryPrice' => $this->parameters['delivery'][$row->zpusob_doruceni]['price'],
+			'payment' => $this->parameters['payment'][$row->platebni_metoda]['name'],
+			'paymentPrice' => $this->parameters['payment'][$row->platebni_metoda]['price'],
+			'note' => $row->poznamka,
 		];
-
-		if ($row->delivery != NULL) {
-			$orders['delivery'] = $row->ref('delivery', 'delivery')->name;
-			$orders['deliveryPrice'] = $row->ref('delivery', 'delivery')->price;
-		}
-
-		if ($row->payment != NULL) {
-			$orders['payment'] = $row->ref('payment', 'payment')->name;
-			$orders['paymentPrice'] =  $row->ref('payment', 'payment')->price;
-		}
-
-		return $orders;
 	}
 
 	/**
 	 * Return array of ordered products in requested order.
-	 * @param $orderId
+	 * @param int $orderId
 	 * @return array
 	 */
-	public function getOrderedProducts($orderId)
+	public function getOrderedProducts(int $orderId): array
 	{
 		$query = $this->database->table(self::TABLE_ORDERED)
-			->where(self::COLUMN_ORDER_ID.' = ?', $orderId);
+			->where(self::ORDERED_ORDER, $orderId);
 
 		$products = [];
 		foreach ($query as $row) {
 			$products[] = [
-				'price' => $row->price,
-				'price_text' => $row->price_text,
-				'quantity' => $row->quantity,
-				'id' => $row->products_id,
-				'name' => $row->products->name,
-				'description' => $row->products->description,
+				'id' => $row->katalogove_cislo,
+				'quantity' => $row->mnozstvi,
+				'price' => $row->cena,
+				'name' => $row->ref(ProductManager::TABLE_NAME, self::ORDERED_PRODUCT)->nazev,
+				'description' => $row->ref(ProductManager::TABLE_NAME, self::ORDERED_PRODUCT)->popis,
 			];
 		}
 

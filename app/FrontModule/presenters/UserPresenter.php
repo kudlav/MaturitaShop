@@ -58,20 +58,23 @@ class UserPresenter extends BasePresenter
 	}
 
 	/**
-	 * @param string $id
+	 * @param int $id
 	 * @throws Nette\Application\AbortException
 	 * @throws Nette\Application\BadRequestException
 	 */
-	public function renderOrder(string $id): void
+	public function renderOrder(int $id): void
 	{
 		if (!$this->getUser()->isLoggedIn()) {
 			$this->redirect('Sign:in', ['state' => $this->storeRequest()]);
 		}
 		$this->template->order = $this->orderManager->getOrder($id);
-		$this->template->products = $this->orderManager->getOrderedProducts($id);
-		$this->template->show_order_code = $this->parameters['product']['show_order_code'];
 		if ($this->template->order['customerId'] != $this->user->id) {
 			$this->error();
+		}
+		$this->template->products = $this->orderManager->getOrderedProducts($id);
+		$this->template->total = $this->template->order['deliveryPrice'] + $this->template->order['paymentPrice'];
+		foreach ($this->template->products as $product) {
+			$this->template->total += $product['price'] * $product['quantity'];
 		}
 	}
 
@@ -80,7 +83,7 @@ class UserPresenter extends BasePresenter
 	 */
 	public function createComponentOrder(): Order
 	{
-		$control = new Order($this->template->order, $this->template->products, $this->template->show_order_code);
+		$control = new Order($this->template->order, $this->template->products, $this->template->total);
 		return $control;
 	}
 
