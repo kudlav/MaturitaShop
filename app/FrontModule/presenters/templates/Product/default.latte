@@ -24,7 +24,7 @@
 	</div>
 
 	<div class="right-half">
-		<div class="left quantity"><br>Skladem: {$product->mnozstvi_skladem|number:0:',':' '} ks</div>
+		<div class="left quantity"><br>Skladem: {if $product->mnozstvi_skladem > 0}{$product->mnozstvi_skladem|number:0:',':' '} ks{else}<span class="error">vyprodáno</span>{/if}</div>
 		<div class="price">{$product->cena|number:0:',':' '} Kč</div>
 		<div class="cleaner"></div>
 		<div class="to-cart">

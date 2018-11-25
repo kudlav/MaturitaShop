@@ -23,7 +23,7 @@
 							<div class="cleaner"></div>
 							{snippet 'item-'.$item->katalogove_cislo}
 								<div class="left">
-									<div class="status">Skladem: {$item->mnozstvi_skladem|number:0:',':' '} ks</div>
+									<div class="status">Skladem: {if $item->mnozstvi_skladem > 0}{$item->mnozstvi_skladem|number:0:',':' '} ks{else}<span class="error">vyprodáno</span>{/if}</div>
 									<div class="order-quantity">Objednat <input n:name="'i'.$item->katalogove_cislo" class="form-input" style="width: 3em" min="1"> ks</div>
 								</div>
 								<div class="price">
