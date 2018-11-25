@@ -34,7 +34,15 @@
 
 		<p>{$product->popis|noescape}</p>
 
+		<div n:if="$productParameters->count() > 0" class="show-cards">
+			<div class="item">
+				<div class="id"><h3>Parametry:</h3></div>
+				<div n:foreach="$productParameters as $parameter">{$parameter->nazev}: {$parameter->hodnota}</div>
+			</div>
+		</div>
+
 		<div n:if="$product_parameters['show_phone_order']" class="phone-order show-cards">
+			<br>
 			<div class="item">
 				<div class="id"><h3>Poptejte telefonicky:</h3></div>
 				{$phone}
@@ -42,7 +50,6 @@
 		</div>
 
 		<div n:if="$product_parameters['show_email_order']" class="email-order show-cards">
-		<br>
 			<div class="item">
 				<div class="id"><h3>Kontaktovat emailem:</h3></div>
 				{control contactForm}

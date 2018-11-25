@@ -22,15 +22,6 @@ parameters:
 		'Pastelky':
 			- 'Homepage:default'
 			- 'pastelky'
-		'<span class="subitem">Obyčejné</span>':
-			- 'Homepage:default'
-			- '99'
-		'<span class="subitem">Progresso</span>':
-			- 'Homepage:default'
-			- '99'
-		'<span class="subitem">Voskovky</span>':
-			- 'Homepage:default'
-			- '99'
 		'Skicáky':
 			- 'Homepage:default'
 			- 'skicáky'
@@ -92,6 +83,7 @@ services:
 	- App\Model\CartManager
 	- App\Model\OrderManager(@container::getParameters())
 	- App\Model\EmployeeManager
+	- App\Model\ParameterManager
 
 	- App\FrontModule\Forms\IUserDataFactory
 	- App\FrontModule\Forms\SignFormFactory

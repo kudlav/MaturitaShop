@@ -9,6 +9,7 @@ use App\FrontModule\Forms\ContactFormFactory;
 use App\Model\ProductManager;
 use App\Model\CartManager;
 use App\Model\OrderManager;
+use App\Model\ParameterManager;
 use Nette\Application\UI\Form;
 
 
@@ -19,10 +20,11 @@ class ProductPresenter extends BasePresenter
 	 * @var ProductManager $productManager
 	 * @var CartManager $cartManager
 	 * @var OrderManager $orderManager
+	 * @var ParameterManager $parameterManager
 	 */
-	private $buyFormFactory, $productManager, $cartManager, $orderManager;
+	private $buyFormFactory, $productManager, $cartManager, $orderManager, $parameterManager;
 
-	public function __construct(BuyFormFactory $buyFormFactory, ProductManager $productManager, CartManager $cartManager, OrderManager $orderManager)
+	public function __construct(BuyFormFactory $buyFormFactory, ProductManager $productManager, CartManager $cartManager, OrderManager $orderManager, ParameterManager $parameterManager)
 	{
 		parent::__construct();
 
@@ -30,6 +32,7 @@ class ProductPresenter extends BasePresenter
 		$this->productManager = $productManager;
 		$this->cartManager = $cartManager;
 		$this->orderManager = $orderManager;
+		$this->parameterManager = $parameterManager;
 	}
 
 	/**
@@ -43,6 +46,7 @@ class ProductPresenter extends BasePresenter
 			$this->error('Požadovaný produkt neexistuje');
 		}
 
+		$this->template->productParameters = $this->parameterManager->getProductParameters($id);
 		$this->template->productPhotos = explode(';', $this->template->product->fotografie ?? '');
 		$this->template->product_parameters = $this->parameters['product'];
 	}
