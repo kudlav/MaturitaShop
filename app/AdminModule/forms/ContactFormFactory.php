@@ -66,6 +66,6 @@ class ContactFormFactory
 		$mailer->send($mail);
 
 		$this->presenter->flashMessage('Emailová zpráva byla odeslána');
-		$this->presenter->redirect($this->presenter->getAction(TRUE),$this->presenter->getParameter('id'));
+		$this->presenter->redirect($this->presenter->getAction(true), $this->presenter->getParameter('id'));
 	}
 }

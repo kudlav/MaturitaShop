@@ -13,16 +13,16 @@ class Contact extends Control
 {
 
 	/**
-	 * @var array $details
+	 * @var array $order
 	 * @var string $email_from
 	 */
-	private $details, $email_from;
+	private $order, $email_from;
 
-	public function  __construct(IRow $details, string $email_from)
+	public function  __construct(array $order, string $email_from)
 	{
 		parent::__construct();
 
-		$this->details = $details;
+		$this->order = $order;
 		$this->email_from = $email_from;
 	}
 
@@ -30,7 +30,7 @@ class Contact extends Control
 	{
 		$template = $this->template;
 		$template->setFile(__DIR__ . '/contact.latte');
-		$template->detail = $this->details;
+		$template->detail = $this->order;
 
 		$template->render();
 	}

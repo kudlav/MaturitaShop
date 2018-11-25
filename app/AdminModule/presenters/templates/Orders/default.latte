@@ -32,7 +32,7 @@
 					<select n:name="'s'.$order['id']" n:snippet="'order'.$order['id']" class="state{array_search($order['state'],$states)}" onchange="$(this).closest('form').submit()"></select>
 				</td>
 				<td class="center" title="{$order['note']}"><span n:if="$order['note']!=''" class="icona-info icon"></span></td>
-				<td class="center nopad"><a href="{plink Orders:contact $order['customer'][2]}" title="Kontaktovat"><div class="icona-chat action"></div></a></td>
+				<td class="center nopad"><a href="{plink Orders:contact $order['id']}" title="Kontaktovat"><div class="icona-chat action"></div></a></td>
 				<td class="center nopad"><a href="{plink Orders:detail $order['id']}" title="Zobrazit"><div class="icona-eye action"></div></a></td>
 				<td class="center nopad"><a href="{plink Orders:detail $order['id']}" title="Upravit""><div class="icona-pencil action"></div></a></td>
 				<td class="center nopad"><a href="{link delete! $order['id']}" title="Smazat" onclick="return confirm('Smazat?')"><div class="icona-trash-1 action"></div></a></td>

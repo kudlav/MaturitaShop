@@ -3,25 +3,24 @@
 		<li>
 			<div class="item">
 				<div class="padding">
-					<div class="id normal"><h2>{$detail['name']} {$detail['surname']}</h2></div>
+					<div class="id normal"><h2>{$detail['customerName']} {$detail['customerSurname']}</h2></div>
 					<div class="cleaner"></div>
 					<div class="order-info">
 						<table>
 							<tbody>
-							<tr><td>Email:</td><td>{$detail['username']}</td></tr>
-							<tr><td>Telefon:</td><td>+{$detail['phone']}</td></tr>
+							<tr><td>Email:</td><td>{$detail['customerUsername']}</td></tr>
 							<tr><td colspan="2" class="id"></td></tr>
 							<tr><td colspan="2"></td></tr>
-							<tr><td>Ulice:</td><td>{$detail['street']}</td></tr>
-							<tr><td>Město:</td><td>{$detail['city']}</td></tr>
-							<tr><td>PSČ:</td><td>{$detail['postcode']}</td></tr>
+							<tr><td>Ulice:</td><td>{$detail['customerStreet']}</td></tr>
+							<tr><td>Město:</td><td>{$detail['customerCity']}</td></tr>
+							<tr><td>PSČ:</td><td>{$detail['customerPostcode']}</td></tr>
 							</tbody>
 						</table>
 					</div>
 					<div class="customer padding">
-						<form n:if="$detail['username']" n:name="contactForm">
+						<form n:name="contactForm">
 							{label subject /}<br><input n:name="subject" class="form-input"><br>
-							<input n:name="email" value="{$detail['username']}">
+							<input n:name="email" value="{$detail['customerUsername']}">
 							{label message /}<br><textarea n:name="message" class="form-input" style="height:4.5em"></textarea><br>
 							<input n:name="send" class="submit">
 						</form>

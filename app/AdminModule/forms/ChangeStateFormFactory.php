@@ -53,7 +53,7 @@ class ChangeStateFormFactory
 			$i = 0;
 			foreach ($values as $key => $value) {
 				if ($this->states[$value] !== $this->orders[$i]['state']) {
-					$this->orderManager->changeState(str_replace('s','',$key), $this->states[$value]);
+					$this->orderManager->changeState(intval(str_replace('s','',$key)), $this->states[$value]);
 				}
 				$i++;
 			}

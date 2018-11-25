@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Model;
 
-use App\FrontModule\Presenters\Cart;
 use Nette;
 use Nette\Database\ResultSet;
 use Nette\Http\SessionSection;
@@ -190,35 +189,35 @@ class OrderManager
 	}
 
 	/**
-	 * Return array of orders in progress.
+	 * @param string $state ('in progress')
 	 * @return array
 	 */
-	public function getOrdersInProgress()
+	public function getOrdersByState(string $state = ""): array
 	{
 		$query = $this->database->table(self::TABLE_ORDERS)
-			->where(self::COLUMN_STATE.' NOT LIKE ?', 'objednávka vyřízena')
-			->order(self::COLUMN_TIMESTAMP.' DESC');
+			->order(self::ORDERS_ID.' DESC');
+
+		if ($state == 'in progress') {
+			$query->where(self::ORDERS_STATE .' <> ?', 'objednávka vyřízena');
+		}
 
 		$orders = [];
 		foreach ($query as $row) {
 			$orders[] = [
-				'id' => $row->id,
-				'timestamp' => $row->timestamp,
-				'customer' => [$row->ref('users', 'customer')->name, $row->ref('users', 'customer')->surname, $row->customer],
-				'total' => $row->total,
-				'state' => $row->state,
-				'note' => $row->note,
+				'id' => $row->cislo_objednavky,
+				'timestamp' => $row->datum_cas,
+				'customer' => [
+					$row->ref(UserManager::TABLE_NAME, OrderManager::ORDERS_CUSTOMER)->jmeno,
+					$row->ref(UserManager::TABLE_NAME, OrderManager::ORDERS_CUSTOMER)->prijmeni,
+					$row->zakaznicke_cislo
+				],
+				'state' => $row->stav,
+				'paid' => $row->zaplaceno,
+				'delivery' => $this->parameters['delivery'][$row->zpusob_doruceni]['name'],
+				'payment' => $this->parameters['payment'][$row->platebni_metoda]['name'],
+				'note' => $row->poznamka,
 			];
 		}
-
-		if ($row->delivery != NULL) {
-			$orders['delivery'] = $row->ref('delivery', 'delivery')->name;
-		}
-
-		if ($row->payment != NULL) {
-			$orders['payment'] = $row->ref('payment', 'payment')->name;
-		}
-
 		return $orders;
 	}
 
@@ -284,46 +283,43 @@ class OrderManager
 	/**
 	 * Delete order witch equal ID.
 	 * @param $orderId
-	 * @return bool Return TRUE in case of success.
+	 * @return bool Return true in case of success.
 	 */
-	public function deleteOrder($orderId)
+	public function deleteOrder(int $orderId): bool
 	{
 		$this->database->beginTransaction();
-		$ordered = $this->database->table(self::TABLE_ORDERED)->where(self::COLUMN_ORDER_ID.' = ?',$orderId)->delete();
-		$orders = $this->database->table(self::TABLE_ORDERS)->get($orderId)->delete();
+		$ordered = $this->database->table(self::TABLE_ORDERED)->where(self::ORDERED_ORDER, $orderId)->delete();
+		$orders = $this->database->table(self::TABLE_ORDERS)->where(self::ORDERS_ID, $orderId)->delete();
 		$this->database->commit();
-		if ($ordered && $orders) {
-			return TRUE;
-		} else {
-			return FALSE;
-		}
+
+		return ($ordered AND $orders);
 	}
 
 	/**
 	 * Return array of possible states of order.
 	 * @return array
 	 */
-	public function getStates()
+	public function getStates(): array
 	{
-		$enum = $this->database->table(self::VIEW_ENUM)
-			->where('`'.self::ENUM_TABLE.'` = ? && `'.self::ENUM_COLUMN.'` = ?', self::TABLE_ORDERS, self::COLUMN_STATE)
-			->fetch();
-
-		$enum = preg_replace('#(enum\()|\)|\'#','',$enum->ENUM);
-		$enum = explode(',',$enum);
-		return $enum;
+		return [
+			'čeká na vyřízení',
+			'zboží odesláno',
+			'připraveno k vyzvednutí',
+			'objednávka vyřízena',
+			'objednávka zrušena'
+		];
 	}
 
 	/**
 	 * Change state of selected order.
-	 * @param $orderId
-	 * @param $value
+	 * @param int $orderId
+	 * @param string $value
+	 * @return bool Return true on success
 	 */
-	public function changeState($orderId, $value)
+	public function changeState(int $orderId, string $value): bool
 	{
-		$row = $this->database->table(self::TABLE_ORDERS)->get($orderId)
-			->update(array(
-				self::COLUMN_STATE => $value
-			));
+		return $this->database->table(self::TABLE_ORDERS)->where(self::ORDERS_ID, $orderId)->fetch()->update([
+			self::ORDERS_STATE => $value
+		]);
 	}
 }

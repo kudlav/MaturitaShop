@@ -19,9 +19,9 @@ class OrdersPresenter extends BasePresenter
 	 * @var OrderManager $orderManager
 	 * @var ProductManager $productManager
 	 * @var UserManager $userManager
-	 * @var int $userId
+	 * @var int $orderId
 	 */
-	private $orderManager, $productManager, $userManager, $userId;
+	private $orderManager, $productManager, $userManager, $orderId;
 
 	public function __construct(OrderManager $orderManager, ProductManager $productManager, UserManager $userManager)
 	{
@@ -34,22 +34,22 @@ class OrdersPresenter extends BasePresenter
 
 	public function renderDefault(): void
 	{
-		$this->template->orders = $this->orderManager->getOrdersInProgress();
+		$this->template->orders = $this->orderManager->getOrdersByState('in progress');
 		$this->template->states = $this->orderManager->getStates();
 	}
 
 	public function createComponentChangeStateForm(): Form
 	{
-		$form = new ChangeStateFormFactory($this, $this->orderManager, $this->orderManager->getOrdersInProgress(), $this->orderManager->getStates());
+		$form = new ChangeStateFormFactory($this, $this->orderManager, $this->orderManager->getOrdersByState('in progress'), $this->orderManager->getStates());
 		return $form->create();
 	}
 
 	/**
 	 * @secured
-	 * @param string $id
+	 * @param int $id
 	 * @throws Nette\Application\AbortException
 	 */
-	public function handleDelete(string $id): void
+	public function handleDelete(int $id): void
 	{
 		if ($this->orderManager->deleteOrder($id)) {
 			$this->flashMessage('Objednávka byla odstraněna');
@@ -60,18 +60,21 @@ class OrdersPresenter extends BasePresenter
 	}
 
 	/**
-	 * @param string $id
+	 * @param int $id
 	 */
-	public function renderDetail(string $id): void
+	public function renderDetail(int $id): void
 	{
 		$this->template->order = $this->orderManager->getOrder($id);
 		$this->template->products = $this->orderManager->getOrderedProducts($id);
-		$this->template->show_order_code = $this->parameters['product']['show_order_code'];
+		$this->template->total = $this->template->order['deliveryPrice'] + $this->template->order['paymentPrice'];
+		foreach ($this->template->products as $product) {
+			$this->template->total += $product['price'] * $product['quantity'];
+		}
 	}
 
 	public function createComponentOrder(): Order
 	{
-		$control = new Order($this->template->order, $this->template->products, $this->template->show_order_code);
+		$control = new Order($this->template->order, $this->template->products, $this->template->total);
 		return $control;
 	}
 
@@ -80,14 +83,14 @@ class OrdersPresenter extends BasePresenter
 
 	}
 
-	public function renderContact(int $id): void
+	public function actionContact(int $id): void
 	{
-		$this->userId = $id;
+		$this->orderId = $id;
 	}
 
 	public function createComponentContact(): Contact
 	{
-		$control = new Contact($this->userManager->getContact($this->userId), $this->parameters['contact']['email_from']);
+		$control = new Contact($this->orderManager->getOrder($this->orderId), $this->parameters['contact']['email_from']);
 		return $control;
 	}
 }
