@@ -9,9 +9,9 @@
 			<tr>
 				<td><input type="checkbox"></td>
 				<th>Číslo</th>
-				<th>Datum vytvoření</th>
-				<th>Jméno zákazníka</th>
-				<th>Cena (Kč)</th>
+				<th>Vytvořeno</th>
+				<th>Zákazník</th>
+				<th>Cena</th>
 				<th>Doprava</th>
 				<th>Platba</th>
 				<th>Stav</th>
@@ -25,7 +25,7 @@
 				<td>OBJ{sprintf("%05d", $order->cislo_objednavky)}</td>
 				<td class="center">{$order->datum_cas|date:'j. n. Y'}<br>{$order->datum_cas|date:'G:i'}</td>
 				<td class="center">{$order->jmeno} {$order->prijmeni}</td>
-				<td class="right">{$order->suma|number:0:',':'.'},-</td>
+				<td class="right">{$order->suma|number:0:',':'.'} Kč</td>
 				<td class="center">{$delivery[$order->zpusob_doruceni]['name']}</td>
 				<td class="center">{$payment[$order->platebni_metoda]['name']}</td>
 				<td class="center">
