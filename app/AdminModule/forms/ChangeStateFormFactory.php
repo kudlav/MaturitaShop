@@ -7,6 +7,7 @@ use Nette;
 use Nette\Application\UI\Form;
 use Nette\Application\UI\Presenter;
 use App\Model\OrderManager;
+use Nette\Database\ResultSet;
 use Nette\Utils\ArrayHash;
 
 
@@ -17,16 +18,16 @@ class ChangeStateFormFactory
 	/**
 	 * @var Presenter $presenter
 	 * @var OrderManager $orderManager
-	 * @var array $orders
+	 * @var ResultSet $orders
 	 * @var array $states
 	 */
 	private $presenter, $orderManager, $orders, $states;
 
-	public function __construct(Presenter $presenter, OrderManager $orderManager, $orders, $states)
+	public function __construct(Presenter $presenter, OrderManager $orderManager, ResultSet $orders, array $states)
 	{
 		$this->presenter = $presenter;
 		$this->orderManager = $orderManager;
-		$this->orders = $orders;
+		$this->orders = $orders->fetchPairs('cislo_objednavky', 'stav');;
 		$this->states = $states;
 	}
 
@@ -37,9 +38,9 @@ class ChangeStateFormFactory
 	{
 		$form = new Form;
 
-		foreach ($this->orders as $order) {
-			$form->addSelect('s'.$order['id'],'Stav objednávky',$this->states)
-				->setValue(array_search($order['state'], $this->states))
+		foreach ($this->orders as $id => $state) {
+			$form->addSelect('s'.$id, 'Stav objednávky', $this->states)
+				->setValue(array_search($state, $this->states))
 				->setRequired();
 		}
 
@@ -50,12 +51,11 @@ class ChangeStateFormFactory
 	public function formSucceeded(Form $form, ArrayHash $values): void
 	{
 		if ($this->presenter->isAjax()) {
-			$i = 0;
 			foreach ($values as $key => $value) {
-				if ($this->states[$value] !== $this->orders[$i]['state']) {
-					$this->orderManager->changeState(intval(str_replace('s','',$key)), $this->states[$value]);
+				$orderId = intval(str_replace('s','',$key));
+				if ($this->states[$value] !== $this->orders[$orderId]) {
+					$this->orderManager->changeState($orderId, $this->states[$value]);
 				}
-				$i++;
 			}
 			$this->presenter->redrawControl('ordersList');
 		}

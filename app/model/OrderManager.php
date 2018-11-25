@@ -93,15 +93,35 @@ class OrderManager
 	 */
 	public function getUserOrders(int $userId): ResultSet
 	{
-		$query = $this->database->query('
+		return $this->database->query('
 			SELECT objednavka.*, SUM(obsahuje.mnozstvi * obsahuje.cena) AS suma
-			FROM objednavka LEFT JOIN obsahuje ON objednavka.cislo_objednavky = obsahuje.cislo_objednavky AND objednavka.zakaznicke_cislo = obsahuje.zakaznicke_cislo
+			FROM objednavka LEFT JOIN obsahuje ON objednavka.cislo_objednavky = obsahuje.cislo_objednavky
 			WHERE objednavka.zakaznicke_cislo = ?
 			GROUP BY objednavka.cislo_objednavky
 			ORDER BY objednavka.cislo_objednavky DESC
 		', $userId);
+	}
 
-		return $query;
+	/**
+	 * @param string $state ('in progress')
+	 * @return ResultSet
+	 */
+	public function getOrdersByState(string $state = ""): ResultSet
+	{
+		$where = '';
+		if ($state == 'in progress') {
+			$where .= 'WHERE '. self::ORDERS_STATE .' <> "objednávka vyřízena"';
+		}
+
+		return $this->database->query("
+			SELECT objednavka.*, SUM(obsahuje.mnozstvi * obsahuje.cena) AS suma, zakaznik.jmeno, zakaznik.prijmeni
+			FROM objednavka
+			LEFT JOIN obsahuje ON objednavka.cislo_objednavky = obsahuje.cislo_objednavky
+			LEFT JOIN zakaznik ON objednavka.zakaznicke_cislo = zakaznik.zakaznicke_cislo
+			$where
+			GROUP BY objednavka.cislo_objednavky
+			ORDER BY objednavka.cislo_objednavky DESC
+		");
 	}
 
 	/**
@@ -186,39 +206,6 @@ class OrderManager
 		}
 		$this->database->rollBack();
 		return -1;
-	}
-
-	/**
-	 * @param string $state ('in progress')
-	 * @return array
-	 */
-	public function getOrdersByState(string $state = ""): array
-	{
-		$query = $this->database->table(self::TABLE_ORDERS)
-			->order(self::ORDERS_ID.' DESC');
-
-		if ($state == 'in progress') {
-			$query->where(self::ORDERS_STATE .' <> ?', 'objednávka vyřízena');
-		}
-
-		$orders = [];
-		foreach ($query as $row) {
-			$orders[] = [
-				'id' => $row->cislo_objednavky,
-				'timestamp' => $row->datum_cas,
-				'customer' => [
-					$row->ref(UserManager::TABLE_NAME, OrderManager::ORDERS_CUSTOMER)->jmeno,
-					$row->ref(UserManager::TABLE_NAME, OrderManager::ORDERS_CUSTOMER)->prijmeni,
-					$row->zakaznicke_cislo
-				],
-				'state' => $row->stav,
-				'paid' => $row->zaplaceno,
-				'delivery' => $this->parameters['delivery'][$row->zpusob_doruceni]['name'],
-				'payment' => $this->parameters['payment'][$row->platebni_metoda]['name'],
-				'note' => $row->poznamka,
-			];
-		}
-		return $orders;
 	}
 
 	/**

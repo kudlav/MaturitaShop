@@ -35,6 +35,8 @@ class OrdersPresenter extends BasePresenter
 	public function renderDefault(): void
 	{
 		$this->template->orders = $this->orderManager->getOrdersByState('in progress');
+		$this->template->delivery = $this->orderManager->getDelivery();
+		$this->template->payment = $this->orderManager->getPayment();
 		$this->template->states = $this->orderManager->getStates();
 	}
 
