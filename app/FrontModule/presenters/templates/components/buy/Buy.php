@@ -41,14 +41,18 @@ class Buy extends Control
 		$delivery = $this->orderManager->getDelivery();
 		$payment = $this->orderManager->getPayment();
 
+		$template->street = $this->session->street;
+		$template->city = $this->session->city;
+		$template->zip = $this->session->zip;
+
 		$template->form = [];
-		$template->form['Vaše poznámka'] = ['name' => $this->session->note];
 		if ($this->session->delivery !== null) {
 			$template->form['Doručení'] = $delivery[$this->session->delivery];
 		}
 		if ($this->session->payment !== null) {
 			$template->form['Platba'] = $payment[$this->session->payment];
 		}
+		$template->form['Vaše poznámka'] = ['name' => $this->session->note];
 
 		// Get price of cart
 		$template->total = $this->cartManager->getPrice($userId);

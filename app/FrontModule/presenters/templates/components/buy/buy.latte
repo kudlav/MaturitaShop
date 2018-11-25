@@ -1,6 +1,13 @@
 <div class="show-cards left-half">
 	Způsob dopravy a platby:
 	<ul>
+		<li>
+			<div class="item">
+				<div class="id normal">Dodací údaje:</div>
+				<div class="cleaner"></div>
+				<div class="note">{$street}<br>{$city}<br>{$zip}</div>
+			</div>
+		</li>
 		<li n:foreach="$form as $item => $value">
 			<div class="item">
 				<div class="id normal">{$item}:</div>
