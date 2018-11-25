@@ -5,12 +5,6 @@
 
 parameters:
 
-	#eshop - enable cart and order process
-	eshop: true
-
-	#fulltext_search - disable when MyISAM <4.6
-	fulltext_search: false
-
 	#contact - email and phone of operator
 	contact:
 		name: 'Marek Musil & Vladan Kudláč'
@@ -20,7 +14,6 @@ parameters:
 
 	#product - enable or disable features on product detail pages [true/false]
 	product:
-		show_order_code: true
 		show_phone_order: true
 		show_email_order: true
 

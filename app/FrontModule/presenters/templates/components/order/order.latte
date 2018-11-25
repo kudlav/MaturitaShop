@@ -59,7 +59,7 @@
                         </thead>
                         <tbody>
                             <tr n:foreach="$products as $product">
-                                <td>{sprintf("%05d", $product['id'])}</td>
+                                <td>{$product['id']}</td>
                                 <td>{$product['name']}</td>
                                 <td class="right">{$product['quantity']}</td>
                                 <td class="right">{$product['price']|number:0:',':' '},-</td>

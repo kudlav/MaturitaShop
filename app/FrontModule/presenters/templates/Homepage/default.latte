@@ -22,11 +22,7 @@
 							<div class="status">
 								<div class="price">{$product->cena|number:0:',':' '} Kč</div>
 								<div class="to-cart">
-									{if $eshop}
-										<a n:href="User:addToCart $product->katalogove_cislo, 'Homepage:'"><button>Do košíku</button></a>
-									{else}
-										<a n:href="Product:default $product->katalogove_cislo"><button>Detaily</button></a>
-									{/if}
+									<a n:href="User:addToCart $product->katalogove_cislo, 'Homepage:'"><button>Do košíku</button></a>
 								</div>
 								<div class="cleaner"></div>
 							</div>

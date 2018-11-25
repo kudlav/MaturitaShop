@@ -68,26 +68,14 @@ class ProductManager
 	/**
 	 * Return list of fulltext searched products.
 	 * @param string $string
-	 * @param bool $fulltext_search
 	 * @return ResultSet
 	 */
-	public function searchProduct(string $string, bool $fulltext_search): ResultSet
+	public function searchProduct(string $string): ResultSet
 	{
-		if ($fulltext_search === true) {
-			$query = $this->database->query("
-				SELECT *
-				FROM `".self::TABLE_NAME."`
-				WHERE (MATCH(`".self::COLUMN_NAME."`,`".self::COLUMN_DESCRIPTION."`) AGAINST (? IN BOOLEAN MODE))
-				ORDER BY 5 * MATCH(`".self::COLUMN_NAME."`) AGAINST (?) + MATCH(`".self::COLUMN_DESCRIPTION."`) AGAINST (?) DESC
-				", $string, $string, $string);
-		}
-		else {
-			$query = $this->database->query("
+		return $this->database->query("
 			SELECT *
 			FROM `".self::TABLE_NAME."`
-			WHERE ".self::COLUMN_NAME." like ? OR ".self::COLUMN_DESCRIPTION." like ?", "%".$string."%", "%".$string."%");
-		}
-		return $query;
+			WHERE ".self::COLUMN_ID." like ? OR ".self::COLUMN_NAME." like ? OR ".self::COLUMN_DESCRIPTION." like ?
+		", "%".$string."%", "%".$string."%", "%".$string."%");
 	}
-
 }

@@ -79,13 +79,8 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 
 	protected function createComponentCart(): Control
 	{
-		if ($this->parameters['eshop']) {
-			$user = $this->getUser();
-			$control = new Cart($user, $this->cartManager);
-		}
-		else {
-			$control = new Operator($this->parameters['contact']);
-		}
+		$user = $this->getUser();
+		$control = new Cart($user, $this->cartManager);
 		return $control;
 	}
 
