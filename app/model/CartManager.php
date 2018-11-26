@@ -56,7 +56,7 @@ class CartManager
 
 		$ret = 0;
 		foreach ($query as $row) {
-			$ret+= $row->pocet_kusu * $row->ref(ProductManager::TABLE_NAME, self::COLUMN_PRODUCTS_ID)->cena;
+			$ret+= $row->pocet_kusu * $row->ref(ProductManager::TABLE_PRODUCT, self::COLUMN_PRODUCTS_ID)->cena;
 		}
 		return $ret;
 	}
@@ -100,7 +100,7 @@ class CartManager
 	 */
 	public function addItem(int $userId, string $productId, int $quantity = 0): bool
 	{
-		$product = $this->database->table(ProductManager::TABLE_NAME)->get($productId);
+		$product = $this->database->table(ProductManager::TABLE_PRODUCT)->get($productId);
 		if ($product && $product->zobrazovat) {
 			$basket = $this->database->table(self::TABLE_BASKETS)
 				->where(self::COLUMN_USERS_ID." = ? AND ".self::COLUMN_PRODUCTS_ID." = ?", $userId, $productId)->fetch();

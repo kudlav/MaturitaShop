@@ -177,7 +177,7 @@ class OrderManager
 							self::ORDERED_PRICE => $product->cena,
 						]);
 
-						$productRow = $this->database->table(ProductManager::TABLE_NAME)->get($product->katalogove_cislo);
+						$productRow = $this->database->table(ProductManager::TABLE_PRODUCT)->get($product->katalogove_cislo);
 						$productRow->update([
 							ProductManager::COLUMN_QUANTITY => ($productRow->mnozstvi_skladem - $product->pocet_kusu)
 						]);
@@ -259,8 +259,8 @@ class OrderManager
 				'id' => $row->katalogove_cislo,
 				'quantity' => $row->mnozstvi,
 				'price' => $row->cena,
-				'name' => $row->ref(ProductManager::TABLE_NAME, self::ORDERED_PRODUCT)->nazev,
-				'description' => $row->ref(ProductManager::TABLE_NAME, self::ORDERED_PRODUCT)->popis,
+				'name' => $row->ref(ProductManager::TABLE_PRODUCT, self::ORDERED_PRODUCT)->nazev,
+				'description' => $row->ref(ProductManager::TABLE_PRODUCT, self::ORDERED_PRODUCT)->popis,
 			];
 		}
 

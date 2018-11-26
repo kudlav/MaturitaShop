@@ -4,6 +4,15 @@
 	<div class="category">Kategorie: {$product->kategorie}</div>
 	<h1 n:block=title>{$product->nazev}</h1>
 	<div class="id">Objednací kód: {$product->katalogove_cislo}</div>
+	<div>
+		{for $i=1; $i<=5 ; $i++}
+			{if $i<=$productRating}
+				<span data-icon="*" class="icon"></span>
+			{else}
+				<span data-icon="." class="icon"></span>
+			{/if}
+		{/for}
+	</div>
 
 	<div class="left-half"
 	{foreach $productPhotos as $photo}
@@ -21,6 +30,28 @@
 		{/if}
 	{/foreach}
 	>
+
+	<div class="show-cards">
+		<div class="item">
+			<div class="row"><h3>Hodnocení produktu ({$productReviews->getRowCount()})</h3></div>
+			<div class="row" n:foreach="$productReviews as $review">
+				<div style="font-size:initial">
+					{$review->jmeno} {$review->prijmeni}
+					{for $i=1; $i<=5 ; $i++}
+						{if $i<=$review->pocet_hvezdicek}
+							<span data-icon="*" class="icon"></span>
+						{else}
+							<span data-icon="." class="icon"></span>
+						{/if}
+					{/for}
+				</div>
+				<div n:ifset="$review->klady" class="pros"><span data-icon="+" class="icon"></span> {$review->klady}</div>
+				<div n:ifset="$review->zapory" class="cons"><span data-icon="-" class="icon"></span> {$review->zapory}</div>
+				<div n:ifset="$review->shrnuti">{$review->shrnuti}</div>
+			</div>
+		</div>
+	</div>
+
 	</div>
 
 	<div class="right-half">

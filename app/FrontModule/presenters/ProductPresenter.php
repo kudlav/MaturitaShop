@@ -49,6 +49,8 @@ class ProductPresenter extends BasePresenter
 		$this->template->productParameters = $this->parameterManager->getProductParameters($id);
 		$this->template->productPhotos = explode(';', $this->template->product->fotografie ?? '');
 		$this->template->product_parameters = $this->parameters['product'];
+		$this->template->productRating = $this->productManager->getItemRating($id);
+		$this->template->productReviews = $this->productManager->getItemReviews($id);
 	}
 
 	/**
