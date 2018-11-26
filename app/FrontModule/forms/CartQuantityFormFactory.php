@@ -28,16 +28,16 @@ class CartQuantityFormFactory
 	}
 
 	/**
-	 * @param ResultSet $items
+	 * @param iterable $items
 	 * @return Form
 	 */
-	public function create(ResultSet $items): Form
+	public function create(iterable $items): Form
 	{
 		$form = new Form;
 
 		foreach ($items as $item) {
-			$form->addText('i'.$item->katalogove_cislo)
-				->setValue($item->pocet_kusu)
+			$form->addText('i'.$item['katalogove_cislo'])
+				->setValue($item['pocet_kusu'])
 				->setRequired(true)
 				->addRule(Form::INTEGER, 'Zadejte celé číslo, větší než 0.');
 		}
@@ -52,14 +52,25 @@ class CartQuantityFormFactory
 	/**
 	 * @param Form $form
 	 * @param ArrayHash $values
+	 * @throws Nette\Application\AbortException
 	 */
 	public function formSucceeded(Form $form, ArrayHash $values): void
 	{
 		if ($this->presenter->isAjax()) {
-			foreach ($values as $id => $value) {
-				if($value<=0 || !$this->cartManager->addItem($this->presenter->user->id, str_replace('i', '', $id), (int) $value)){
-					$this->presenter->flashMessage('Chyba, množství musí být celé číslo, větší než 0.','flash-error');
+			if ($this->presenter->user->isLoggedIn()) { // Update database
+				foreach ($values as $id => $value) {
+					if ($value <= 0 || !$this->cartManager->addItem($this->presenter->user->id, substr($id, 1), (int)$value)) {
+						$this->presenter->flashMessage('Chyba, množství musí být celé číslo, větší než 0.', 'flash-error');
+					}
 				}
+			}
+			else { // Update cookies
+				$cart = [];
+				foreach ($values as $id => $value) {
+					$cart[substr($id, 1)] = $value;
+				}
+				$this->presenter->getHttpResponse()->setCookie('cart', json_encode($cart), '365 days');
+				$this->presenter->redirect('User:cart');
 			}
 			$this->presenter->redrawControl('flashMessage');
 			$this->presenter->redrawControl('cartCards');
