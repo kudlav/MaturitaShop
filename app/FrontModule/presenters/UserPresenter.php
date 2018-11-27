@@ -5,6 +5,7 @@ namespace App\FrontModule\Presenters;
 
 use App\FrontModule\Forms\CartQuantityFormFactory;
 use App\Model\ProductManager;
+use App\Model\SupplierManager;
 use Nette;
 use Nette\Application\UI\Form;
 use App\Model\CartManager;
@@ -114,6 +115,7 @@ class UserPresenter extends BasePresenter
 							ProductManager::COLUMN_CATEGORY => $product->kategorie,
 							ProductManager::COLUMN_SHOW => $product->zobrazovat,
 							'pocet_kusu' => $count,
+                            'productDelivery' => $product->ref(SupplierManager::TABLE_NAME, ProductManager::COLUMN_SUPPLIER)->dodaci_lhuta,
 						];
 						$this->template->total += $product->cena * $count;
 					}

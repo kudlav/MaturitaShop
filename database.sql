@@ -37,7 +37,10 @@ CREATE TABLE dodavatel (
   ulice VARCHAR(45) NOT NULL,
   mesto VARCHAR(45) NOT NULL,
   psc NUMERIC(5) NOT NULL,
-  CONSTRAINT pk_dodavatel PRIMARY KEY (ico)
+  CONSTRAINT pk_dodavatel PRIMARY KEY (ico),
+  dodaci_lhuta VARCHAR(45) NOT NULL,
+  email VARCHAR(45),
+  telefon VARCHAR(12)
 );
 
 
@@ -53,7 +56,9 @@ CREATE TABLE produkt (
   fotografie VARCHAR(255),
   kategorie VARCHAR(45),
   zobrazovat TINYINT(1) UNSIGNED NULL,
-  CONSTRAINT pk_produkt PRIMARY KEY (katalogove_cislo)
+  CONSTRAINT pk_produkt PRIMARY KEY (katalogove_cislo),
+  dodavatel NUMERIC(8) NOT NULL,
+  CONSTRAINT fk_produkt_dodavatel FOREIGN KEY (dodavatel) REFERENCES dodavatel (ico)
 );
 
 
@@ -157,9 +162,9 @@ CREATE TABLE zamestnanec (
 
 -- Insert into tables --
 INSERT INTO zakaznik VALUES (1, 'Petr', 'Kapr', '', NULL);
-INSERT INTO dodavatel VALUES (26359723, 'RANDOM DISTRIBUTION, s.r.o.', 'Vojta Okoun', 'Zahradni 173/2', 'Plzen', 32600);
-INSERT INTO produkt VALUES ('SVT33300460', 'Bobo Skicak KRTEK lepeny A4 10 listu', 'Lepeny skicak s motivem krtecka obsahuje 10 cistych listu.', 30, 500, 'bobo-skicak-krtek-lepeny-a4-10-listu-33300460.jpg', 'Skicaky', 1);
-INSERT INTO produkt (katalogove_cislo, nazev, cena, mnozstvi_skladem, zobrazovat) VALUES ('SVT44102600', 'Pastelky CONCORDE trojhranne - 18 barev', 39, 0, 1);
+INSERT INTO dodavatel VALUES (26359723, 'RANDOM DISTRIBUTION, s.r.o.', 'Vojta Okoun', 'Zahradni 173/2', 'Plzen', 32600, '14 dní', NULL, NULL);
+INSERT INTO produkt VALUES ('SVT33300460', 'Bobo Skicak KRTEK lepeny A4 10 listu', 'Lepeny skicak s motivem krtecka obsahuje 10 cistych listu.', 30, 500, 'bobo-skicak-krtek-lepeny-a4-10-listu-33300460.jpg', 'Skicaky', 1, 26359723);
+INSERT INTO produkt (katalogove_cislo, nazev, cena, mnozstvi_skladem, zobrazovat, dodavatel) VALUES ('SVT44102600', 'Pastelky CONCORDE trojhranne - 18 barev', 39, 0, 1, 26359723);
 INSERT INTO parametr VALUES ('Počet stran'), ('Gramáž');
 INSERT INTO objednavka VALUES (1, 1, '2018-03-26 13:29:26', 'Prijata', 0, 'Pekarova 4', 'Praha', 18106, 0, 1, 'Dodani do Vanoc, prosim.');
 INSERT INTO obsahuje VALUES (1, 1, 'SVT33300460', 2, 30);

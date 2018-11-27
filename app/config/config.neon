@@ -83,6 +83,7 @@ services:
 	- App\Model\CartManager
 	- App\Model\OrderManager(@container::getParameters())
 	- App\Model\EmployeeManager
+	- App\Model\SupplierManager
 	- App\Model\ParameterManager
 
 	- App\FrontModule\Forms\IUserDataFactory

@@ -70,7 +70,7 @@ class CartManager
 	{
 		$query = $this->database->query("
 			SELECT produkt.*, vlozil_do_kosiku.pocet_kusu
-			FROM vlozil_do_kosiku LEFT JOIN produkt ON vlozil_do_kosiku.katalogove_cislo = produkt.katalogove_cislo
+			FROM vlozil_do_kosiku LEFT JOIN produkt ON vlozil_do_kosiku.katalogove_cislo = produkt.katalogove_cislo LEFT JOIN dodavatel ON produkt.dodavatel = dodavatel.ico
 			WHERE vlozil_do_kosiku.zakaznicke_cislo = ?
 		", $userId);
 

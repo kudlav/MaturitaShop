@@ -23,6 +23,7 @@ class ProductManager
 		COLUMN_PHOTO = 'fotografie',
 		COLUMN_CATEGORY  = 'kategorie',
 		COLUMN_SHOW = 'zobrazovat',
+        COLUMN_SUPPLIER = 'dodavatel',
 
 		TABLE_RATE = 'ohodnotil',
 		RATE_PRODUCT = 'katalogove_cislo',

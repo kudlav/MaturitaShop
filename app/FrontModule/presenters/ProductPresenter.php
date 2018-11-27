@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\FrontModule\Presenters;
 
 use App\FrontModule\Forms\ReviewFormFactory;
+use App\Model\SupplierManager;
 use Nette;
 use App\FrontModule\Forms\BuyFormFactory;
 use App\FrontModule\Forms\ContactFormFactory;
@@ -52,6 +53,7 @@ class ProductPresenter extends BasePresenter
 		$this->template->product_parameters = $this->parameters['product'];
 		$this->template->productRating = $this->productManager->getItemRating($id);
 		$this->template->productReviews = $this->productManager->getItemReviews($id);
+		$this->template->productDelivery = $this->template->product->ref(SupplierManager::TABLE_NAME, ProductManager::COLUMN_SUPPLIER)->dodaci_lhuta;
 	}
 
 	/**
