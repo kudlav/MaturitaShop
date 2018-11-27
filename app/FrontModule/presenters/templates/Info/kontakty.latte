@@ -12,16 +12,16 @@
 	</ul>
 	<h3><span data-icon="l" class="icon"></span> Korespondenční adresa:</h3>
 	<ul type="none">
-		<li><strong>Pastelky a skicáky</strong></li>
-		<li>Božetěchova 1/2</li>
-		<li>612 66 Brno</li>
+		<li><strong>{$contact['name']}</strong></li>
+		<li>{$contact['street']}</li>
+		<li>{$contact['city']}</li>
 	</ul>
 	Na této adrese se nenachází prodejna ani sklad, osobní odběr není možný.
 	<ul>
-	<li><strong>IČ:</strong> 002 163 05</li>
-	<li><strong>DIČ:</strong> CZ 002 163 05</li>
-	<li><strong>Bank. spojení:</strong> 415623789 / 6100 (Equa bank)</li>
+	<li><strong>IČ:</strong> {$contact['id']}</li>
+	<li><strong>DIČ:</strong> {$contact['tax_id']}</li>
+	<li><strong>Bank. spojení:</strong> {$contact['bank']}</li>
 	</ul>
-	Zapsáno v oddílu C.58549 u rejstříkového soudu v Praze.
+	{$contact['registration']}
 </div>
 <div class="cleaner"></div>

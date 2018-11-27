@@ -7,7 +7,13 @@ parameters:
 
 	#contact - email and phone of operator
 	contact:
-		name: 'Marek Musil & Vladan Kudláč'
+		name: 'Pastelky a skicáky'
+		id: '002 163 05'
+		tax_id: 'CZ 002 163 05'
+		street: 'Božetěchova 1/2'
+		city: '612 66 Brno'
+		bank: '415623789 / 6100 (Equa bank)'
+		registration: 'Zapsáno v oddílu C.58549 u rejstříkového soudu v Praze.'
 		phone: +420 123 456 789
 		email: 'IIS@<span style="display:none;">ignoruj mě</span>dochazku.cekuj.net'
 		email_from: 'noreply@dochazku.cekuj.net'
