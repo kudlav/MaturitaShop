@@ -81,7 +81,7 @@ class BuyFormFactory
 		$form->setCurrentGroup();
 
 		$form->addTextArea('note','Poznámka k objednávce')
-			->setAttribute('class','form-input')
+			->setAttribute('class','form-input frm-note')
 			->setValue($this->session->note);
 
 		$form->addCheckbox('terms','Souhlasím s obchodními podmínkami.')
