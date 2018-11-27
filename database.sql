@@ -2,7 +2,7 @@
 
 
 -- DROP TABLE IF EXISTSs --
-DROP TABLE IF EXISTS hodnotil;
+DROP TABLE IF EXISTS ohodnotil;
 DROP TABLE IF EXISTS vlozil_do_kosiku;
 DROP TABLE IF EXISTS upresnuje;
 DROP TABLE IF EXISTS obsahuje;
@@ -11,6 +11,7 @@ DROP TABLE IF EXISTS parametr;
 DROP TABLE IF EXISTS produkt;
 DROP TABLE IF EXISTS dodavatel;
 DROP TABLE IF EXISTS zakaznik;
+DROP TABLE IF EXISTS zamestnanec;
 
 
 -- -----------------------------------------------------
