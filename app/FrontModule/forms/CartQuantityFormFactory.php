@@ -63,6 +63,7 @@ class CartQuantityFormFactory
 						$this->presenter->flashMessage('Chyba, množství musí být celé číslo, větší než 0.', 'flash-error');
 					}
 				}
+				$this->presenter->redirect('User:cart');
 			}
 			else { // Update cookies
 				$cart = [];

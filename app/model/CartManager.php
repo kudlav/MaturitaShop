@@ -69,7 +69,7 @@ class CartManager
 	public function getItems(int $userId): ResultSet
 	{
 		$query = $this->database->query("
-			SELECT produkt.*, vlozil_do_kosiku.pocet_kusu
+			SELECT produkt.*, vlozil_do_kosiku.pocet_kusu, dodavatel.dodaci_lhuta AS productDelivery
 			FROM vlozil_do_kosiku LEFT JOIN produkt ON vlozil_do_kosiku.katalogove_cislo = produkt.katalogove_cislo LEFT JOIN dodavatel ON produkt.dodavatel = dodavatel.ico
 			WHERE vlozil_do_kosiku.zakaznicke_cislo = ?
 		", $userId);
