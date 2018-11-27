@@ -6,7 +6,8 @@
     {control order}
 
     <div class="back"><a href="{plink User:orders}"><button class="form-button">&larr; Zpět</button></a></div>
-    <button class="form-button" id="print">Tisk</button>
+    <button class="form-button" id="print">Tisk objednávky</button>
+    <a n:if="$order['state'] == 'objednávka vyřízena'" n:href="User:invoice $order['id']" target="_blank"><button class="form-button" id="print">Tisk faktury</button></a>
 </div>
 
 <div class="cleaner"></div>

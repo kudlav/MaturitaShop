@@ -126,7 +126,7 @@ class ProductPresenter extends BasePresenter
 				$order = ($this->orderManager->orderProducts($items, $session, $userId));
 				if ($order !== -1) {
 					$session->remove();
-					$this->flashMessage("Objednávka $order byla úspěšně vytvořena");
+					$this->flashMessage("Objednávka OBJ". sprintf("%05d", $order) ." byla úspěšně vytvořena");
 				} else {
 					$this->flashMessage('Objednávku nebylo možné vytvořit!', 'flash-error');
 				}

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{ifset title}{include title|striptags} | {/ifset}Pastelky a skicáky</title>
+  <link rel="stylesheet" href="{$basePath}/css/front/style.css">
+</head>
+<body>
+
+  <ul type="none">
+    <div>
+      <div class="item">
+        <div class="id normal"><h2>FAV{sprintf("%05d", $order['id'])}</h2></div>
+        <div class="cleaner"></div>
+
+        <div class="order-info padding">
+          <table class="right">
+            <thead>
+            <tr><th>Dodavatel:</th></tr>
+            </thead>
+            <tbody>
+            <tr><td></td><td colspan="2"><strong>{$contact['name']}</strong></td></tr>
+            <tr><td colspan="3">{$contact['street']}</td></tr>
+            <tr><td></td><td colspan="2">{$contact['city']}</td></tr>
+            <tr><td colspan="3" class="id"></td></tr>
+            <tr><td colspan="3"></td></tr>
+            <tr><td>IČ:</td><td colspan="2">{$contact['id']}</td></tr>
+            <tr><td>DIČ:</td><td colspan="2">{$contact['tax_id']}</td></tr>
+            <tr><td colspan="3" class="id"></td></tr>
+            <tr><td colspan="3"></td></tr>
+            </tbody>
+          </table>
+          <div>{$contact['registration']}</div>
+        </div>
+
+        <div class="customer padding">
+          <table class="right">
+            <thead>
+            <tr><th>Odběratel:</th></tr>
+            </thead>
+            <tbody>
+            <tr><td></td><td><strong>{$order['customerName']}</strong></td><td class="text-left"><strong>{$order['customerSurname']}</strong></td></tr>
+            <tr><td colspan="3">{$order['customerStreet']}</td></tr>
+            <tr><td colspan="2">{sprintf("%05d",$order['customerPostcode'])}</td><td>{$order['customerCity']}</td></tr>
+            <tr><td colspan="3" class="id"></td></tr>
+            <tr><td colspan="2"></td></tr>
+            <tr><td colspan="3">{$order['customerUsername']}</td></tr>
+            </tbody>
+          </table>
+          <br>
+        </div>
+        <div class="cleaner"></div>
+        <div class="id normal"></div>
+        <div class="cleaner"></div>
+
+        <div>
+          <div class="order-info padding"">
+            <table>
+              <tbody>
+              <tr><td>Datum vystavení:</td><td>{$order['timestamp']|date:'j. n. Y'}</td></tr>
+              <tr><td>Datum zdanitelného plnění:</td><td>{$order['timestamp']|date:'j. n. Y'}</td></tr>
+              <tr><td><strong>Splatnost:</strong></td><td><strong>{$order['timestamp']|date:'j. n. Y'}</strong></td></tr>
+              <tr><td colspan="2" class="id"></td></tr>
+              <tr><td colspan="2"></td></tr>
+              <tr><td colspan="2" class="id"></td></tr>
+              <tr><td colspan="2"></td></tr>
+              <tr><td>Poznámka<br>zákazníka:</td><td>{$order['note']}</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="customer padding">
+            <table>
+              <tr><tr><td>Forma úhrady:</td><td>{$order['payment']}</td></tr>
+              <tr><tr><td>Bankovní spojení:</td><td>{$contact['bank']}</td></tr>
+            </table>
+          </div>
+          <div class="cleaner"></div>
+        </div>
+        <div class="id normal"></div>
+        <div class="cleaner"></div>
+
+        <div class="padding">
+          <strong>Fakturujeme vám:</strong>
+          <table class="table-products">
+            <thead>
+            <tr>
+              <th>Kód</th>
+              <th>Název produktu</th>
+              <th class="right">Počet ks</th>
+              <th class="right">Cena za ks</th>
+              <th class="right">Celkem</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr n:foreach="$products as $product">
+              <td>{$product['id']}</td>
+              <td>{$product['name']}</td>
+              <td class="right">{$product['quantity']}</td>
+              <td class="right">{$product['price']|number:0:',':' '},-</td>
+              <td class="right">{$product['price']*$product['quantity']|number:0:',':' '},-</td>
+            </tr>
+            <tr>
+              <td>-</td>
+              <td>Způsob platby: {$order['payment']}</td>
+              <td class="right">1</td>
+              <td class="right">{$order['paymentPrice']},-</td>
+              <td class="right">{$order['paymentPrice']},-</td>
+            </tr>
+            <tr>
+              <td>-</td>
+              <td>Způsob dopravy: {$order['delivery']}</td>
+              <td class="right">1</td>
+              <td class="right">{$order['deliveryPrice']},-</td>
+              <td class="right">{$order['deliveryPrice']},-</td>
+            </tr>
+            </tbody>
+          </table>
+          <br><div class="total">Celkem k úhradě: <strong>{$total|number:0:',':' '} Kč</strong></div>
+        </div>
+      </div>
+    </li>
+  </ul>
+
+<script>
+  window.print();
+  window.close();
+</script>
+
+</body>
