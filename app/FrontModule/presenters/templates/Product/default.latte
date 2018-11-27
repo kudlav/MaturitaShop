@@ -33,6 +33,7 @@
 
 	<div class="show-cards">
 		<div class="item">
+			<a class="to-cart" n:href="Product:review $product->katalogove_cislo"><button>Napsat recenzi</button></a>
 			<div class="row"><h3>Hodnocení produktu ({$productReviews->getRowCount()})</h3></div>
 			<div class="row" n:foreach="$productReviews as $review">
 				<div style="font-size:initial">

@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\FrontModule\Presenters;
 
+use App\FrontModule\Forms\ReviewFormFactory;
 use Nette;
 use App\FrontModule\Forms\BuyFormFactory;
 use App\FrontModule\Forms\ContactFormFactory;
@@ -138,5 +139,24 @@ class ProductPresenter extends BasePresenter
 			$this->flashMessage('Před objednáním je nutné projít celým objednávkovým procesem!','flash-error');
 		}
 		$this->redirect('Homepage:');
+	}
+
+	public function renderReview(string $id): void
+	{
+		if (!$this->getUser()->isLoggedIn()) {
+			$this->flashMessage('Přihlaste se prosím.');
+			$this->redirect('Sign:in', ['state' => $this->storeRequest()]);
+		}
+
+		$this->template->product = $this->productManager->getItem($id);
+		if ($this->template->product === NULL) {
+			$this->error('Požadovaný produkt neexistuje');
+		}
+	}
+
+	public function createComponentReviewForm(): Form
+	{
+		$form = new ReviewFormFactory($this, $this->productManager);
+		return $form->createForm();
 	}
 }

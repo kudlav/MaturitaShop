@@ -44,8 +44,7 @@ class ContactFormFactory
 			->setRequired('Zadejte vaše jméno');
 
 		$form->addTextArea('message','Váš dotaz:')
-			->setAttribute('class','form-input')
-			->setAttribute('id','frm-buyForm-note')
+			->setAttribute('class','frm-note form-input')
 			->setRequired('Zadejte váš dotaz');
 
 		$form->addSubmit('send','Poslat email')

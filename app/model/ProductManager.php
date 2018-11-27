@@ -26,6 +26,7 @@ class ProductManager
 
 		TABLE_RATE = 'ohodnotil',
 		RATE_PRODUCT = 'katalogove_cislo',
+		RATE_USER = 'zakaznicke_cislo',
 		RATE_STARS = 'pocet_hvezdicek',
 		RATE_PROS = 'klady',
 		RATE_CONS = 'zapory',
@@ -92,7 +93,7 @@ class ProductManager
 			SELECT AVG(pocet_hvezdicek) AS rating
 			FROM ohodnotil
 			WHERE katalogove_cislo = ?
-			GROUP BY zakaznicke_cislo
+			GROUP BY katalogove_cislo
 		', $id)->fetch();
 
 		if ($query == false) {
@@ -109,5 +110,34 @@ class ProductManager
 			FROM ohodnotil LEFT JOIN zakaznik ON ohodnotil.zakaznicke_cislo = zakaznik.zakaznicke_cislo
 			WHERE ohodnotil.katalogove_cislo = ?
 		', $id);
+	}
+
+	public function getItemReviewByUser(string $productId, int $userId): ResultSet
+	{
+		return $this->database->query('
+			SELECT ohodnotil.*, zakaznik.jmeno, zakaznik.prijmeni
+			FROM ohodnotil LEFT JOIN zakaznik ON ohodnotil.zakaznicke_cislo = zakaznik.zakaznicke_cislo
+			WHERE ohodnotil.katalogove_cislo = ? AND ohodnotil.zakaznicke_cislo = ?
+		', $productId, $userId);
+	}
+
+	public function setItemReviewByUser(string $productId, int $userId, int $rate, ?string $pros=null, ?string $cons=null, ?string $summary=null): bool
+	{
+		 $this->database->table(self::TABLE_RATE)
+		 	->where(self::RATE_PRODUCT, $productId)
+		 	->where(self::RATE_USER, $userId)
+		 	->delete()
+		 ;
+
+		 $result = $this->database->table(self::TABLE_RATE)->insert([
+		 	self::RATE_PRODUCT => $productId,
+			self::RATE_USER => $userId,
+			self::RATE_STARS => $rate,
+		 	self::RATE_PROS => $pros,
+		 	self::RATE_CONS => $cons,
+		 	self::RATE_SUMMARY => $summary,
+		 ]);
+
+		 return ($result != false);
 	}
 }
