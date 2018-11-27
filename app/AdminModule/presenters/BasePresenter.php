@@ -53,6 +53,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 	{
 		$items = [
 			'Objednávky' => ['Orders:default'],
+			'Dodavatelé' => ['Suppliers:default'],
 			'Odhlásit se' => ['Sign:out'],
 		];
 		$control = new Navbar('Administrace', $items);
