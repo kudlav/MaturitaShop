@@ -57,7 +57,7 @@ class ContactFormFactory
 	public function formSucceeded(Form $form, ArrayHash $values): void
 	{
 		$mail = new Message();
-		$mail->setFrom('Auto CVK <'.$this->email_from.'>')
+		$mail->setFrom('IIShop <'.$this->email_from.'>')
 			->addTo($values->email)
 			->setSubject($values->subject)
 			->setBody($values->message);

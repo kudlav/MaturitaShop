@@ -7,12 +7,12 @@
 
 	<h3><span data-icon="d" class="icon"></span> Doprava:</h3>
 	<ul>
-		<li n:foreach="$delivery as $method">{$method['name']} ({$method['price']})</li>
+		<li n:foreach="$delivery as $method">{$method['name']} ({$method['price']} Kč)</li>
 	</ul>
 
 	<h3><span data-icon="e" class="icon"></span> Platba:</h3>
 	<ul>
-		<li n:foreach="$payment as $method">{$method['name']} ({$method['price']})</li>
+		<li n:foreach="$payment as $method">{$method['name']} ({$method['price']} Kč)</li>
 	</ul>
 </div>
 <div class="cleaner"></div>

@@ -58,9 +58,9 @@ class ContactFormFactory
 	public function onSuccess(Form $form, ArrayHash $values): void
 	{
 		$mail = new Message();
-		$mail->setFrom('Auto CVK <'.$this->operator_email.'>')
+		$mail->setFrom('IIShop <'.$this->operator_email.'>')
 			->addTo($this->operator_email)
-			->setSubject('[Auto CVK] - dotaz od '.$values->customer)
+			->setSubject('[IIShop] - dotaz od '.$values->customer)
 			->setBody('Zákazník '.$values->customer.' ('.$values->email.')\n\n'.$values->message);
 
 		$mailer = new SendmailMailer();
