@@ -8,7 +8,6 @@ use Nette;
 use Nette\Application\UI\Form;
 use Nette\Application\UI\Presenter;
 use Nette\Database\Table\IRow;
-use Nette\Utils\ArrayHash;
 
 
 class EditSupplierFormFactory

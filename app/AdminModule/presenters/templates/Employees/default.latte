@@ -1,0 +1,27 @@
+{block content}
+
+<a class="to-cart" n:href="Employees:edit"><button>Nový zaměstnanec</button></a>
+<h1 n:block=title><span data-icon="b" class="icon"></span> Správa zaměstnanců</h1>
+
+<table class="striped">
+  <thead>
+  <tr>
+    <th>Uživatelské jméno</th>
+    <th>Jméno zaměstnance</th>
+    <th>Role</th>
+    <th>Aktivní</th>
+    <th colspan="2">Akce</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr n:foreach="$employees as $employee">
+    <td class="center">{$employee->uzivatelske_jmeno}</td>
+    <td class="center">{$employee->jmeno} {$employee->prijmeni}</td>
+    <td class="center">{$employee->role}</td>
+    <td class="center">{ifset $employee->heslo}<span data-icon="V" class="icon pros"></span>{else}<span data-icon="x" class="icon cons"></span>{/ifset}</td>
+    <td class="center nopad"><a n:href="Employees:edit $employee->uzivatelske_jmeno" title="Upravit"><div class="icona-pencil action"></div></a></td>
+    <td class="center nopad"><a n:href="delete! $employee->uzivatelske_jmeno" title="Smazat" onclick="return confirm('Smazat účet?')"><div class="icona-trash-1 action"></div></a></td>
+    <td n:ifset="$employee->heslo" class="center nopad"><a n:href="disable! $employee->uzivatelske_jmeno" title="Deaktivovat" onclick="return confirm('Deaktivovat účet?')"><div data-icon="x" class="action"></div></a></td>
+  </tr>
+  </tbody>
+</table>

@@ -54,8 +54,12 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 		$items = [
 			'Objednávky' => ['Orders:default'],
 			'Dodavatelé' => ['Suppliers:default'],
-			'Odhlásit se' => ['Sign:out'],
 		];
+		if ($this->user->isInRole('spravce')) {
+			$items['Zaměstnanci'] = ['Employees:default'];
+		}
+		$items['Odhlásit se'] = ['Sign:out'];
+
 		$control = new Navbar('Administrace', $items);
 		return $control;
 	}
