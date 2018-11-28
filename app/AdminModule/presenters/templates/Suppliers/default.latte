@@ -26,8 +26,8 @@
     <td class="center">{$supplier->email}</td>
     <td class="center">{$supplier->dodaci_lhuta}</td>
     <td class="center nopad"><a href="{plink Suppliers:contact $supplier->ico}" title="Kontaktovat"><div class="icona-chat action"></div></a></td>
-    <td class="center nopad"><a href="{plink Suppliers:edit $supplier->ico}" title="Upravit""><div class="icona-pencil action"></div></a></td>
-    <td class="center nopad"><a href="{link delete! $supplier->ico}" title="Smazat" onclick="return confirm('Smazat?')"><div class="icona-trash-1 action"></div></a></td>
+    <td class="center nopad"><a href="{plink Suppliers:edit $supplier->ico}" title="Upravit""><div data-icon="l" class="action"></div></a></td>
+    <td class="center nopad"><a href="{link delete! $supplier->ico}" title="Smazat" onclick="return confirm('Smazat?')"><div data-icon="r" class="action"></div></a></td>
   </tr>
   </tbody>
 </table>
