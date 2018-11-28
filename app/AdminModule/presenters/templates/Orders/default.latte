@@ -34,7 +34,6 @@
 				<td class="center" title="{$order->poznamka}"><span n:if="$order->poznamka!=''" class="icona-info icon"></span></td>
 				<td class="center nopad"><a href="{plink Orders:contact $order->cislo_objednavky}" title="Kontaktovat"><div class="icona-chat action"></div></a></td>
 				<td class="center nopad"><a href="{plink Orders:detail $order->cislo_objednavky}" title="Zobrazit"><div class="icona-eye action"></div></a></td>
-				<td class="center nopad"><a href="{plink Orders:detail $order->cislo_objednavky}" title="Upravit""><div class="icona-pencil action"></div></a></td>
 				<td class="center nopad"><a href="{link delete! $order->cislo_objednavky}" title="Smazat" onclick="return confirm('Smazat?')"><div class="icona-trash-1 action"></div></a></td>
 			</tr>
 		</tbody>
