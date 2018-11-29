@@ -166,7 +166,7 @@ INSERT INTO dodavatel VALUES (26359723, 'RANDOM DISTRIBUTION, s.r.o.', 'Vojta Ok
 INSERT INTO produkt VALUES ('SVT33300460', 'Bobo Skicak KRTEK lepeny A4 10 listu', 'Lepeny skicak s motivem krtecka obsahuje 10 cistych listu.', 30, 500, 'bobo-skicak-krtek-lepeny-a4-10-listu-33300460.jpg', 'Skicaky', 1, 26359723);
 INSERT INTO produkt (katalogove_cislo, nazev, cena, mnozstvi_skladem, zobrazovat, dodavatel) VALUES ('SVT44102600', 'Pastelky CONCORDE trojhranne - 18 barev', 39, 0, 1, 26359723);
 INSERT INTO parametr VALUES ('Počet stran'), ('Gramáž');
-INSERT INTO objednavka VALUES (1, 1, '2018-03-26 13:29:26', 'Prijata', 0, 'Pekarova 4', 'Praha', 18106, 0, 1, 'Dodani do Vanoc, prosim.');
+INSERT INTO objednavka VALUES (1, 1, '2018-03-26 13:29:26', 'čeká na vyřízení', 0, 'Pekarova 4', 'Praha', 18106, 0, 1, 'Dodani do Vanoc, prosim.');
 INSERT INTO obsahuje VALUES (1, 1, 'SVT33300460', 2, 30);
 INSERT INTO upresnuje VALUES ('SVT33300460', 'Počet stran', '10'), ('SVT33300460', 'Gramáž', '200g/m2');
 INSERT INTO vlozil_do_kosiku VALUES ('SVT33300460', 1, 42);

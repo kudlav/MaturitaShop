@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Model;
 
 use Nette;
+use Nette\Database\Table\ActiveRow;
+use Nette\Database\Table\Selection;
 
 
 class SupplierManager
@@ -34,4 +36,62 @@ class SupplierManager
 		$this->database = $database;
 	}
 
+	public function getSuppliers(): Selection
+	{
+		return $this->database->table(self::TABLE_NAME);
+	}
+
+	public function deleteSupplier(int $id): int
+	{
+		try {
+			return $this->database->table(self::TABLE_NAME)->where(self::COLUMN_ID, $id)->delete();
+		}
+		catch (Nette\Database\ForeignKeyConstraintViolationException $e) {
+			return 0;
+		}
+	}
+
+	public function getSupplier(int $id): ?ActiveRow
+	{
+		$result = $this->database->table(self::TABLE_NAME)->get($id);
+
+		if ($result == false) {
+			return null;
+		}
+
+		return $result;
+	}
+
+	public function addSupplier(array $values): bool
+	{
+		$result = $this->database->table(self::TABLE_NAME)->insert([
+			self::COLUMN_ID => $values['id'],
+			self::COLUMN_NAME => $values['name'],
+			self::COLUMN_CONTACT_PERSON => $values['fullname'],
+			self::COLUMN_STREET => $values['street'],
+			self::COLUMN_CITY => $values['city'],
+			self::COLUMN_PSC => $values['zip'],
+			self::COLUMN_DELIVERY_TIME => $values['delivery'],
+			self::COLUMN_EMAIL => $values['email'],
+			self::COLUMN_PHONE_NUMBER => $values['phone'],
+		]);
+
+		return ($result != false);
+	}
+
+	public function updateSupplier(int $id, array $values): bool
+	{
+		$result = $this->database->table(self::TABLE_NAME)->get($id)->update([
+			self::COLUMN_NAME => $values['name'],
+			self::COLUMN_CONTACT_PERSON => $values['fullname'],
+			self::COLUMN_STREET => $values['street'],
+			self::COLUMN_CITY => $values['city'],
+			self::COLUMN_PSC => $values['zip'],
+			self::COLUMN_DELIVERY_TIME => $values['delivery'],
+			self::COLUMN_EMAIL => $values['email'],
+			self::COLUMN_PHONE_NUMBER => $values['phone'],
+		]);
+
+		return ($result != false);
+	}
 }

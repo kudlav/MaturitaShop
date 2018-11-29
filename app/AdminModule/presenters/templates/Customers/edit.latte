@@ -1,0 +1,5 @@
+{block content}
+
+<a n:href="Customers:" style="padding-right:1em">🡄 Zpět</a><h1 n:block=title style="display:inline-block;"><span data-icon="u" class="icon"></span> {ifset $customer}Úprava zákazníka {$customer->zakaznicke_cislo}{else}Nový zákazník{/ifset}</h1>
+<div>Položky označené hvězdičkou jsou povinné.</div>
+{control editCustomerForm}

@@ -212,12 +212,18 @@ class UserPresenter extends BasePresenter
 	 */
 	public function renderInvoice(int $id): void
 	{
-		if (!$this->getUser()->isLoggedIn()) {
-			$this->redirect('Sign:in', ['state' => $this->storeRequest()]);
+		if (!$this->user->isLoggedIn()) {
+			$this->user->getStorage()->setNamespace('Admin');
+			if (!$this->user->isLoggedIn()) {
+				$this->user->getStorage()->setNamespace('Front');
+				$this->redirect('Sign:in', ['state' => $this->storeRequest()]);
+			}
 		}
 		$this->template->order = $this->orderManager->getOrder($id);
 
-		if (!$this->user->isInRole('prodejce') OR !$this->user->isInRole('spravce')) {
+		$this->user->getStorage()->setNamespace('Admin');
+		if (!($this->user->isInRole('prodejce') OR $this->user->isInRole('spravce'))) {
+			$this->user->getStorage()->setNamespace('Front');
 			if ($this->template->order['customerId'] != $this->user->id) {
 				$this->error();
 			}
@@ -229,5 +235,6 @@ class UserPresenter extends BasePresenter
 			$this->template->total += $product['price'] * $product['quantity'];
 		}
 		$this->template->contact = $this->parameters['contact'];
+		$this->user->getStorage()->setNamespace('Front');
 	}
 }

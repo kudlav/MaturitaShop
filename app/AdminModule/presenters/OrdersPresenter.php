@@ -19,9 +19,8 @@ class OrdersPresenter extends BasePresenter
 	 * @var OrderManager $orderManager
 	 * @var ProductManager $productManager
 	 * @var UserManager $userManager
-	 * @var int $orderId
 	 */
-	private $orderManager, $productManager, $userManager, $orderId;
+	private $orderManager, $productManager, $userManager;
 
 	public function __construct(OrderManager $orderManager, ProductManager $productManager, UserManager $userManager)
 	{
@@ -34,7 +33,7 @@ class OrdersPresenter extends BasePresenter
 
 	public function renderDefault(): void
 	{
-		$this->template->orders = $this->orderManager->getOrdersByState('in progress');
+		$this->template->orders = $this->orderManager->getOrdersByState();
 		$this->template->delivery = $this->orderManager->getDelivery();
 		$this->template->payment = $this->orderManager->getPayment();
 		$this->template->states = $this->orderManager->getStates();
@@ -42,7 +41,7 @@ class OrdersPresenter extends BasePresenter
 
 	public function createComponentChangeStateForm(): Form
 	{
-		$form = new ChangeStateFormFactory($this, $this->orderManager, $this->orderManager->getOrdersByState('in progress'), $this->orderManager->getStates());
+		$form = new ChangeStateFormFactory($this, $this->orderManager, $this->orderManager->getOrdersByState(), $this->orderManager->getStates());
 		return $form->create();
 	}
 
@@ -53,7 +52,7 @@ class OrdersPresenter extends BasePresenter
 	 */
 	public function handleDelete(int $id): void
 	{
-		if ($this->orderManager->deleteOrder($id)) {
+		if ($this->orderManager->deleteOrder($id) > 0) {
 			$this->flashMessage('Objednávka byla odstraněna');
 		} else {
 			$this->flashMessage('Objednávku nebylo možné odstranit.','flash-error');
@@ -87,12 +86,20 @@ class OrdersPresenter extends BasePresenter
 
 	public function actionContact(int $id): void
 	{
-		$this->orderId = $id;
+
 	}
 
 	public function createComponentContact(): Contact
 	{
-		$control = new Contact($this->orderManager->getOrder($this->orderId), $this->parameters['contact']['email_from']);
+		$order = $this->orderManager->getOrder((int)$this->getParameter('id'));
+		$data = [
+			'person' => $order['customerName'] .' '. $order['customerSurname'],
+			'email' => $order['customerUsername'],
+			'street' => $order['customerStreet'],
+			'city' => $order['customerCity'],
+			'zip' => $order['customerPostcode'],
+		];
+		$control = new Contact($data, $this->parameters['contact']['email_from']);
 		return $control;
 	}
 }

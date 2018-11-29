@@ -12,6 +12,7 @@
 
 <div class="right-column">
 	<h1 n:block=title>{$items[$phase]}</h1>
+	<div n:if="$phase == 0">Položky označené hvězdičkou jsou povinné.</div>
 	{control buyForm}
 </div>
 

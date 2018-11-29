@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\FrontModule\Presenters;
 
 use App\Model\UserAuthenticator;
-use App\Model\UserManager;
 use Nette;
 use App\Model\CartManager;
 use App\Model\ProductManager;

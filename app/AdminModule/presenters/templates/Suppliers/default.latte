@@ -1,0 +1,33 @@
+{block content}
+
+<a class="to-cart" n:href="Suppliers:edit"><button>Nový dodavatel</button></a>
+<h1 n:block=title><span data-icon="d" class="icon"></span> Správa dodavatelů</h1>
+
+<table class="striped">
+  <thead>
+  <tr>
+    <th>IČO</th>
+    <th>Název</th>
+    <th>Adresa</th>
+    <th>Kontaktní osoba</th>
+    <th>Telefon</th>
+    <th>Email</th>
+    <th>Dodací lhůta</th>
+    <th colspan="4">Akce</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr n:foreach="$suppliers as $supplier">
+    <td>{$supplier->ico}</td>
+    <td class="center">{$supplier->nazev}</td>
+    <td class="center">{$supplier->ulice}<br>{$supplier->psc} {$supplier->mesto}</td>
+    <td class="center">{$supplier->kontaktni_osoba}</td>
+    <td class="center">{$supplier->telefon}</td>
+    <td class="center">{$supplier->email}</td>
+    <td class="center">{$supplier->dodaci_lhuta}</td>
+    <td class="center nopad"><a href="{plink Suppliers:contact $supplier->ico}" title="Kontaktovat"><div data-icon="t" class="action"></div></a></td>
+    <td class="center nopad"><a href="{plink Suppliers:edit $supplier->ico}" title="Upravit""><div data-icon="l" class="action"></div></a></td>
+    <td class="center nopad"><a href="{link delete! $supplier->ico}" title="Smazat" onclick="return confirm('Smazat?')"><div data-icon="r" class="action"></div></a></td>
+  </tr>
+  </tbody>
+</table>

@@ -1,0 +1,5 @@
+{block content}
+
+<a n:href="Employees:default" style="padding-right:1em">🡄 Zpět</a><h1 n:block=title style="display:inline-block;"><span data-icon="b" class="icon"></span> {ifset $employee}Úprava zaměstnance{else}Nový zaměstnanec{/ifset}</h1>
+<div>Položky označené hvězdičkou jsou povinné.</div>
+{control editEmployeeForm}

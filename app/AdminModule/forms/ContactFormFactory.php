@@ -34,13 +34,13 @@ class ContactFormFactory
 	{
 		$form = new Form;
 
-		$form->addText('subject','Předmět:')
+		$form->addText('subject','Předmět: *')
 			->setRequired('Zadejte předmět emailu');
 
 		$form->addHidden('email')
 			->setRequired('Načtěte stránku znovu');
 
-		$form->addTextArea('message','Text:')
+		$form->addTextArea('message','Text *:')
 			->setRequired('Zadejte text emailu');
 
 		$form->addSubmit('send','Poslat email');
@@ -57,7 +57,7 @@ class ContactFormFactory
 	public function formSucceeded(Form $form, ArrayHash $values): void
 	{
 		$mail = new Message();
-		$mail->setFrom('Auto CVK <'.$this->email_from.'>')
+		$mail->setFrom('IIShop <'.$this->email_from.'>')
 			->addTo($values->email)
 			->setSubject($values->subject)
 			->setBody($values->message);
