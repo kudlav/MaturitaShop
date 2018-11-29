@@ -1,0 +1,30 @@
+{block content}
+
+<a class="to-cart" n:href="Customers:edit"><button>Nový zákazník</button></a>
+<h1 n:block=title><span data-icon="u" class="icon"></span> Správa zákazníků</h1>
+
+<table class="striped">
+  <thead>
+  <tr>
+    <th>Zákaznické číslo</th>
+    <th>Email</th>
+    <th>Jméno</th>
+    <th>Adresa</th>
+    <th>Aktivní</th>
+    <th colspan="4">Akce</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr n:foreach="$customers as $customer">
+    <td>{$customer->zakaznicke_cislo}</td>
+    <td>{$customer->email}</td>
+    <td class="center">{$customer->jmeno} {$customer->prijmeni}</td>
+    <td class="center">{$customer->ulice}<br>{$customer->psc} {$customer->mesto}</td>
+    <td class="center">{ifset $customer->heslo}<span data-icon="V" class="icon pros"></span>{else}<span data-icon="x" class="icon cons"></span>{/ifset}</td>
+    <td class="center nopad"><a n:href="Customers:contact $customer->zakaznicke_cislo" title="Kontaktovat"><div data-icon="t" class="action"></div></a></td>
+    <td class="center nopad"><a n:href="Customers:edit $customer->zakaznicke_cislo" title="Upravit""><div data-icon="l" class="action"></div></a></td>
+    <td class="center nopad"><a n:href="delete! $customer->zakaznicke_cislo" title="Smazat" onclick="return confirm('Smazat?')"><div data-icon="r" class="action"></div></a></td>
+    <td n:ifset="$customer->heslo" class="center nopad"><a n:href="disable! $customer->zakaznicke_cislo" title="Deaktivovat" onclick="return confirm('Deaktivovat účet?')"><div data-icon="x" class="action"></div></a></td>
+  </tr>
+  </tbody>
+</table>

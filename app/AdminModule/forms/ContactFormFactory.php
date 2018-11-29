@@ -34,13 +34,13 @@ class ContactFormFactory
 	{
 		$form = new Form;
 
-		$form->addText('subject','Předmět:')
+		$form->addText('subject','Předmět: *')
 			->setRequired('Zadejte předmět emailu');
 
 		$form->addHidden('email')
 			->setRequired('Načtěte stránku znovu');
 
-		$form->addTextArea('message','Text:')
+		$form->addTextArea('message','Text *:')
 			->setRequired('Zadejte text emailu');
 
 		$form->addSubmit('send','Poslat email');

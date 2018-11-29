@@ -53,6 +53,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 	{
 		$items = [
 			'Objednávky' => ['Orders:default'],
+			'Zákazníci' => ['Customers:default'],
 			'Dodavatelé' => ['Suppliers:default'],
 		];
 		if ($this->user->isInRole('spravce')) {

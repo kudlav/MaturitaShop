@@ -3,6 +3,6 @@
 {control order}
 
 <div class="back"><a href="{plink Orders:}"><button class="form-button">&larr; Zpět</button></a></div>
-<button class="form-button" id="print">Tisk</button>
-
+<button class="form-button" id="print">Tisk objednávky</button>
+<a n:href=":Front:User:invoice $order['id']" target="_blank"><button class="form-button" id="print">Tisk faktury</button></a>
 <script src="{$basePath.'/js/print.js'}"></script>

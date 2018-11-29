@@ -55,7 +55,7 @@ class EditEmployeeFormFactory
 
 		$form->addText('surname', 'Příjmení: *')
 			->addRule(Form::MAX_LENGTH, 'Příjmení nesmí mít více než 45 znaků', 45)
-			->setRequired('Příjmení zaměstnance')
+			->setRequired('Zadejte příjmení zaměstnance')
 			->setAttribute('class', 'form-input')
 		;
 

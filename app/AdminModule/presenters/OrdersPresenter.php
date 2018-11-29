@@ -33,7 +33,7 @@ class OrdersPresenter extends BasePresenter
 
 	public function renderDefault(): void
 	{
-		$this->template->orders = $this->orderManager->getOrdersByState('in progress');
+		$this->template->orders = $this->orderManager->getOrdersByState();
 		$this->template->delivery = $this->orderManager->getDelivery();
 		$this->template->payment = $this->orderManager->getPayment();
 		$this->template->states = $this->orderManager->getStates();
@@ -41,7 +41,7 @@ class OrdersPresenter extends BasePresenter
 
 	public function createComponentChangeStateForm(): Form
 	{
-		$form = new ChangeStateFormFactory($this, $this->orderManager, $this->orderManager->getOrdersByState('in progress'), $this->orderManager->getStates());
+		$form = new ChangeStateFormFactory($this, $this->orderManager, $this->orderManager->getOrdersByState(), $this->orderManager->getStates());
 		return $form->create();
 	}
 
