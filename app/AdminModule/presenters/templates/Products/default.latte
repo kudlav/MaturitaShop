@@ -1,0 +1,40 @@
+{block content}
+
+<h1 n:block=title><span data-icon="P" class="icon"></span> Seznam produktů</h1>
+
+{snippet productsList}
+
+	{if $products->count() > 0}
+	<table class="striped">
+		<thead>
+			<tr>
+				<th>Katalogové číslo</th>
+				<th>Název</th>
+				<th>Popis</th>
+				<th>Cena</th>
+				<th>Množství skladem</th>
+				<th>Kategorie</th>
+				<th>Zobrazovat</th>
+				<th>Dodavatel.</th>
+				<th colspan="3">Akce</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr n:foreach="$products as $product">
+				<td>{$product->katalogove_cislo}</td>
+				<td class="center">{$product->nazev}</td>
+				<td class="right">{$product->popis}</td>
+				<td class="right">{$product->cena} Kč</td>
+				<td class="center">{$product->mnozstvi_skladem}</td>
+				<td class="center">{$product->kategorie}</td>
+				<td class="center">{$product->zobrazovat ? "Ano" : "Ne"}</td>
+				<td class="center">{$product->dodavatel}</td>
+				<td class="center nopad"><a href="{plink :Front:Product:default $product->katalogove_cislo}" title="Zobrazit" target="_blank"><div data-icon="o" class="action"></div></a></td>
+				<td class="center nopad"><a n:href="Products:edit $product->katalogove_cislo" title="Upravit""><div data-icon="l" class="action"></div></a></td>
+				<td class="center nopad"><a href="{link delete! $product->katalogove_cislo}" title="Smazat" onclick="return confirm('Smazat?')"><div data-icon="r" class="action"></div</a></td>
+			</tr>
+		</tbody>
+	</table>
+	{/if}
+
+{/snippet}

@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model;
 
+use mysql_xdevapi\Exception;
 use Nette;
 use Nette\Database\ResultSet;
 use Nette\Database\Table\IRow;
@@ -31,7 +32,11 @@ class ProductManager
 		RATE_STARS = 'pocet_hvezdicek',
 		RATE_PROS = 'klady',
 		RATE_CONS = 'zapory',
-		RATE_SUMMARY = 'shrnuti'
+		RATE_SUMMARY = 'shrnuti',
+
+        TABLE_EXTENDS = 'upresnuje',
+        EXTENDS_NAME = 'nazev',
+        EXTENDS_VALUE = 'hodnota'
 	;
 
 
@@ -48,13 +53,24 @@ class ProductManager
 	/**
 	 * Return all product at database.
 	 * @param string $category Only products belonging to this cat. Don't filter when NULL.
+     * @param int $show Show all products except hidden ones.
 	 * @return Selection
 	 */
-	public function getProducts(string $category = ""): Selection {
-		$products = $this->database->table(self::TABLE_PRODUCT)
-			->where(self::COLUMN_SHOW, 1)
-			->order(self::COLUMN_ID.' DESC');
-		if ($category != "") {
+	public function getProducts(string $category = "", int $show = 1): Selection {
+
+	    if ($show){
+            $products = $this->database->table(self::TABLE_PRODUCT)
+                ->where(self::COLUMN_SHOW, 1)
+                ->order(self::COLUMN_ID.' DESC')
+            ;
+        } else {
+            $products = $this->database->table(self::TABLE_PRODUCT)
+                ->order(self::COLUMN_ID.' DESC')
+            ;
+        }
+
+
+        if ($category != "") {
 			$products->where(self::COLUMN_CATEGORY, $category);
 		}
 
@@ -141,4 +157,47 @@ class ProductManager
 
 		 return ($result != false);
 	}
+
+	public function deleteItem(string $product): bool
+    {
+        try{
+            $this->database->beginTransaction();
+            $extend = $this->database->table(self::TABLE_EXTENDS)->where(self::COLUMN_ID, $product)->delete();
+            $product_deleted = $this->database->table(self::TABLE_PRODUCT)->where(self::COLUMN_ID, $product)->delete();
+            $this->database->commit();
+        } catch (Nette\Database\ForeignKeyConstraintViolationException $e) {
+            return false;
+        }
+
+        return ($product_deleted == 1);
+    }
+
+    public function addProduct(array $values): bool
+    {
+        $result = $this->database->table(self::TABLE_PRODUCT)->insert([
+            self::COLUMN_ID => $values['id'],
+            self::COLUMN_NAME => $values['name'],
+            self::COLUMN_DESCRIPTION => $values['description'],
+            self::COLUMN_PRICE => $values['price'],
+            self::COLUMN_QUANTITY => $values['stock'],
+            self::COLUMN_SHOW => $values['show'],
+            self::COLUMN_CATEGORY => $values['category']
+        ]);
+        return ($result != false);
+    }
+
+    public function updateProduct(string $id, $values): bool
+    {
+        $row = $this->database->table(self::TABLE_PRODUCT)->get($id);
+
+        $result = $row->update([
+            self::COLUMN_NAME => $values['name'],
+            self::COLUMN_DESCRIPTION => $values['description'],
+            self::COLUMN_PRICE => $values['price'],
+            self::COLUMN_QUANTITY => $values['stock'],
+            self::COLUMN_SHOW => $values['show'],
+            self::COLUMN_CATEGORY => $values['category']
+        ]);
+        return ($result != false);
+    }
 }

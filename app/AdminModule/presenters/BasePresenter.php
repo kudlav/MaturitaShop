@@ -53,6 +53,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 	{
 		$items = [
 			'Objednávky' => ['Orders:default'],
+            'Produkty' => ['Products:default'],
 			'Zákazníci' => ['Customers:default'],
 			'Dodavatelé' => ['Suppliers:default'],
 		];
