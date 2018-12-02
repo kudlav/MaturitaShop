@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <!-- saved from url=(0067)https://www.fit.vutbr.cz/study/courses/IIS/private/projekt/doc.html -->
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-2">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     
     <title>Projekt IIS</title>
     <style type="text/css">
@@ -11,47 +11,72 @@
 <style></style></head>
 <body>
 
-<!-- Zkontrolujte prosím nastavení kódování v hlavičce dokumentu 
-     podle použitého editoru -->
+<!-- Zkontrolujte prosĂ­m nastavenĂ­ kĂłdovĂĄnĂ­ v hlaviÄce dokumentu 
+     podle pouĹžitĂŠho editoru -->
 
-<h1>Název zadání (editujte)</h1> <!-- Nahradte názvem svého zadání -->
+<h1>InternetovĂ˝ obchod s pastelkami a skicĂĄky</h1>
 
 <dl>
-	<dt>Autoři</dt>
-	<dd>První jméno <!-- Nahraďte skutečným jménem a e-mailem autora a popisem činnosti -->
-	    <a href="mailto:xautor01@stud.fit.vutbr.cz">xautor01@stud.fit.vutbr.cz</a> -
-		správa uživatelů a uživatelské rozhraní
+	<dt>AutoĹi</dt>
+	<dd>Vladan KudlĂĄÄ
+	    <a href="mailto:xkudla15@stud.fit.vutbr.cz">xkudla15@stud.fit.vutbr.cz</a> -
+		uĹživatelskĂŠ rozhranĂ­, db, nĂĄvrh
 	</dd>
-	<dd>Druhé jméno <!-- Nahraďte skutečným jménem a e-mailem autora a popisem činnosti -->
-	    <a href="mailto:xautor02@stud.fit.vutbr.cz">xautor02@stud.fit.vutbr.cz</a> - 
-		databázový subsystém
+	<dd>Marek Musil
+	    <a href="mailto:xmusil65@stud.fit.vutbr.cz">xmusil65@stud.fit.vutbr.cz</a> -
+		uĹživatelskĂŠ rozhranĂ­, db
 	</dd>
 	<dt>URL aplikace</dt>
 	<dd><a href="http://www.stud.fit.vutbr.cz/~xautor01/IIS">http://www.stud.fit.vutbr.cz/~xautor01/IIS</a></dd>
-	<dd>(pokud má aplikace více vstupních stránek, napište obdobně další URL)</dd>
+	<dd>(pokud mĂĄ aplikace vĂ­ce vstupnĂ­ch strĂĄnek, napiĹĄte obdobnÄ dalĹĄĂ­ URL)</dd>
 </dl>
 
-<h2>Uživatelé systému pro testování</h2>
-<p>Uveďte prosím existující zástupce <strong>všech rolí uživatelů</strong>.</p>
+<h2>UĹživatelĂŠ systĂŠmu pro testovĂĄnĂ­</h2>
+<p>UveÄte prosĂ­m existujĂ­cĂ­ zĂĄstupce <strong>vĹĄech rolĂ­ uĹživatelĹŻ</strong>.</p>
 <table>
 <tbody><tr><th>Login</th><th>Heslo</th><th>Role</th></tr>
-<tr><td>admin</td><td>admin</td><td>Administrátor</td></tr>
-<tr><td>prodavac</td><td>prodavac</td><td>Prodavač</td></tr>
-<tr><td>franta</td><td>franta</td><td>Zákazník</td></tr>
+<tr><td>admin</td><td>admin</td><td>SprĂĄvce</td></tr>
+<tr><td>vokoun</td><td>vokoun</td><td>ProdavaÄ</td></tr>
+<tr><td>pkapr</td><td>1234</td><td>ZĂĄkaznĂ­k</td></tr>
 </tbody></table>
 
 <h2>Implementace</h2>
-<p>Stručná dokumentace k implementaci, která popisuje, které PHP skripty implementují jednotlivé případy použití uvedené v use-case diagramu z IDS. V případě, že bylo nutno při implementaci učinit změny v návrhu, musí být v dokumentaci zdůvodněny.</p>
+<p>
+	SystĂŠm je rozdÄlen do dvou hlavnĂ­ch modulĹŻ, AdminModule a FrontModule. Jak z nĂĄzvĹŻ napovĂ­dĂĄ, AdminModule je administrace a FrontModule je eshop samotnĂ˝. Architektura se ĹĂ­dĂ­ dle model-view-presenter, kde je kĂłd logicky rozdÄlen na model, view, presenter.
+	<ul>
+		<li>Model - prĂĄce s daty, dotazy na DB</li>
+		<li>View - UI, kterĂŠ je naplnÄno daty</li>
+		<li>Presenter - mĂĄ na starost zpracovĂĄnĂ­ view eventĹŻ a dotazovat se na model</li>
+	</ul>
+</p>
+
+<h3>FrontModule</h3>
+<p></p>
+
+<h3>AdminModule</h3>
+<p></p>
 
 <h2>Instalace</h2>
 <ul>
-<li>Stručně popište postup instalace na server</li>
-<li>Softwarové požadavky (verze PHP apod.)</li>
-<li>Jak rozbalit, konfigurovat, inicializovat databází, ...</li>
+<li>Po instalaci potĹebnĂŠho SW, je zapotĹebĂ­ nainstalovat Nette Framework. K tomu slouĹžĂ­ pĹĂ­kaz `composer install`. Po nainstalovĂĄnĂ­ Nette, by za pĹedpokladu sprĂĄvnÄ nastavenĂŠho serveru a importovanĂŠ databĂĄze, mÄl bĂ˝t echop funkÄnĂ­.</li>
+<li>SoftwarovĂŠ poĹžadavky:</li>
+	<ul>
+		<li>PHP 7.2 a novÄjĹĄĂ­</li>
+		<li>Composer</li>
+		<li>Nette Framework</li>
+		<li>Ĺ ablonovacĂ­ systĂŠm Latte</li>
+		<li>MariaDB 10.3 nebo ekvivalentnĂ­ MySQL databĂĄzovĂ˝ server </li>
+	</ul>
+<li>NastavenĂ­ DB</li>
+	<ul>
+		<li>
+			Konfigurace pĹipojenĂ­ k databĂĄzi se nachĂĄzĂ­ v souboru `app/config/config.local.neon`
+		</li>
+	</ul>
 </ul>
 
-<h2>Známé problémy</h2>
-<p>Zde popište, které body zadání (IDS a IIS) nejsou implementovány a z jakého důvodu. Např. &#8222;Z časových důvodů nebyla implementována správa uživatelů.&#8221; Pomůžete tím zrychlit opravování, když neimplementované funkce nebudeme muset dlouze hledat.</p>
+<h2>ZnĂĄmĂŠ problĂŠmy</h2>
+<p>Z ÄasovĂ˝ch dĹŻvodĹŻ nebyla implementovĂĄna funkce statistik prodeje produktĹŻ.</p>
 
 
 

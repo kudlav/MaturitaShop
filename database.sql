@@ -161,7 +161,7 @@ CREATE TABLE zamestnanec (
 );
 
 -- Insert into tables --
-INSERT INTO zakaznik VALUES (1, 'Petr', 'Kapr', '', NULL);
+INSERT INTO zakaznik VALUES (1, 'Petr', 'Kapr', 'pkapr@example.com', '$2y$10$Ap5ExBNV6qpfjY1h3YL5TOVk2dEmq4QSurke7wV.NBg8b3Fvzdnd6');
 INSERT INTO dodavatel VALUES (26359723, 'RANDOM DISTRIBUTION, s.r.o.', 'Vojta Okoun', 'Zahradni 173/2', 'Plzen', 32600, '14 dní', NULL, NULL);
 INSERT INTO produkt VALUES ('SVT33300460', 'Bobo Skicak KRTEK lepeny A4 10 listu', 'Lepeny skicak s motivem krtecka obsahuje 10 cistych listu.', 30, 500, 'bobo-skicak-krtek-lepeny-a4-10-listu-33300460.jpg', 'Skicaky', 1, 26359723);
 INSERT INTO produkt (katalogove_cislo, nazev, cena, mnozstvi_skladem, zobrazovat, dodavatel) VALUES ('SVT44102600', 'Pastelky CONCORDE trojhranne - 18 barev', 39, 0, 1, 26359723);
@@ -172,3 +172,6 @@ INSERT INTO upresnuje VALUES ('SVT33300460', 'Počet stran', '10'), ('SVT3330046
 INSERT INTO vlozil_do_kosiku VALUES ('SVT33300460', 1, 42);
 INSERT INTO ohodnotil VALUES ('SVT33300460', 1, 4, 'Vydareny vzhled - krtecek.', 'Vysoka cena, malo listu. Listy se trhaji.', 'Za ty penize bych cekal lepsi kvalitu.');
 INSERT INTO ohodnotil (katalogove_cislo, zakaznicke_cislo, pocet_hvezdicek) VALUES ('SVT44102600', 1, 5);
+
+INSERT INTO zamestnanec (uzivatelske_jmeno, jmeno, prijmeni, heslo, role) VALUES ('admin', 'admin', 'admin', '$2y$10$bFL/sppR.wsPK1FEFDNVKeZciAyIHWLZ2VAFF8tBQk8iIM2C06CBC', 'spravce')
+INSERT INTO zamestnanec (uzivatelske_jmeno, jmeno, prijmeni, heslo, role) VALUES ('vokoun', 'Vojtěch', 'Okoun', '$2y$10$VMEbXinGky.gKkH94ds7Z.Lt.PIehOjOKLGxC8rB2pkhHLLBlqTzS', 'prodejce')
