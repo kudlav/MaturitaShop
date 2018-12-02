@@ -29,7 +29,7 @@
 				<td class="center">{$product->kategorie}</td>
 				<td class="center">{$product->zobrazovat ? "Ano" : "Ne"}</td>
 				<td class="center">{$product->dodavatel}</td>
-				<td class="center nopad"><a href="{plink :Front:Product:default $product->katalogove_cislo}" title="Zobrazit"><div data-icon="o" class="action"></div></a></td>
+				<td class="center nopad"><a href="{plink :Front:Product:default $product->katalogove_cislo}" title="Zobrazit" target="_blank"><div data-icon="o" class="action"></div></a></td>
 				<td class="center nopad"><a n:href="Products:edit $product->katalogove_cislo" title="Upravit""><div data-icon="l" class="action"></div></a></td>
 				<td class="center nopad"><a href="{link delete! $product->katalogove_cislo}" title="Smazat" onclick="return confirm('Smazat?')"><div data-icon="r" class="action"></div</a></td>
 			</tr>
