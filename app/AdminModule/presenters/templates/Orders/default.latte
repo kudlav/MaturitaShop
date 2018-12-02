@@ -4,10 +4,12 @@
 
 {snippet ordersList}
 <form n:name="changeStateForm" class="ajax">
+	{if $orders->getRowCount() > 0}
 	<table class="striped">
 		<thead>
 			<tr>
-				<td><input type="checkbox"></td>
+				<td>
+				</td>
 				<th>Číslo</th>
 				<th>Vytvořeno</th>
 				<th>Zákazník</th>
@@ -21,7 +23,6 @@
 		</thead>
 		<tbody>
 			<tr n:foreach="$orders as $order">
-				<td><input type="checkbox" value="{$order->cislo_objednavky}"></td>
 				<td>OBJ{sprintf("%05d", $order->cislo_objednavky)}</td>
 				<td class="center">{$order->datum_cas|date:'j. n. Y'}<br>{$order->datum_cas|date:'G:i'}</td>
 				<td class="center">{$order->jmeno} {$order->prijmeni}</td>
@@ -31,12 +32,13 @@
 				<td class="center">
 					<select n:name="'s'.$order->cislo_objednavky" n:snippet="'order'.$order->cislo_objednavky" class="state{array_search($order->stav,$states)}" onchange="$(this).closest('form').submit()"></select>
 				</td>
-				<td class="center" title="{$order->poznamka}"><span n:if="$order->poznamka!=''" data-icon="a" class="icon"></span></td>
-				<td class="center nopad"><a href="{plink Orders:contact $order->cislo_objednavky}" title="Kontaktovat"><div data-icon="t" class="action"></div></a></td>
-				<td class="center nopad"><a href="{plink Orders:detail $order->cislo_objednavky}" title="Zobrazit"><div data-icon="o" class="action"></div></a></td>
-				<td class="center nopad"><a href="{link delete! $order->cislo_objednavky}" title="Smazat" onclick="return confirm('Smazat?')"><div data-icon="r" class="action"></div></a></td>
+                <td class="center" title="{$order->poznamka}"><span n:if="$order->poznamka!=''" data-icon="a" class="icon"></span></td>
+                <td class="center nopad"><a href="{plink Orders:contact $order->cislo_objednavky}" title="Kontaktovat"><div data-icon="t" class="action"></div></a></td>
+                <td class="center nopad"><a href="{plink Orders:detail $order->cislo_objednavky}" title="Zobrazit"><div data-icon="o" class="action"></div></a></td>
+                <td class="center nopad"><a href="{link delete! $order->cislo_objednavky}" title="Smazat" onclick="return confirm('Smazat?')"><div data-icon="r" class="action"></div></a></td>
 			</tr>
 		</tbody>
 	</table>
+	{/if}
 </form>
 {/snippet}

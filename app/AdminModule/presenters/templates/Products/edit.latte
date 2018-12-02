@@ -1,0 +1,5 @@
+{block content}
+
+<a n:href="Products:default" style="padding-right:1em">🡄 Zpět</a><h1 n:block=title style="display:inline-block;"><span data-icon="P" class="icon"></span>{ifset $product}Úprava produktu {$product->katalogove_cislo}{else}Nový produkt{/ifset}</h1>
+<div>Položky označené hvězdičkou jsou povinné.</div>
+{control editProductForm}
