@@ -27,8 +27,8 @@
 		uživatelské rozhraní, db
 	</dd>
 	<dt>URL aplikace</dt>
-	<dd><a href="http://www.stud.fit.vutbr.cz/~xautor01/IIS">http://www.stud.fit.vutbr.cz/~xautor01/IIS</a></dd>
-	<dd>(pokud má aplikace více vstupních stránek, napište obdobně další URL)</dd>
+	<dd><a href="http://kudlac.tode.cz/iishop/www/">http://kudlac.tode.cz/iishop/www/</a></dd>
+	<dd><a href="http://kudlac.tode.cz/iishop/www/administrace">http://kudlac.tode.cz/iishop/www/administrace</a> - administrace</dd>
 </dl>
 
 <h2>Uživatelé systému pro testování</h2>
@@ -103,6 +103,12 @@
 	Složka model obsahuje třídy modelu. Tedy pro jednotlivé logické celky, každá třída má množinu metod, které se dotazují na databázi a komunikují s presenterama.
 </p>
 
+<h3>Změny oproti původnímu ERD</h3>
+<p>
+	Ačkoliv jsme se znažili schéma databáze už v IDS navrhnout tak, aby bylo co nejvíce použitelné pro použití systémem, neobešlo se bez pár menších úprav.
+	Tyto úpravy jsou v <a href="ERD.pdf">ERD.pdf</a> vyznačeny žlutým zvýrazňovačem. Jedná se hlavně o přidání dalších řádků do tabulek, případně změny datových typů.
+</p>
+
 <h2>Instalace</h2>
 <ul>
 <li>Po instalaci potřebného SW, je zapotřebí nainstalovat Nette Framework. K tomu slouží příkaz `composer install`. Po nainstalování Nette, by za předpokladu správně nastaveného serveru a importované databáze, měl být echop funkční.</li>
@@ -110,7 +116,7 @@
 	<ul>
 		<li>PHP 7.2 a novější</li>
 		<li>Composer</li>
-		<li>Nette Framework</li>
+		<li>Nette Framework 2.4</li>
 		<li>Šablonovací systém Latte</li>
 		<li>MariaDB 10.3 nebo ekvivalentní MySQL databázový server </li>
 	</ul>
