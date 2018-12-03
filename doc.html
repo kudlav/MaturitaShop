@@ -46,15 +46,62 @@
 	<ul>
 		<li>Model - práce s daty, dotazy na DB</li>
 		<li>View - UI, které je naplněno daty</li>
-		<li>Presenter - má na starost zpracování view eventů a dotazovat se na model</li>
+		<li>Presenter - má na starost zpracování view eventů a dotazovat se na model, vykreslení komponent.</li>
 	</ul>
 </p>
 
+<h3>Use Case Diagram</h3>
+<p>
+	<div>
+		<img src="UCD-IIS.png">
+	</div>
+</p>
+
+
 <h3>FrontModule</h3>
-<p></p>
+<p>
+	Část systému, kterou vidí zákazník a pracuje s ní. Modul se skládá z presenterů, formulářů a pohledů. Modely jsou společné pro FrontModule i AdminModule.
+	Ve složce modulu se nachází složky forms a presenters. Každý formulář je vlastní třída, stejně tak jako presentery jsou samostatné třídy. Ve složce presenters se dále nachází šablony pro HTML samotné.
+</p>
+<h4>Stručný popis presenterů</h4>
+<p>
+    Názvy tříd jsme záměrně volili tak, aby bylo z nich co nejvíce jasné, co může mít na starost.
+    <ul>
+        <li>BasePresenter - Abstraktní třída, sloužící jako základ pro jednotlivé presentery.</li>
+        <li>Error4xxPresenter - presenter použitý při HTML chybách 4xx</li>
+        <li>ErrorPresenter - Zpracování chyb</li>
+        <li>HomepagePresenter - Úvodní strana</li>
+        <li>InfoPresenter</li>
+        <li>ProductPresenter - Presenter pro konkrétní produkt, zobrazení informací o produktu, přidání do košíku, recenze</li>
+        <li>RegisterPresenter - Registrace uživatele</li>
+        <li>SignPresenter - Přihlášení uživatele</li>
+        <li>UserPresenter - inforace o uživateli, jeho košík, objednávky.</li>
+    </ul>
+</p>
 
 <h3>AdminModule</h3>
-<p></p>
+<p>
+	Struktura složky mobulu je stejná jako u FrontModule. Obsahuje formuláře, presentery a šablony.
+</p>
+<h4>Stručný popis presenterů</h4>
+<p>
+    Podobně jako u FrontModule.
+<ul>
+    <li>BasePresenter - Abstraktní třída, sloužící jako základ pro jednotlivé presentery.</li>
+    <li>CustomersPresenter - Funkce spojené se zákazníky. Výpis zákazníků, možnost kontaktu, editace karty zákazníka, jeho smazání či deaktivace. Vytvoření nového zákazníka.</li>
+    <li>EmployeesPresenter - Výpis zaměstnanců a jejich rolí, editace karty zaměstnance, smazání, či deaktivace. Vytvoření nového zaměstnance.</li>
+    <li>HomepagePresenter - Úvodní strana, jako výchozí jsou zobrazené objednávky.</li>
+    <li>OrdersPresenter - Seznam objednávek a operace s nimi spojené. Zobrazení, kontaktování zákazníka, smazání objednávky.</li>
+    <li>ProductsPresenter - Seznam produktů a informací o nich. Zobrazení karty produktu, jeho editace, deaktivace a smazání. Přidání nového produktu.</li>
+    <li>SignPresenter - Přihlašování do administrace.</li>
+    <li>SuppliersPresenter - Seznam dodavatelů, možnost editace jeho karty, či smazání. Přidání nového dodavatele.</li>
+</ul>
+</p>
+
+<h3>Model</h3>
+<p>
+	Složka model obsahuje třídy modelu. Tedy pro jednotlivé logické celky, každá třída má množinu metod, které se dotazují na databázi a komunikují s presenterama.
+</p>
 
 <h2>Instalace</h2>
 <ul>

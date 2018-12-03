@@ -191,7 +191,8 @@ class ProductManager
             self::COLUMN_PRICE => $values['price'],
             self::COLUMN_QUANTITY => $values['stock'],
             self::COLUMN_SHOW => $values['show'],
-            self::COLUMN_CATEGORY => $values['category']
+            self::COLUMN_CATEGORY => $values['category'],
+            self::COLUMN_SUPPLIER => $values['supplier']
         ]);
         return ($result != false);
     }
