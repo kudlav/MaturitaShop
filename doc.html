@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <!-- saved from url=(0067)https://www.fit.vutbr.cz/study/courses/IIS/private/projekt/doc.html -->
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    
+
     <title>Projekt IIS</title>
     <style type="text/css">
     	table { border-collapse: collapse; }
@@ -32,7 +32,6 @@
 </dl>
 
 <h2>Uživatelé systému pro testování</h2>
-<p>Uveďte prosím existující zástupce <strong>všech rolí uživatelů</strong>.</p>
 <table>
 <tbody><tr><th>Login</th><th>Heslo</th><th>Role</th></tr>
 <tr><td>admin</td><td>admin</td><td>Správce</td></tr>
@@ -42,11 +41,11 @@
 
 <h2>Implementace</h2>
 <p>
-	Systém je rozdělen do dvou hlavních modulů, AdminModule a FrontModule. Jak z názvů napovídá, AdminModule je administrace a FrontModule je eshop samotný. Architektura se řídí dle model-view-presenter, kde je kód logicky rozdělen na model, view, presenter.
+	Systém je rozdělen do dvou hlavních modulů, AdminModule a FrontModule. AdminModule má na starost administrační část a FrontModule je veřejná část eshopu. Přihlášení uživatele do jednotlivých modulů je na sobě nezávislé. Architektura se řídí dle Model-View-Presenter:
 	<ul>
-		<li>Model - práce s daty, dotazy na DB</li>
-		<li>View - UI, které je naplněno daty</li>
-		<li>Presenter - má na starost zpracování view eventů a dotazovat se na model, vykreslení komponent.</li>
+		<li>Model - získává a zpracovává data z databáze či z konfiguračních souborů</li>
+		<li>View - prezentace dat uživateli</li>
+		<li>Presenter - má na starost zpracování požadavků, získání adekvátních dat z modelu, předání a připravení dat patřičnému pohledu, vykreslení komponent.</li>
 	</ul>
 </p>
 
@@ -60,22 +59,22 @@
 
 <h3>FrontModule</h3>
 <p>
-	Část systému, kterou vidí zákazník a pracuje s ní. Modul se skládá z presenterů, formulářů a pohledů. Modely jsou společné pro FrontModule i AdminModule.
+	Část systému, kterou vidí zákazník a pracuje s ní. Přihlášení probíhá emailovou adresou a heslem. Registrovat se může kdokoliv. Modul se skládá z presenterů, formulářů a pohledů. Modely jsou společné pro FrontModule i AdminModule.
 	Ve složce modulu se nachází složky forms a presenters. Každý formulář je vlastní třída, stejně tak jako presentery jsou samostatné třídy. Ve složce presenters se dále nachází šablony pro HTML samotné.
 </p>
-<h4>Stručný popis presenterů</h4>
+<h4>Popis presenterů</h4>
 <p>
-    Názvy tříd jsme záměrně volili tak, aby bylo z nich co nejvíce jasné, co může mít na starost.
+    Názvy tříd jsme volili tak, aby co nejvíce reflektovaly, co mají na starost.
     <ul>
-        <li>BasePresenter - Abstraktní třída, sloužící jako základ pro jednotlivé presentery.</li>
-        <li>Error4xxPresenter - presenter použitý při HTML chybách 4xx</li>
-        <li>ErrorPresenter - Zpracování chyb</li>
-        <li>HomepagePresenter - Úvodní strana</li>
-        <li>InfoPresenter</li>
-        <li>ProductPresenter - Presenter pro konkrétní produkt, zobrazení informací o produktu, přidání do košíku, recenze</li>
-        <li>RegisterPresenter - Registrace uživatele</li>
-        <li>SignPresenter - Přihlášení uživatele</li>
-        <li>UserPresenter - inforace o uživateli, jeho košík, objednávky.</li>
+        <li>BasePresenter - Abstraktní třída, sloužící jako základ pro jednotlivé presentery, vytváří komponenty společné pro všechny presentery (vyhledávání, stav košíku a navigační menu), získává a poskytuje presenterům nastavení frameworku.</li>
+        <li>Error4xxPresenter - Presenter použitý při HTML chybách 4xx.</li>
+        <li>ErrorPresenter - Pokud dojde v průběhu zpracování požadavku k chybě, je zpracována a zobrazena tímto presenterem.</li>
+        <li>HomepagePresenter - Úvodní strana se seznamem produktů, vyhledávání produktů, zobrazení produkůtů podle kategorie.</li>
+        <li>InfoPresenter - Prezenter slouží pro zobrazení informací o kontaktních údajích, obchodních podmínkách, dopravě a platbě.</li>
+        <li>ProductPresenter - Presenter pro konkrétní produkt, zobrazení informací o produktu, přidání do košíku, recenze. Presenter má rovněž na starost objednávkový proces a odeslání objednávky.</li>
+        <li>RegisterPresenter - Registrace uživatele (pro FrontModule).</li>
+        <li>SignPresenter - Přihlášení/odhlášení uživatele (pro FrontModule).</li>
+        <li>UserPresenter - Inforace o uživateli - jeho košík, objednávky. Má na starost zobrazení detailu objednávky a tisk faktury a objednávky.</li>
     </ul>
 </p>
 
@@ -83,17 +82,17 @@
 <p>
 	Struktura složky mobulu je stejná jako u FrontModule. Obsahuje formuláře, presentery a šablony.
 </p>
-<h4>Stručný popis presenterů</h4>
+<h4>Popis presenterů</h4>
 <p>
     Podobně jako u FrontModule.
 <ul>
-    <li>BasePresenter - Abstraktní třída, sloužící jako základ pro jednotlivé presentery.</li>
+    <li>BasePresenter - Abstraktní třída, sloužící jako základ pro jednotlivé presentery, vytváří navigační menu, které jse společné pro všechny presetery, ověřuje, zda-li je uživatel oprávněn pracovat s administrační částí a získává a poskytuje presenterům nastavení frameworku.</li>
     <li>CustomersPresenter - Funkce spojené se zákazníky. Výpis zákazníků, možnost kontaktu, editace karty zákazníka, jeho smazání či deaktivace. Vytvoření nového zákazníka.</li>
     <li>EmployeesPresenter - Výpis zaměstnanců a jejich rolí, editace karty zaměstnance, smazání, či deaktivace. Vytvoření nového zaměstnance.</li>
-    <li>HomepagePresenter - Úvodní strana, jako výchozí jsou zobrazené objednávky.</li>
-    <li>OrdersPresenter - Seznam objednávek a operace s nimi spojené. Zobrazení, kontaktování zákazníka, smazání objednávky.</li>
+    <li>HomepagePresenter - Úvodní strana, jako výchozí jsou zobrazené objednávky, požadavky pouze přesměruje na OrdersPresenter.</li>
+    <li>OrdersPresenter - Seznam objednávek a operace s nimi spojené. Zobrazení objednávky, kontaktování zákazníka, smazání objednávky, změna stavu objednávky.</li>
     <li>ProductsPresenter - Seznam produktů a informací o nich. Zobrazení karty produktu, jeho editace, deaktivace a smazání. Přidání nového produktu.</li>
-    <li>SignPresenter - Přihlašování do administrace.</li>
+    <li>SignPresenter - Přihlašování do administrační části.</li>
     <li>SuppliersPresenter - Seznam dodavatelů, možnost editace jeho karty, či smazání. Přidání nového dodavatele.</li>
 </ul>
 </p>
