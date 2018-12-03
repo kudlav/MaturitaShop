@@ -173,5 +173,5 @@ INSERT INTO vlozil_do_kosiku VALUES ('SVT33300460', 1, 42);
 INSERT INTO ohodnotil VALUES ('SVT33300460', 1, 4, 'Vydareny vzhled - krtecek.', 'Vysoka cena, malo listu. Listy se trhaji.', 'Za ty penize bych cekal lepsi kvalitu.');
 INSERT INTO ohodnotil (katalogove_cislo, zakaznicke_cislo, pocet_hvezdicek) VALUES ('SVT44102600', 1, 5);
 
-INSERT INTO zamestnanec (uzivatelske_jmeno, jmeno, prijmeni, heslo, role) VALUES ('admin', 'admin', 'admin', '$2y$10$bFL/sppR.wsPK1FEFDNVKeZciAyIHWLZ2VAFF8tBQk8iIM2C06CBC', 'spravce')
-INSERT INTO zamestnanec (uzivatelske_jmeno, jmeno, prijmeni, heslo, role) VALUES ('vokoun', 'Vojtěch', 'Okoun', '$2y$10$VMEbXinGky.gKkH94ds7Z.Lt.PIehOjOKLGxC8rB2pkhHLLBlqTzS', 'prodejce')
+INSERT INTO zamestnanec (uzivatelske_jmeno, jmeno, prijmeni, heslo, role) VALUES ('admin', 'admin', 'admin', '$2y$10$bFL/sppR.wsPK1FEFDNVKeZciAyIHWLZ2VAFF8tBQk8iIM2C06CBC', 'spravce');
+INSERT INTO zamestnanec (uzivatelske_jmeno, jmeno, prijmeni, heslo, role) VALUES ('vokoun', 'Vojtěch', 'Okoun', '$2y$10$VMEbXinGky.gKkH94ds7Z.Lt.PIehOjOKLGxC8rB2pkhHLLBlqTzS', 'prodejce');
