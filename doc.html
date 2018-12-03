@@ -32,7 +32,6 @@
 </dl>
 
 <h2>Uživatelé systému pro testování</h2>
-<p>Uveďte prosím existující zástupce <strong>všech rolí uživatelů</strong>.</p>
 <table>
 <tbody><tr><th>Login</th><th>Heslo</th><th>Role</th></tr>
 <tr><td>admin</td><td>admin</td><td>Správce</td></tr>
@@ -100,7 +99,24 @@
 
 <h3>Model</h3>
 <p>
-	Složka model obsahuje třídy modelu. Tedy pro jednotlivé logické celky, každá třída má množinu metod, které se dotazují na databázi a komunikují s presenterama.
+	Složka model obsahuje třídy modelu. Tedy pro jednotlivé logické celky, každá třída má množinu metod, které se dotazují na databázi a komunikují s presentery.
+</p>
+<h4>Popis modelů</h4>
+<p>
+	<ul>
+		<li>CartManager - Model pro košík. Práce s tabulkou `vlozil_do_kosiku`. Přidávání, odebírání zboží do/z košíku, zobrazení obashu košíku.</li>
+		<li>EmailValidator - Validace e-mailu, kontrola existence v databázi.</li>
+		<li>EmployeeAuthenticator - Autentizace uživatele (zaměstnance).</li>
+		<li>EmployeeManager - Operace nad tabulkou `zamestnanec`. Zobrazení všech zaměstnanců, zobrazení a editace údajů o konkrétním zaměstnanci. Přidání nového, smazání existujicího.</li>
+		<li>OrderManager - Operace nad tabulkou `objednavka`. Vytvoření nové objednávky, zobrazení objednávek uživatele, zobrazení všech dle stavu</li>
+		<li>ParameterManager - Zobrazení parametrů produktu.</li>
+		<li>Parameters - Přístup k parametrům ze souboru `app/config/config.neon`</li>
+		<li>ProductManager - Operace nad tabulkami `produkt`, `ohodnotil`, `upresnuje`. Vytvoření nového produktu, editace existujícího, smazání produktu, deaktivace produktu.</li>
+		<li>Registrator - Vytváření nového uživatele.</li>
+		<li>SupplierManager - Operace nad tabulkou `dodavatel`. Zobrazení dodavatelů, jejich editace, smazání, vytvoření nového.</li>
+		<li>UserAuthenticator - Autentizace uživatele(zákaznika).</li>
+		<li>UserManager - Operace nad tabulkou `zakaznik`. Zobrazení zákazníků, vytváření nových zákazníků, editace údajů, mazání, deaktivace.</li>
+	</ul>
 </p>
 
 <h3>Změny oproti původnímu ERD</h3>
