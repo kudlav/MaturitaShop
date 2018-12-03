@@ -44,7 +44,8 @@ class EditProductFormFactory
 		$form->addGroup();
 
 		$form->addText('id','Katalogové číslo: *')
-			->addRule(Form::MAX_LENGTH, 'Uživatelské jméno nesmí mít více než 45 znaků', 45)
+			->addRule(Form::MAX_LENGTH, 'Katalogové číslo nesmí mít více než 45 znaků', 45)
+			->addRule(Form::PATTERN, 'Katalogové číslo smí obsahovat pouze alfanumerické znaky', '[A-Za-z0-9]+')
 			->setRequired('Zadejte uživatelské jméno')
 			->setAttribute('class', 'form-input')
 		;
