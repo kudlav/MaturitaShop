@@ -158,6 +158,11 @@ class ProductManager
 		 return ($result != false);
 	}
 
+    /**
+     * Delete product
+     * @param string $product Product to be deleted
+     * @return bool Returns true if product was deleted
+     */
 	public function deleteItem(string $product): bool
     {
         try{
@@ -172,6 +177,11 @@ class ProductManager
         return ($product_deleted == 1);
     }
 
+    /**
+     * Create new product
+     * @param array $values Information about product
+     * @return bool True if product was created
+     */
     public function addProduct(array $values): bool
     {
         $result = $this->database->table(self::TABLE_PRODUCT)->insert([
@@ -181,12 +191,19 @@ class ProductManager
             self::COLUMN_PRICE => $values['price'],
             self::COLUMN_QUANTITY => $values['stock'],
             self::COLUMN_SHOW => $values['show'],
-            self::COLUMN_CATEGORY => $values['category']
+            self::COLUMN_CATEGORY => $values['category'],
+            self::COLUMN_SUPPLIER => $values['supplier']
         ]);
         return ($result != false);
     }
 
-    public function updateProduct(string $id, $values): bool
+    /**
+     * Update existing product
+     * @param string $id Catalog number of updated product
+     * @param array $values Information about product
+     * @return bool True if product was updated
+     */
+    public function updateProduct(string $id, array $values): bool
     {
         $row = $this->database->table(self::TABLE_PRODUCT)->get($id);
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <!-- saved from url=(0067)https://www.fit.vutbr.cz/study/courses/IIS/private/projekt/doc.html -->
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-2">
-    
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
     <title>Projekt IIS</title>
     <style type="text/css">
     	table { border-collapse: collapse; }
@@ -11,47 +11,145 @@
 <style></style></head>
 <body>
 
-<!-- Zkontrolujte pros�m nastaven� k�dov�n� v hlavi�ce dokumentu 
-     podle pou�it�ho editoru -->
+<!-- Zkontrolujte prosím nastavení kódování v hlavičce dokumentu 
+     podle použitého editoru -->
 
-<h1>N�zev zad�n� (editujte)</h1> <!-- Nahradte n�zvem sv�ho zad�n� -->
+<h1>Internetový obchod s pastelkami a skicáky</h1>
 
 <dl>
-	<dt>Auto�i</dt>
-	<dd>Prvn� jm�no <!-- Nahra�te skute�n�m jm�nem a e-mailem autora a popisem �innosti -->
-	    <a href="mailto:xautor01@stud.fit.vutbr.cz">xautor01@stud.fit.vutbr.cz</a> -
-		spr�va u�ivatel� a u�ivatelsk� rozhran�
+	<dt>Autoři</dt>
+	<dd>Vladan Kudláč
+	    <a href="mailto:xkudla15@stud.fit.vutbr.cz">xkudla15@stud.fit.vutbr.cz</a> -
+		uživatelské rozhraní, db, návrh
 	</dd>
-	<dd>Druh� jm�no <!-- Nahra�te skute�n�m jm�nem a e-mailem autora a popisem �innosti -->
-	    <a href="mailto:xautor02@stud.fit.vutbr.cz">xautor02@stud.fit.vutbr.cz</a> - 
-		datab�zov� subsyst�m
+	<dd>Marek Musil
+	    <a href="mailto:xmusil65@stud.fit.vutbr.cz">xmusil65@stud.fit.vutbr.cz</a> -
+		uživatelské rozhraní, db
 	</dd>
 	<dt>URL aplikace</dt>
-	<dd><a href="http://www.stud.fit.vutbr.cz/~xautor01/IIS">http://www.stud.fit.vutbr.cz/~xautor01/IIS</a></dd>
-	<dd>(pokud m� aplikace v�ce vstupn�ch str�nek, napi�te obdobn� dal�� URL)</dd>
+	<dd><a href="http://kudlac.tode.cz/iishop/www/">http://kudlac.tode.cz/iishop/www/</a></dd>
+	<dd><a href="http://kudlac.tode.cz/iishop/www/administrace">http://kudlac.tode.cz/iishop/www/administrace</a> - administrace</dd>
 </dl>
 
-<h2>U�ivatel� syst�mu pro testov�n�</h2>
-<p>Uve�te pros�m existuj�c� z�stupce <strong>v�ech rol� u�ivatel�</strong>.</p>
+<h2>Uživatelé systému pro testování</h2>
 <table>
 <tbody><tr><th>Login</th><th>Heslo</th><th>Role</th></tr>
-<tr><td>admin</td><td>admin</td><td>Administr�tor</td></tr>
-<tr><td>prodavac</td><td>prodavac</td><td>Prodava�</td></tr>
-<tr><td>franta</td><td>franta</td><td>Z�kazn�k</td></tr>
+<tr><td>admin</td><td>admin</td><td>Správce</td></tr>
+<tr><td>vokoun</td><td>vokoun</td><td>Prodavač</td></tr>
+<tr><td>pkapr@example.com</td><td>1234</td><td>Zákazník</td></tr>
 </tbody></table>
+<p>
+    Role Zákazník je uživatel pro e-shop samotný. Role Správce a Prodavač jsou určeny pro zaměstnance pro přístup do administrace systému.<br>
+    Rozdíl mezi rolí správce a prodavače je ten, že správce na rozdíl od prodavače může přidávat a spravovat existující uživatele administračního rozhraní.
+</p>
 
 <h2>Implementace</h2>
-<p>Stru�n� dokumentace k implementaci, kter� popisuje, kter� PHP skripty implementuj� jednotliv� p��pady pou�it� uveden� v use-case diagramu z IDS. V p��pad�, �e bylo nutno p�i implementaci u�init zm�ny v n�vrhu, mus� b�t v dokumentaci zd�vodn�ny.</p>
+<p>
+	Systém je rozdělen do dvou hlavních modulů, AdminModule a FrontModule. AdminModule má na starost administrační část a FrontModule je veřejná část eshopu. Přihlášení uživatele do jednotlivých modulů je na sobě nezávislé. Architektura se řídí dle Model-View-Presenter:
+	<ul>
+		<li>Model - získává a zpracovává data z databáze či z konfiguračních souborů</li>
+		<li>View - prezentace dat uživateli</li>
+		<li>Presenter - má na starost zpracování požadavků, získání adekvátních dat z modelu, předání a připravení dat patřičnému pohledu, vykreslení komponent.</li>
+	</ul>
+</p>
+
+<h3>Use Case Diagram</h3>
+<p>
+	<div>
+		<img src="UCD-IIS.png">
+	</div>
+</p>
+
+
+<h3>FrontModule</h3>
+<p>
+	Část systému, kterou vidí zákazník a pracuje s ní. Přihlášení probíhá emailovou adresou a heslem. Registrovat se může kdokoliv. Modul se skládá z presenterů, formulářů a pohledů. Modely jsou společné pro FrontModule i AdminModule.
+	Ve složce modulu se nachází složky forms a presenters. Každý formulář je vlastní třída, stejně tak jako presentery jsou samostatné třídy. Ve složce presenters se dále nachází šablony pro HTML samotné.
+</p>
+<h4>Popis presenterů</h4>
+<p>
+    Názvy tříd jsme volili tak, aby co nejvíce reflektovaly, co mají na starost.
+    <ul>
+        <li>BasePresenter - Abstraktní třída, sloužící jako základ pro jednotlivé presentery, vytváří komponenty společné pro všechny presentery (vyhledávání, stav košíku a navigační menu), získává a poskytuje presenterům nastavení frameworku.</li>
+        <li>Error4xxPresenter - Presenter použitý při HTML chybách 4xx.</li>
+        <li>ErrorPresenter - Pokud dojde v průběhu zpracování požadavku k chybě, je zpracována a zobrazena tímto presenterem.</li>
+        <li>HomepagePresenter - Úvodní strana se seznamem produktů, vyhledávání produktů, zobrazení produkůtů podle kategorie.</li>
+        <li>InfoPresenter - Prezenter slouží pro zobrazení informací o kontaktních údajích, obchodních podmínkách, dopravě a platbě.</li>
+        <li>ProductPresenter - Presenter pro konkrétní produkt, zobrazení informací o produktu, přidání do košíku, recenze. Presenter má rovněž na starost objednávkový proces a odeslání objednávky.</li>
+        <li>RegisterPresenter - Registrace uživatele (pro FrontModule).</li>
+        <li>SignPresenter - Přihlášení/odhlášení uživatele (pro FrontModule).</li>
+        <li>UserPresenter - Inforace o uživateli - jeho košík, objednávky. Má na starost zobrazení detailu objednávky a tisk faktury a objednávky.</li>
+    </ul>
+</p>
+
+<h3>AdminModule</h3>
+<p>
+	Struktura složky mobulu je stejná jako u FrontModule. Obsahuje formuláře, presentery a šablony.
+</p>
+<h4>Popis presenterů</h4>
+<p>
+    Podobně jako u FrontModule.
+<ul>
+    <li>BasePresenter - Abstraktní třída, sloužící jako základ pro jednotlivé presentery, vytváří navigační menu, které jse společné pro všechny presetery, ověřuje, zda-li je uživatel oprávněn pracovat s administrační částí a získává a poskytuje presenterům nastavení frameworku.</li>
+    <li>CustomersPresenter - Funkce spojené se zákazníky. Výpis zákazníků, možnost kontaktu, editace karty zákazníka, jeho smazání či deaktivace. Vytvoření nového zákazníka.</li>
+    <li>EmployeesPresenter - Výpis zaměstnanců a jejich rolí, editace karty zaměstnance, smazání, či deaktivace. Vytvoření nového zaměstnance.</li>
+    <li>HomepagePresenter - Úvodní strana, jako výchozí jsou zobrazené objednávky, požadavky pouze přesměruje na OrdersPresenter.</li>
+    <li>OrdersPresenter - Seznam objednávek a operace s nimi spojené. Zobrazení objednávky, kontaktování zákazníka, smazání objednávky, změna stavu objednávky.</li>
+    <li>ProductsPresenter - Seznam produktů a informací o nich. Zobrazení karty produktu, jeho editace, deaktivace a smazání. Přidání nového produktu.</li>
+    <li>SignPresenter - Přihlašování do administrační části.</li>
+    <li>SuppliersPresenter - Seznam dodavatelů, možnost editace jeho karty, či smazání. Přidání nového dodavatele.</li>
+</ul>
+</p>
+
+<h3>Model</h3>
+<p>
+	Složka model obsahuje třídy modelu. Tedy pro jednotlivé logické celky, každá třída má množinu metod, které se dotazují na databázi a komunikují s presentery.
+</p>
+<h4>Popis modelů</h4>
+<p>
+	<ul>
+		<li>CartManager - Model pro košík. Práce s tabulkou `vlozil_do_kosiku`. Přidávání, odebírání zboží do/z košíku, zobrazení obashu košíku.</li>
+		<li>EmailValidator - Validace e-mailu, kontrola existence v databázi.</li>
+		<li>EmployeeAuthenticator - Autentizace uživatele (zaměstnance).</li>
+		<li>EmployeeManager - Operace nad tabulkou `zamestnanec`. Zobrazení všech zaměstnanců, zobrazení a editace údajů o konkrétním zaměstnanci. Přidání nového, smazání existujicího.</li>
+		<li>OrderManager - Operace nad tabulkou `objednavka`. Vytvoření nové objednávky, zobrazení objednávek uživatele, zobrazení všech dle stavu</li>
+		<li>ParameterManager - Zobrazení parametrů produktu.</li>
+		<li>Parameters - Přístup k parametrům ze souboru `app/config/config.neon`</li>
+		<li>ProductManager - Operace nad tabulkami `produkt`, `ohodnotil`, `upresnuje`. Vytvoření nového produktu, editace existujícího, smazání produktu, deaktivace produktu.</li>
+		<li>Registrator - Vytváření nového uživatele.</li>
+		<li>SupplierManager - Operace nad tabulkou `dodavatel`. Zobrazení dodavatelů, jejich editace, smazání, vytvoření nového.</li>
+		<li>UserAuthenticator - Autentizace uživatele(zákaznika).</li>
+		<li>UserManager - Operace nad tabulkou `zakaznik`. Zobrazení zákazníků, vytváření nových zákazníků, editace údajů, mazání, deaktivace.</li>
+	</ul>
+</p>
+
+<h3>Změny oproti původnímu ERD</h3>
+<p>
+	Ačkoliv jsme se znažili schéma databáze už v IDS navrhnout tak, aby bylo co nejvíce použitelné pro použití systémem, neobešlo se bez pár menších úprav.
+	Tyto úpravy jsou v <a href="ERD.pdf">ERD.pdf</a> vyznačeny žlutým zvýrazňovačem. Jedná se hlavně o přidání dalších řádků do tabulek, případně změny datových typů.
+</p>
 
 <h2>Instalace</h2>
 <ul>
-<li>Stru�n� popi�te postup instalace na server</li>
-<li>Softwarov� po�adavky (verze PHP apod.)</li>
-<li>Jak rozbalit, konfigurovat, inicializovat datab�z�, ...</li>
+<li>Po instalaci potřebného SW, je zapotřebí nainstalovat Nette Framework. K tomu slouží příkaz `composer install`. Po nainstalování Nette, by za předpokladu správně nastaveného serveru a importované databáze, měl být echop funkční.</li>
+<li>Softwarové požadavky:</li>
+	<ul>
+		<li>PHP 7.2 a novější</li>
+		<li>Composer</li>
+		<li>Nette Framework 2.4</li>
+		<li>Šablonovací systém Latte</li>
+		<li>MariaDB 10.3 nebo ekvivalentní MySQL databázový server </li>
+	</ul>
+<li>Nastavení DB</li>
+	<ul>
+		<li>
+			Konfigurace připojení k databázi se nachází v souboru `app/config/config.local.neon`
+		</li>
+	</ul>
 </ul>
 
-<h2>Zn�m� probl�my</h2>
-<p>Zde popi�te, kter� body zad�n� (IDS a IIS) nejsou implementov�ny a z jak�ho d�vodu. Nap�. &#8222;Z �asov�ch d�vod� nebyla implementov�na spr�va u�ivatel�.&#8221; Pom��ete t�m zrychlit opravov�n�, kdy� neimplementovan� funkce nebudeme muset dlouze hledat.</p>
+<h2>Známé problémy</h2>
+<p>Z časových důvodů nebyla implementována funkce statistik prodeje produktů.</p>
 
 
 
