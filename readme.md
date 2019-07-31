@@ -1,4 +1,7 @@
 # IIShop
+Nette project made for school leaving exam. Basic system for e-shops containing order process, product list and static pages. Order process can be disabled - useful for orders only over phone and email.
+
+http://kudlac.tode.cz/iishop/
 
 ### Installing
 #### Windows
